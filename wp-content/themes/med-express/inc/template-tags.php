@@ -5,23 +5,6 @@
  * @package MedExpress
  */
 
-if ( ! function_exists( 'medexpress_get_hero_background_style' ) ) {
-    /**
-     * Build hero background inline style.
-     *
-     * @return string
-     */
-    function medexpress_get_hero_background_style() {
-        $background = get_theme_mod( 'medexpress_hero_background' );
-
-        if ( empty( $background ) ) {
-            return '';
-        }
-
-        return sprintf( 'style="background-image: url(%s);"', esc_url( $background ) );
-    }
-}
-
 if ( ! function_exists( 'medexpress_get_phone_href' ) ) {
     /**
      * Format phone number into tel: link.

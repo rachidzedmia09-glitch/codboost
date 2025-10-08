@@ -6,8 +6,13 @@
  */
 
 get_header();
+
+if ( function_exists( 'medexpress_elementor_render_location' ) && medexpress_elementor_render_location( array( '404', 'archive' ) ) ) {
+    get_footer();
+    return;
+}
 ?>
-<div class="container container--narrow">
+<div class="site-container">
     <section class="error-404 not-found">
         <header class="page-header">
             <h1 class="page-title"><?php esc_html_e( 'Oops! That page can’t be found.', 'med-express' ); ?></h1>

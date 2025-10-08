@@ -6,8 +6,13 @@
  */
 
 get_header();
+
+if ( function_exists( 'medexpress_elementor_render_location' ) && medexpress_elementor_render_location( array( 'archive', 'archive-post' ) ) ) {
+    get_footer();
+    return;
+}
 ?>
-<div class="container container--narrow">
+<div class="site-container">
     <?php if ( have_posts() ) : ?>
         <header class="page-header">
             <?php

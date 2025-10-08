@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'MEDEXPRESS_VERSION' ) ) {
-    define( 'MEDEXPRESS_VERSION', '1.0.0' );
+    define( 'MEDEXPRESS_VERSION', '1.1.0' );
 }
 
 if ( ! function_exists( 'medexpress_theme_setup' ) ) {
@@ -22,7 +22,10 @@ if ( ! function_exists( 'medexpress_theme_setup' ) ) {
         add_theme_support( 'responsive-embeds' );
         add_theme_support( 'editor-styles' );
         add_theme_support( 'align-wide' );
-        add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) );
+        add_theme_support(
+            'html5',
+            array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' )
+        );
         add_theme_support(
             'custom-logo',
             array(
@@ -35,9 +38,8 @@ if ( ! function_exists( 'medexpress_theme_setup' ) ) {
 
         register_nav_menus(
             array(
-                'primary'   => __( 'Primary Menu', 'med-express' ),
-                'secondary' => __( 'Secondary Menu', 'med-express' ),
-                'footer'    => __( 'Footer Menu', 'med-express' ),
+                'primary' => __( 'Primary Menu', 'med-express' ),
+                'footer'  => __( 'Footer Menu', 'med-express' ),
             )
         );
     }
@@ -55,9 +57,8 @@ if ( ! function_exists( 'medexpress_enqueue_assets' ) ) {
         wp_enqueue_style( 'medexpress-google-fonts', 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap', array(), null );
         wp_enqueue_style( 'medexpress-style', get_stylesheet_uri(), array(), $theme_version );
 
-        wp_enqueue_script( 'jquery' );
         wp_enqueue_script( 'medexpress-navigation', get_template_directory_uri() . '/assets/js/navigation.js', array(), $theme_version, true );
-        wp_enqueue_script( 'medexpress-theme', get_template_directory_uri() . '/assets/js/theme.js', array( 'jquery' ), $theme_version, true );
+        wp_enqueue_script( 'medexpress-theme', get_template_directory_uri() . '/assets/js/theme.js', array(), $theme_version, true );
     }
 }
 add_action( 'wp_enqueue_scripts', 'medexpress_enqueue_assets' );
@@ -67,44 +68,48 @@ if ( ! function_exists( 'medexpress_widgets_init' ) ) {
      * Register widget areas.
      */
     function medexpress_widgets_init() {
+        $widget_args = array(
+            'before_widget' => '<section id="%1$s" class="widget %2$s">',
+            'after_widget'  => '</section>',
+            'before_title'  => '<h3 class="widget-title">',
+            'after_title'   => '</h3>',
+        );
+
         register_sidebar(
-            array(
-                'name'          => __( 'Footer Column 1', 'med-express' ),
-                'id'            => 'footer-1',
-                'description'   => __( 'Widgets in this area will be shown in the first footer column.', 'med-express' ),
-                'before_widget' => '<section id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</section>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+            array_merge(
+                $widget_args,
+                array(
+                    'name'        => __( 'Footer Column 1', 'med-express' ),
+                    'id'          => 'footer-1',
+                    'description' => __( 'Widgets in this area will be shown in the first footer column.', 'med-express' ),
+                )
             )
         );
 
         register_sidebar(
-            array(
-                'name'          => __( 'Footer Column 2', 'med-express' ),
-                'id'            => 'footer-2',
-                'description'   => __( 'Widgets in this area will be shown in the second footer column.', 'med-express' ),
-                'before_widget' => '<section id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</section>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+            array_merge(
+                $widget_args,
+                array(
+                    'name'        => __( 'Footer Column 2', 'med-express' ),
+                    'id'          => 'footer-2',
+                    'description' => __( 'Widgets in this area will be shown in the second footer column.', 'med-express' ),
+                )
             )
         );
 
         register_sidebar(
-            array(
-                'name'          => __( 'Footer Column 3', 'med-express' ),
-                'id'            => 'footer-3',
-                'description'   => __( 'Widgets in this area will be shown in the third footer column.', 'med-express' ),
-                'before_widget' => '<section id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</section>',
-                'before_title'  => '<h3 class="widget-title">',
-                'after_title'   => '</h3>',
+            array_merge(
+                $widget_args,
+                array(
+                    'name'        => __( 'Footer Column 3', 'med-express' ),
+                    'id'          => 'footer-3',
+                    'description' => __( 'Widgets in this area will be shown in the third footer column.', 'med-express' ),
+                )
             )
         );
     }
 }
 add_action( 'widgets_init', 'medexpress_widgets_init' );
 
-require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/template-tags.php';
+require get_template_directory() . '/inc/elementor.php';

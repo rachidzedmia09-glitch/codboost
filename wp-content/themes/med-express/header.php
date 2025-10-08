@@ -14,65 +14,51 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <div class="site" id="page">
-    <header class="site-header">
-        <div class="topbar">
-            <div class="container">
-                <div class="topbar__contact">
-                    <?php $phone = get_theme_mod( 'medexpress_contact_phone', '+213 (0) 21 123 456' ); ?>
-                    <a href="<?php echo esc_url( medexpress_get_phone_href( $phone ) ); ?>" class="topbar__item">
-                        <span class="dashicons dashicons-phone"></span>
-                        <?php echo esc_html( $phone ); ?>
-                    </a>
-                    <?php $email = get_theme_mod( 'medexpress_contact_email', 'contact@medexpress.dz' ); ?>
-                    <a href="mailto:<?php echo antispambot( $email ); ?>" class="topbar__item">
-                        <span class="dashicons dashicons-email"></span>
-                        <?php echo esc_html( $email ); ?>
-                    </a>
+    <?php if ( function_exists( 'elementor_theme_do_location' ) && elementor_theme_do_location( 'header' ) ) : ?>
+    <?php else : ?>
+        <header class="site-header" role="banner">
+            <div class="site-container site-header__inner">
+                <div class="site-branding">
+                    <?php if ( has_custom_logo() ) : ?>
+                        <?php the_custom_logo(); ?>
+                    <?php endif; ?>
+
+                    <?php if ( display_header_text() ) : ?>
+                        <?php if ( is_front_page() && is_home() ) : ?>
+                            <h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+                        <?php else : ?>
+                            <p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
+                        <?php endif; ?>
+                        <?php
+                        $medexpress_description = get_bloginfo( 'description', 'display' );
+                        if ( $medexpress_description || is_customize_preview() ) :
+                            ?>
+                            <p class="site-description"><?php echo esc_html( $medexpress_description ); ?></p>
+                        <?php endif; ?>
+                    <?php endif; ?>
                 </div>
-                <div class="topbar__cta">
+
+                <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+                    <span class="menu-toggle__bar"></span>
+                    <span class="menu-toggle__bar"></span>
+                    <span class="menu-toggle__bar"></span>
+                    <span class="screen-reader-text"><?php esc_html_e( 'Toggle navigation', 'med-express' ); ?></span>
+                </button>
+
+                <nav id="site-navigation" class="main-navigation" aria-label="<?php esc_attr_e( 'Main navigation', 'med-express' ); ?>">
                     <?php
-                    $cta_text = get_theme_mod( 'medexpress_cta_button_text', __( 'Schedule a Call', 'med-express' ) );
-                    $cta_link = get_theme_mod( 'medexpress_cta_button_link', '#contact' );
+                    wp_nav_menu(
+                        array(
+                            'theme_location' => 'primary',
+                            'menu_id'        => 'primary-menu',
+                            'container'      => false,
+                            'fallback_cb'    => 'wp_page_menu',
+                        )
+                    );
                     ?>
-                    <a class="button button--ghost" href="<?php echo esc_url( $cta_link ); ?>"><?php echo esc_html( $cta_text ); ?></a>
-                </div>
+                </nav>
             </div>
-        </div>
-        <div class="container">
-            <div class="site-branding">
-                <?php the_custom_logo(); ?>
-                <div class="site-title-wrapper">
-                    <?php if ( is_front_page() && is_home() ) : ?>
-                        <h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-                    <?php else : ?>
-                        <p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-                    <?php endif; ?>
-                    <?php
-                    $description = get_bloginfo( 'description', 'display' );
-                    if ( $description || is_customize_preview() ) :
-                        ?>
-                        <p class="site-description"><?php echo esc_html( $description ); ?></p>
-                    <?php endif; ?>
-                </div>
-            </div>
-            <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
-                <span class="menu-toggle__bar"></span>
-                <span class="menu-toggle__bar"></span>
-                <span class="menu-toggle__bar"></span>
-                <span class="screen-reader-text"><?php esc_html_e( 'Toggle navigation', 'med-express' ); ?></span>
-            </button>
-            <nav id="site-navigation" class="main-navigation" aria-label="<?php esc_attr_e( 'Main navigation', 'med-express' ); ?>">
-                <?php
-                wp_nav_menu(
-                    array(
-                        'theme_location' => 'primary',
-                        'menu_id'        => 'primary-menu',
-                        'container'      => false,
-                        'fallback_cb'    => '__return_false',
-                    )
-                );
-                ?>
-            </nav>
-        </div>
-    </header>
+        </header>
+    <?php endif; ?>
+
     <main id="content" class="site-main">
