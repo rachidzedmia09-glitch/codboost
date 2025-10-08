@@ -1,0 +1,5 @@
+<svg width="240" height="72" viewBox="0 0 240 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="240" height="72" rx="18" fill="#0F172A"/>
+  <path d="M32 20C24 20 18 26.268 18 36C18 45.732 24 52 32 52H46V44H32C28 44 26 41 26 36C26 31 28 28 32 28H46V20H32Z" fill="#D7FF00"/>
+  <text x="64" y="45" fill="white" font-family="'Inter', sans-serif" font-size="26" font-weight="700">Codboost</text>
+</svg>

@@ -1,0 +1,104 @@
+/*
+Theme Name: Codboost Finance Portal
+Theme URI: https://codboost.pro/
+Author: Codboost
+Author URI: https://codboost.pro/
+Description: Tailored UI/UX theme for the Codboost money management experience.
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: codboost-finance
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1114ff 100%);
+    min-height: 100vh;
+    color: #0f172a;
+}
+
+a {
+    color: #d7ff00;
+}
+
+a:hover {
+    color: #fff;
+}
+
+.site-wrapper {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+}
+
+.site-hero {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2rem;
+    padding: 2.5rem;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 30px 60px rgba(15, 23, 42, 0.45);
+}
+
+.site-hero h1 {
+    font-size: 2.8rem;
+    margin: 0 0 1rem;
+    letter-spacing: -0.02em;
+}
+
+.site-hero p {
+    font-size: 1.1rem;
+    margin: 0 auto 2rem;
+    max-width: 640px;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.site-hero .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #d7ff00;
+    color: #0f172a;
+    padding: 0.85rem 1.6rem;
+    border-radius: 999px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.site-hero .cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 30px rgba(17, 20, 255, 0.25);
+}
+
+.site-content {
+    margin-top: 3rem;
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 1.75rem;
+    padding: 2.5rem;
+    box-shadow: 0 25px 50px rgba(15, 23, 42, 0.18);
+}
+
+.site-footer {
+    margin-top: 2.5rem;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .site-hero {
+        padding: 2rem 1.5rem;
+    }
+
+    .site-hero h1 {
+        font-size: 2.2rem;
+    }
+
+    .site-content {
+        padding: 1.75rem;
+    }
+}

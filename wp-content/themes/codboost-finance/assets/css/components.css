@@ -1,0 +1,28 @@
+.money-manager-wrapper {
+    margin-top: 2rem;
+}
+
+.money-manager-wrapper .codboost-money-manager {
+    background: transparent;
+}
+
+.money-manager-wrapper .cbm-panel {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.money-manager-wrapper .cbm-card {
+    background: rgba(215, 255, 0, 0.12);
+    border-left-color: #d7ff00;
+}
+
+.money-manager-wrapper .cbm-card--income {
+    border-left-color: #0f766e;
+}
+
+.money-manager-wrapper .cbm-card--outcome {
+    border-left-color: #dc2626;
+}
+
+.money-manager-wrapper .cbm-card--balance {
+    border-left-color: #1114ff;
+}
