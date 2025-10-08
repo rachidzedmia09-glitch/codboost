@@ -1,0 +1,51 @@
+.klpu-product-search + .select2-container {
+    min-width: 260px;
+    width: 100% !important;
+}
+
+.klpu-offer-preview {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 24px 24px;
+    padding: 16px 20px;
+    background: #f6f7fb;
+    border: 1px solid #e2e5f0;
+    border-radius: 12px;
+}
+
+.klpu-offer-preview__media img {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    object-fit: cover;
+    display: block;
+}
+
+.klpu-offer-preview__details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+}
+
+.klpu-offer-preview__title {
+    font-size: 14px;
+}
+
+.klpu-offer-preview__price {
+    color: #007cba;
+    font-weight: 600;
+}
+
+@media (max-width: 782px) {
+    .klpu-offer-preview {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .klpu-offer-preview__media img {
+        width: 72px;
+        height: 72px;
+    }
+}
