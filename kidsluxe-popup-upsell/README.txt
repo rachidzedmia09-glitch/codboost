@@ -40,6 +40,7 @@ Kids-Luxe Pop-Up Upsell by Codboost permet d’afficher un pop-up élégant et p
 * `klpu_should_show_for_product` — Permet de conditionner l’affichage de l’upsell pour un produit donné.
 * `klpu_should_open_on_add_to_cart` — Active/désactive l’ouverture du pop-up selon le contexte (`add_to_cart`, `buy_now`).
 * `klpu_offer_title`, `klpu_offer_subtitle`, `klpu_offer_price_label` — Modifie les textes affichés dans le pop-up.
+* `klpu_modal_payload` — Ajuste les données envoyées au script front (prix, image, triggers…).
 * Template surchargeable : `woocommerce/kidsluxe/modal-offer.php`.
 
 == FAQ ==
@@ -51,6 +52,11 @@ Non. Le plugin ajuste uniquement le prix du produit proposé dans le panier en f
 Oui, via la case à cocher « Activer le pop-up pour ce produit ». Vous pouvez également utiliser le filtre `klpu_should_show_for_product`.
 
 == Changelog ==
+
+= 1.0.1 =
+* Amélioration du pop-up (overlay, transitions, lecteur d’écran) et ajout d’un indicateur de chargement sur le CTA.
+* Correction de la recherche de produit dans l’onglet produit avec affichage d’un aperçu visuel et du prix.
+* Meilleure prise en charge des produits variables et boutons personnalisés pour l’ouverture du pop-up.
 
 = 1.0.0 =
 * Version initiale.

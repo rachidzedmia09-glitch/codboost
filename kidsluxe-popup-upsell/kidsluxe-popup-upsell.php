@@ -3,7 +3,7 @@
  * Plugin Name: Kids-Luxe Pop-Up Upsell by Codboost
  * Plugin URI: https://codboost.pro/
  * Description: Affiche un pop-up d'upsell premium lors de l'ajout au panier ou de l'achat immédiat dans WooCommerce.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Codboost
  * Author URI: https://codboost.pro/
  * Text Domain: kidsluxe-popup-upsell
@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
 define( 'KLPU_PLUGIN_FILE', __FILE__ );
 define( 'KLPU_PLUGIN_DIR', plugin_dir_path( KLPU_PLUGIN_FILE ) );
 define( 'KLPU_PLUGIN_URL', plugin_dir_url( KLPU_PLUGIN_FILE ) );
-define( 'KLPU_VERSION', '1.0.0' );
+define( 'KLPU_VERSION', '1.0.1' );
 
 require_once KLPU_PLUGIN_DIR . 'includes/helpers.php';
 require_once KLPU_PLUGIN_DIR . 'includes/class-KLPU-Admin.php';

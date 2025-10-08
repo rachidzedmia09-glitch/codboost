@@ -6,6 +6,10 @@
     --klpu-border: rgba(255, 255, 255, 0.2);
 }
 
+body.klpu-modal-open {
+    overflow: hidden;
+}
+
 #klpu-modal[hidden] {
     display: none !important;
 }
@@ -20,6 +24,8 @@
     font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
     letter-spacing: 0.01em;
     color: var(--klpu-text);
+    line-height: 1.6;
+    padding: 16px;
 }
 
 .klpu-modal__overlay {
@@ -27,6 +33,7 @@
     inset: 0;
     background: var(--klpu-background);
     opacity: 0;
+    backdrop-filter: blur(18px);
     transition: opacity 0.3s ease;
 }
 
@@ -41,7 +48,7 @@
     border-radius: 18px;
     box-shadow: 0 24px 48px rgba(8, 8, 18, 0.55);
     max-width: 720px;
-    width: calc(100% - 32px);
+    width: min(100%, 720px);
     overflow: hidden;
     transform: translateY(20px);
     opacity: 0;
@@ -94,9 +101,14 @@
 .klpu-offer__excerpt {
     margin: 0 0 1.25rem;
     color: rgba(255, 255, 255, 0.8);
+    max-width: 46ch;
 }
 
 .klpu-offer__price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.45rem;
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 0.75rem;
@@ -104,7 +116,6 @@
 
 .klpu-offer__price-label {
     color: rgba(255, 255, 255, 0.7);
-    margin-right: 8px;
 }
 
 .klpu-offer__profit {
@@ -120,12 +131,17 @@
 }
 
 .klpu-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
     border-radius: 999px;
     padding: 0.85rem 1.8rem;
     font-size: 1rem;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     border: 1px solid transparent;
+    position: relative;
 }
 
 .klpu-button:focus {
@@ -157,6 +173,21 @@
     border-color: var(--klpu-accent);
 }
 
+.klpu-button--primary.is-busy {
+    pointer-events: none;
+    transform: none;
+}
+
+.klpu-button--primary.is-busy::after {
+    content: '';
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    border: 2px solid rgba(10, 10, 26, 0.3);
+    border-top-color: rgba(10, 10, 26, 0.8);
+    animation: klpu-spin 0.75s linear infinite;
+}
+
 .klpu-modal__close {
     position: absolute;
     top: 16px;
@@ -172,6 +203,25 @@
 .klpu-modal__close:hover,
 .klpu-modal__close:focus-visible {
     transform: scale(1.05);
+}
+
+@keyframes klpu-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .klpu-modal__overlay,
+    .klpu-modal__content,
+    .klpu-button,
+    .klpu-button--primary.is-busy::after {
+        transition: none !important;
+        animation: none !important;
+    }
 }
 
 @media (max-width: 768px) {

@@ -171,6 +171,8 @@ class KLPU_Frontend {
             'regularPrice'    => wc_get_price_to_display( $offer_product, [ 'price' => $offer_product->get_regular_price() ] ),
         ];
 
+        $data = apply_filters( 'klpu_modal_payload', $data, $product, $offer_product );
+
         $this->products[ $product_id ] = $data;
     }
 

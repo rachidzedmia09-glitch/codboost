@@ -24,6 +24,8 @@
         buyNow: globals.buyNow || '',
     };
 
+    const body = document.body;
+
     function getText(key, fallback = '') {
         if (!globals.texts || typeof globals.texts[key] === 'undefined') {
             return fallback;
@@ -152,7 +154,9 @@
             elements.profit.textContent = getText('profitLabel', fallbackProfit);
         }
 
-        document.body.style.overflow = 'hidden';
+        if (body) {
+            body.classList.add('klpu-modal-open');
+        }
         focusModal();
     }
 
@@ -162,11 +166,23 @@
         window.setTimeout(() => {
             modal.hidden = true;
         }, 200);
-        document.body.style.overflow = '';
+        if (body) {
+            body.classList.remove('klpu-modal-open');
+        }
+        if (elements.accept) {
+            elements.accept.classList.remove('is-busy');
+            elements.accept.removeAttribute('aria-busy');
+            elements.accept.disabled = false;
+        }
         if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
             lastFocusedElement.focus();
         }
         currentProduct = null;
+    }
+
+    function normalizeProductId(value) {
+        const id = parseInt(value, 10);
+        return Number.isNaN(id) ? null : id;
     }
 
     function findProductIdFromElement(element) {
@@ -174,31 +190,77 @@
             return null;
         }
 
-        const attr = element.getAttribute('data-klpu-product');
-        if (attr) {
-            return parseInt(attr, 10);
+        const directAttr = element.getAttribute('data-klpu-product') || (element.dataset ? element.dataset.klpuProduct : null);
+        const directId = normalizeProductId(directAttr);
+        if (directId) {
+            return directId;
         }
 
-        const closest = element.closest('[data-klpu-product]');
-        if (closest && closest.getAttribute('data-klpu-product')) {
-            return parseInt(closest.getAttribute('data-klpu-product'), 10);
+        const directProductAttr = element.getAttribute('data-product_id') || (element.dataset ? element.dataset.productId : null);
+        const directProductId = normalizeProductId(directProductAttr);
+        if (directProductId) {
+            return directProductId;
         }
 
-        const form = element.closest('form');
-        if (form) {
-            const input = form.querySelector('input[name="add-to-cart"]');
-            if (input && input.value) {
-                return parseInt(input.value, 10);
+        const contexts = [];
+        const productContainer = element.closest('.product, [data-klpu-product], form');
+        if (productContainer) {
+            contexts.push(productContainer);
+        }
+
+        if (element.closest) {
+            const markerContext = element.closest('.klpu-marker[data-klpu-product]');
+            if (markerContext) {
+                contexts.push(markerContext);
             }
         }
 
-        const marker = document.querySelector('.klpu-marker[data-klpu-product]');
-        if (marker) {
-            return parseInt(marker.getAttribute('data-klpu-product'), 10);
-        }
+        contexts.push(document);
 
-        if (element.dataset && element.dataset.productId) {
-            return parseInt(element.dataset.productId, 10);
+        for (const context of contexts) {
+            if (!context) {
+                continue;
+            }
+
+            if (context !== document) {
+                const contextAttr = context.getAttribute && context.getAttribute('data-klpu-product');
+                const contextId = normalizeProductId(contextAttr);
+                if (contextId) {
+                    return contextId;
+                }
+            }
+
+            const marker = context.querySelector ? context.querySelector('.klpu-marker[data-klpu-product]') : null;
+            if (marker) {
+                const markerId = normalizeProductId(marker.getAttribute('data-klpu-product') || (marker.dataset ? marker.dataset.klpuProduct : null));
+                if (markerId) {
+                    return markerId;
+                }
+            }
+
+            if (context.matches && context.matches('[data-product_id]')) {
+                const contextProductId = normalizeProductId(context.getAttribute('data-product_id'));
+                if (contextProductId) {
+                    return contextProductId;
+                }
+            }
+
+            if (context.dataset && context.dataset.productId) {
+                const datasetId = normalizeProductId(context.dataset.productId);
+                if (datasetId) {
+                    return datasetId;
+                }
+            }
+
+            if (context.querySelector) {
+                const productIdInput = context.querySelector('input[name="product_id"]');
+                const addToCartInput = context.querySelector('input[name="add-to-cart"]');
+                const fallbackId = normalizeProductId(productIdInput && productIdInput.value ? productIdInput.value : null)
+                    || normalizeProductId(addToCartInput && addToCartInput.value ? addToCartInput.value : null);
+                if (fallbackId) {
+                    return fallbackId;
+                }
+            }
         }
 
         return null;
@@ -234,6 +296,12 @@
 
         elements.accept.disabled = true;
         elements.accept.setAttribute('aria-busy', 'true');
+        elements.accept.classList.add('is-busy');
+
+        if (!globals.ajaxUrl) {
+            closeModal();
+            return;
+        }
 
         const formData = new FormData();
         formData.append('action', 'klpu_add_offer');
@@ -265,8 +333,6 @@
             })
             .catch(() => {})
             .finally(() => {
-                elements.accept.disabled = false;
-                elements.accept.removeAttribute('aria-busy');
                 closeModal();
             });
     }

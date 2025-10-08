@@ -30,7 +30,7 @@ $profit_notice = __( 'Inclut une marge Kids-Luxe.', 'kidsluxe-popup-upsell' );
                 <p class="klpu-offer__subtitle" data-klpu-subtitle data-default-text="<?php echo esc_attr( $subtitle ); ?>"><?php echo esc_html( $subtitle ); ?></p>
                 <h3 class="klpu-offer__product" data-klpu-product-title></h3>
                 <p class="klpu-offer__excerpt" data-klpu-excerpt></p>
-                <p class="klpu-offer__price"><span class="klpu-offer__price-label" data-klpu-price-label data-default-text="<?php echo esc_attr( $price ); ?>"><?php echo esc_html( $price ); ?></span> <span data-klpu-price></span></p>
+                <p class="klpu-offer__price" aria-live="polite"><span class="klpu-offer__price-label" data-klpu-price-label data-default-text="<?php echo esc_attr( $price ); ?>"><?php echo esc_html( $price ); ?></span> <span data-klpu-price></span></p>
                 <?php if ( $show_profit ) : ?>
                     <p class="klpu-offer__profit" data-klpu-profit data-default-text="<?php echo esc_attr( $profit_notice ); ?>"><?php echo esc_html( $profit_notice ); ?></p>
                 <?php endif; ?>

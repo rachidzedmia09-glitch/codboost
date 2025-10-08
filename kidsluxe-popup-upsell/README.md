@@ -36,6 +36,7 @@ kidsluxe-popup-upsell/
 - `klpu_should_show_for_product` : autorise/empêche le pop-up sur un produit.
 - `klpu_should_open_on_add_to_cart` : contrôle l’ouverture selon le contexte (`add_to_cart`, `buy_now`).
 - `klpu_offer_title`, `klpu_offer_subtitle`, `klpu_offer_price_label` : modifie les textes affichés.
+- `klpu_modal_payload` : ajuste la charge utile envoyée au script front (image, prix, triggers…).
 
 ## Développement
 
@@ -47,6 +48,16 @@ kidsluxe-popup-upsell/
 ## Tests
 
 Un squelette de tests unitaires peut être ajouté pour valider le calcul de profit (`KLPU_calculate_price_with_profit`). Prévoir un bootstrap WooCommerce lors de l’intégration continue.
+
+## Changelog
+
+### 1.0.1
+- Optimisations UI/UX du pop-up (overlay adouci, meilleur responsive, lecteur d’écran) et état de chargement du CTA.
+- Correction de la recherche de produit en admin avec affichage du produit sélectionné.
+- Meilleure compatibilité des déclencheurs sur les produits variables et boutons personnalisés.
+
+### 1.0.0
+- Version initiale.
 
 ## Licence
 

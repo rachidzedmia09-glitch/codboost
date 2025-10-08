@@ -22,6 +22,7 @@ class KLPU_Admin {
         add_action( 'save_post_product', [ $this, 'save_product_data' ], 10, 2 );
         add_action( 'admin_menu', [ $this, 'register_settings_page' ] );
         add_action( 'admin_init', [ $this, 'register_settings' ] );
+        add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_assets' ] );
     }
 
     public function add_product_data_tab( array $tabs ): array {
@@ -46,6 +47,13 @@ class KLPU_Admin {
         $settings   = KLPU_get_product_settings( $product_id );
         $triggers   = array_map( 'sanitize_text_field', (array) $settings['triggers'] );
 
+        $selected_product      = $settings['offer_product'] ? wc_get_product( $settings['offer_product'] ) : null;
+        $selected_product_name = '';
+
+        if ( $selected_product instanceof WC_Product ) {
+            $selected_product_name = wp_strip_all_tags( $selected_product->get_formatted_name() );
+        }
+
         wp_nonce_field( 'klpu_save_product', 'klpu_meta_nonce' );
         ?>
         <div id="klpu_product_data" class="panel woocommerce_options_panel hidden">
@@ -64,17 +72,39 @@ class KLPU_Admin {
                     [
                         'id'                => '_klpu_offer_product_id',
                         'label'             => __( 'Produit à proposer', 'kidsluxe-popup-upsell' ),
-                        'class'             => 'wc-product-search',
+                        'class'             => 'wc-product-search klpu-product-search',
                         'type'              => 'hidden',
                         'value'             => $settings['offer_product'] ?: '',
-                        'data-placeholder'  => esc_attr__( 'Rechercher un produit…', 'kidsluxe-popup-upsell' ),
-                        'data-action'       => 'woocommerce_json_search_products_and_variations',
+                        'custom_attributes' => [
+                            'data-placeholder' => esc_attr__( 'Rechercher un produit…', 'kidsluxe-popup-upsell' ),
+                            'data-action'      => 'woocommerce_json_search_products_and_variations',
+                            'data-allow_clear' => 'true',
+                            'data-selected'    => $selected_product_name,
+                        ],
                         'desc_tip'          => true,
                         'description'       => __( 'Sélectionnez le produit à proposer dans le pop-up.', 'kidsluxe-popup-upsell' ),
                     ]
                 );
                 ?>
             </div>
+
+            <?php if ( $selected_product instanceof WC_Product ) :
+                $preview_price = wc_price( wc_get_price_to_display( $selected_product ) );
+                $preview_image = $selected_product->get_image( 'thumbnail' );
+                if ( ! $preview_image ) {
+                    $preview_image = sprintf( '<img src="%s" alt="" />', esc_url( wc_placeholder_img_src( 'thumbnail' ) ) );
+                }
+                ?>
+                <div class="klpu-offer-preview">
+                    <div class="klpu-offer-preview__media">
+                        <?php echo wp_kses_post( $preview_image ); ?>
+                    </div>
+                    <div class="klpu-offer-preview__details">
+                        <strong class="klpu-offer-preview__title"><?php echo esc_html( $selected_product->get_name() ); ?></strong>
+                        <span class="klpu-offer-preview__price"><?php echo wp_kses_post( $preview_price ); ?></span>
+                    </div>
+                </div>
+            <?php endif; ?>
 
             <div class="options_group">
                 <p class="form-field">
@@ -293,5 +323,21 @@ class KLPU_Admin {
             <?php esc_html_e( 'Afficher l’information « inclut une marge Kids-Luxe ».', 'kidsluxe-popup-upsell' ); ?>
         </label>
         <?php
+    }
+
+    public function enqueue_admin_assets(): void {
+        $screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+
+        if ( ! $screen ) {
+            return;
+        }
+
+        $is_product_screen = 'product' === $screen->id || ( property_exists( $screen, 'post_type' ) && 'product' === $screen->post_type );
+
+        if ( ! $is_product_screen ) {
+            return;
+        }
+
+        wp_enqueue_style( 'klpu-admin', KLPU_PLUGIN_URL . 'assets/css/admin.css', [], KLPU_VERSION );
     }
 }
