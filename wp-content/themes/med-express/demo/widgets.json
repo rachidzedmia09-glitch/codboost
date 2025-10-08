@@ -1,0 +1,35 @@
+{
+  "sidebar_data": {
+    "footer-1": [
+      "text-1"
+    ],
+    "footer-2": [
+      "text-2"
+    ],
+    "footer-3": [
+      "text-3"
+    ]
+  },
+  "widget_data": {
+    "text": {
+      "text-1": {
+        "title": "Customer Support",
+        "text": "<strong>Hotline:</strong> +213 770 123 456<br/><strong>Email:</strong> support@medexpress.dz",
+        "filter": false,
+        "visual": true
+      },
+      "text-2": {
+        "title": "Head Office",
+        "text": "12 Rue Didouche Mourad<br/>Algiers, Algeria",
+        "filter": false,
+        "visual": true
+      },
+      "text-3": {
+        "title": "Working Hours",
+        "text": "Sunday – Thursday: 8:00 – 18:00<br/>Saturday: 9:00 – 13:00",
+        "filter": false,
+        "visual": true
+      }
+    }
+  }
+}

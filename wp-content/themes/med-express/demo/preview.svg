@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Med Express Delivery Demo Preview</title>
+  <desc id="desc">Preview graphic for the Med Express Delivery Elementor demo import.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111827" />
+      <stop offset="100%" stop-color="#1f2937" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)" />
+  <g fill="none" stroke="#22d3ee" stroke-width="3" opacity="0.35">
+    <circle cx="200" cy="150" r="120" />
+    <circle cx="1000" cy="540" r="160" />
+    <path d="M80 520 C280 380 480 430 680 300 C860 190 1040 210 1160 120" />
+  </g>
+  <g fill="#f9fafb" font-family="'Poppins', 'Helvetica Neue', Arial, sans-serif">
+    <text x="100" y="220" font-size="80" font-weight="600">Med Express Delivery</text>
+    <text x="100" y="300" font-size="42" font-weight="400">Elementor Demo Import</text>
+    <text x="100" y="380" font-size="26" font-weight="300">Courier &amp; logistics WordPress theme for Algeria</text>
+  </g>
+  <g transform="translate(880 180)">
+    <rect x="0" y="0" width="260" height="310" rx="16" ry="16" fill="#111827" stroke="#22d3ee" stroke-width="4" />
+    <text x="32" y="70" font-size="32" font-weight="600" fill="#22d3ee">1H Delivery</text>
+    <text x="32" y="120" font-size="18" fill="#f9fafb">Same-day dispatch across</text>
+    <text x="32" y="150" font-size="18" fill="#f9fafb">Algiers, Oran, Annaba,</text>
+    <text x="32" y="180" font-size="18" fill="#f9fafb">Constantine &amp; more.</text>
+    <text x="32" y="240" font-size="20" fill="#f9fafb">Schedule pickups,</text>
+    <text x="32" y="270" font-size="20" fill="#f9fafb">track parcels, delight</text>
+    <text x="32" y="300" font-size="20" fill="#f9fafb">customers.</text>
+  </g>
+</svg>

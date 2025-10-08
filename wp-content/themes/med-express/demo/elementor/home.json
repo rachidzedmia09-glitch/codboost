@@ -1,0 +1,286 @@
+{
+  "version": "0.4",
+  "title": "Home",
+  "type": "page",
+  "assign_to": {
+    "post_title": "Home",
+    "post_type": "page"
+  },
+  "page_settings": {
+    "page_title": "Home",
+    "hide_title": "yes"
+  },
+  "content": [
+    {
+      "id": "hero-section",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "content_width": "full_width",
+        "gap": "extended",
+        "padding": {
+          "unit": "px",
+          "top": "140",
+          "right": "40",
+          "bottom": "120",
+          "left": "40",
+          "isLinked": false
+        },
+        "background_background": "gradient",
+        "background_color": "#0f172a",
+        "background_color_b": "#1f2937",
+        "background_gradient_type": "linear",
+        "background_gradient_angle": 135,
+        "shape_divider_bottom": "tilt"
+      },
+      "elements": [
+        {
+          "id": "hero-column-left",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 50,
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "30",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": false
+            }
+          },
+          "elements": [
+            {
+              "id": "hero-badge",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Same-day Delivery across Algeria",
+                "header_size": "h6",
+                "typography_typography": "custom",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 16
+                },
+                "typography_font_weight": "600",
+                "text_color": "#22d3ee"
+              }
+            },
+            {
+              "id": "hero-heading",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Logistics that keep your marketplace moving",
+                "header_size": "h1",
+                "typography_typography": "custom",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 54
+                },
+                "typography_font_weight": "700",
+                "text_color": "#f8fafc"
+              }
+            },
+            {
+              "id": "hero-description",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p>Med Express Delivery orchestrates pickups, cross-city routing, cash-on-delivery, and real-time updates so your customers receive parcels in hours, not days.</p>",
+                "text_color": "#e2e8f0",
+                "typography_typography": "custom",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 18
+                },
+                "typography_line_height": {
+                  "unit": "em",
+                  "size": 1.7
+                }
+              }
+            },
+            {
+              "id": "hero-buttons",
+              "elType": "widget",
+              "widgetType": "button",
+              "settings": {
+                "text": "Book a Pickup",
+                "link": {
+                  "url": "https://wa.me/213770123456",
+                  "is_external": "true",
+                  "nofollow": "true"
+                },
+                "size": "lg",
+                "button_type": "success",
+                "background_color": "#22d3ee",
+                "color": "#0f172a",
+                "hover_background_color": "#0ea5e9",
+                "hover_color": "#0f172a"
+              }
+            },
+            {
+              "id": "hero-secondary-button",
+              "elType": "widget",
+              "widgetType": "button",
+              "settings": {
+                "text": "Download Service Deck",
+                "link": {
+                  "url": "#services"
+                },
+                "size": "md",
+                "button_type": "info",
+                "background_color": "rgba(15,23,42,0)",
+                "color": "#f8fafc",
+                "hover_background_color": "rgba(255,255,255,0.1)",
+                "hover_color": "#22d3ee",
+                "border_border": "solid",
+                "border_width": {
+                  "unit": "px",
+                  "top": "2",
+                  "right": "2",
+                  "bottom": "2",
+                  "left": "2",
+                  "isLinked": true
+                },
+                "border_color": "rgba(248,250,252,0.4)",
+                "margin": {
+                  "unit": "px",
+                  "top": "16",
+                  "right": "0",
+                  "bottom": "0",
+                  "left": "16",
+                  "isLinked": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "hero-column-right",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 50,
+            "vertical_align": "middle"
+          },
+          "elements": [
+            {
+              "id": "hero-image",
+              "elType": "widget",
+              "widgetType": "image",
+              "settings": {
+                "image": {
+                  "url": "https://via.placeholder.com/540x520/f8fafc/0f172a?text=Fleet+Tracking"
+                },
+                "alignment": "center",
+                "border_radius": {
+                  "unit": "px",
+                  "top": "24",
+                  "right": "24",
+                  "bottom": "24",
+                  "left": "24",
+                  "isLinked": true
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "metrics-section",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "background_color": "#f8fafc",
+        "padding": {
+          "unit": "px",
+          "top": "80",
+          "right": "20",
+          "bottom": "80",
+          "left": "20",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "metrics-column",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "metrics-heading",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Numbers that build trust",
+                "header_size": "h2",
+                "align": "center",
+                "typography_typography": "custom",
+                "typography_font_weight": "600",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 42
+                }
+              }
+            },
+            {
+              "id": "metrics-text",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"text-align:center;\">Serving 1,200+ Algerian merchants with 99.3% on-time deliveries and 2-hour urban drop-offs.</p>"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "services-section",
+      "elType": "section",
+      "settings": {
+        "padding": {
+          "unit": "px",
+          "top": "100",
+          "right": "20",
+          "bottom": "100",
+          "left": "20",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "services-heading-column",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "services-heading",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "End-to-end delivery coverage",
+                "header_size": "h2",
+                "align": "center"
+              }
+            },
+            {
+              "id": "services-description",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"text-align:center;\">Pickups, warehousing, last-mile, and COD reconciliation tailored for Algerian marketplaces.</p>"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "version": "0.4",
+  "title": "Contact",
+  "type": "page",
+  "assign_to": {
+    "post_title": "Contact",
+    "post_type": "page"
+  },
+  "page_settings": {
+    "page_title": "Contact",
+    "hide_title": "yes"
+  },
+  "content": [
+    {
+      "id": "contact-section",
+      "elType": "section",
+      "settings": {
+        "content_width": "boxed",
+        "gap": "wide",
+        "padding": {
+          "unit": "px",
+          "top": "120",
+          "right": "20",
+          "bottom": "120",
+          "left": "20",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "contact-column-left",
+          "elType": "column",
+          "settings": {
+            "_column_size": 50
+          },
+          "elements": [
+            {
+              "id": "contact-heading",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Let’s plan your delivery expansion",
+                "header_size": "h2"
+              }
+            },
+            {
+              "id": "contact-text",
+              "elType": "widget",
+              "widgetType": "icon-list",
+              "settings": {
+                "icon_list": [
+                  {
+                    "text": "+213 770 123 456",
+                    "icon": "fas fa-phone-alt"
+                  },
+                  {
+                    "text": "support@medexpress.dz",
+                    "icon": "fas fa-envelope"
+                  },
+                  {
+                    "text": "12 Rue Didouche Mourad, Algiers",
+                    "icon": "fas fa-map-marker-alt"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": "contact-column-right",
+          "elType": "column",
+          "settings": {
+            "_column_size": 50
+          },
+          "elements": [
+            {
+              "id": "contact-form",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": {
+                "shortcode": "[contact-form-7 id=\"new\" title=\"Logistics Contact\"]"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

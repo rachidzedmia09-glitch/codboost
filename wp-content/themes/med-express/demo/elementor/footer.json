@@ -1,0 +1,102 @@
+{
+  "version": "0.4",
+  "title": "Med Express Footer",
+  "type": "section",
+  "location": "footer",
+  "page_settings": [],
+  "content": [
+    {
+      "id": "footer-section",
+      "elType": "section",
+      "settings": {
+        "content_width": "boxed",
+        "gap": "extended",
+        "background_background": "classic",
+        "background_color": "#0f172a",
+        "padding": {
+          "unit": "px",
+          "top": "80",
+          "right": "20",
+          "bottom": "40",
+          "left": "20",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "footer-top",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "footer-logo",
+              "elType": "widget",
+              "widgetType": "image",
+              "settings": {
+                "image": {
+                  "url": "https://via.placeholder.com/210x64/0f172a/f8fafc?text=Med+Express"
+                },
+                "align": "left"
+              }
+            },
+            {
+              "id": "footer-text",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"color:#e2e8f0;\">Trusted by Algeria's fastest growing retailers for instant pickup, transparent tracking, and delightful doorstep experiences.</p>"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "footer-bottom",
+      "elType": "section",
+      "settings": {
+        "content_width": "boxed",
+        "gap": "no",
+        "padding": {
+          "unit": "px",
+          "top": "20",
+          "right": "0",
+          "bottom": "20",
+          "left": "0",
+          "isLinked": false
+        },
+        "background_color": "#0b1220"
+      },
+      "elements": [
+        {
+          "id": "footer-bottom-column",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100,
+            "vertical_align": "middle"
+          },
+          "elements": [
+            {
+              "id": "footer-menu",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": {
+                "shortcode": "[medexpress_menu location=\"footer\" class=\"medexpress-footer-menu\"]"
+              }
+            },
+            {
+              "id": "footer-copyright",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"text-align:center;color:#64748b;\">&copy; 2024 Med Express Delivery. All rights reserved.</p>"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
