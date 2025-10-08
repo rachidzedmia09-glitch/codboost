@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DGTools Project Keystone Launch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            color-scheme: dark;
+            --page-bg: #050b18;
+            --panel-bg: rgba(12, 18, 38, 0.72);
+            --panel-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #f7f9ff;
+            --text-secondary: rgba(244, 247, 255, 0.76);
+            --accent-a: #5c7cfa;
+            --accent-b: #05d1ff;
+            --accent-c: #f6ad55;
+            --accent-success: #3ddc97;
+            --accent-danger: #ff5f7e;
+            --radius-large: 28px;
+            --radius-medium: 20px;
+            --shadow-xl: 0 40px 80px -32px rgba(0, 0, 0, 0.65);
+            --blur-large: blur(28px);
+            --transition-base: cubic-bezier(0.4, 0.12, 0, 1);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at 20% -10%, rgba(92, 124, 250, 0.25), transparent 55%),
+                        radial-gradient(circle at 90% 0%, rgba(5, 209, 255, 0.2), transparent 60%),
+                        radial-gradient(circle at 10% 110%, rgba(246, 173, 85, 0.18), transparent 65%),
+                        var(--page-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: url('data:image/svg+xml,%3Csvg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"%3E%3Cpath d="M0 200h400M200 0v400"/%3E%3Ccircle cx="200" cy="200" r="90"/%3E%3Ccircle cx="200" cy="200" r="160"/%3E%3C/g%3E%3C/svg%3E');
+            opacity: 0.4;
+            pointer-events: none;
+            transform: scale(1.1);
+            animation: bg-pan 32s linear infinite;
+        }
+
+        @keyframes bg-pan {
+            0% { transform: scale(1.1) translate3d(-20px, -20px, 0); }
+            50% { transform: scale(1.12) translate3d(20px, 10px, 0); }
+            100% { transform: scale(1.1) translate3d(-20px, -20px, 0); }
+        }
+
+        .page-wrap {
+            position: relative;
+            width: min(1200px, 92vw);
+            margin: 0 auto;
+            padding: min(14vh, 8rem) 0 12rem;
+        }
+
+        header.hero {
+            position: relative;
+            display: grid;
+            gap: clamp(2rem, 5vw, 4.5rem);
+            padding: clamp(3rem, 6vw, 5rem);
+            border-radius: var(--radius-large);
+            background: linear-gradient(135deg, rgba(8, 16, 32, 0.92), rgba(8, 8, 24, 0.88));
+            border: 1px solid var(--panel-border);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        header.hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 78% 20%, rgba(92, 124, 250, 0.16), transparent 55%),
+                        radial-gradient(circle at 15% 95%, rgba(5, 209, 255, 0.18), transparent 60%);
+            mix-blend-mode: screen;
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            align-items: center;
+            gap: clamp(2rem, 4vw, 4rem);
+        }
+
+        .hero-copy h1 {
+            font-size: clamp(2.75rem, 6vw, 4.25rem);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: clamp(1rem, 2.5vw, 1.75rem);
+            line-height: 1.04;
+            position: relative;
+        }
+
+        .hero-copy h1 span {
+            background: linear-gradient(135deg, var(--accent-a), var(--accent-b));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-copy p {
+            font-size: clamp(1.05rem, 2vw, 1.25rem);
+            color: var(--text-secondary);
+            max-width: 38ch;
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 2.25rem 0 3.25rem;
+        }
+
+        .hero-badges span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.65rem 1.2rem;
+            border-radius: 999px;
+            background: rgba(92, 124, 250, 0.14);
+            border: 1px solid rgba(92, 124, 250, 0.35);
+            font-size: 0.9rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        }
+
+        .hero-visual {
+            position: relative;
+            aspect-ratio: 4 / 3;
+            border-radius: var(--radius-large);
+            overflow: hidden;
+            background: radial-gradient(circle at 30% 20%, rgba(92, 124, 250, 0.25), transparent 65%),
+                        rgba(6, 12, 24, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .hero-visual img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 35px 45px rgba(0, 0, 0, 0.65));
+            animation: hero-card 12s var(--transition-base) infinite;
+        }
+
+        @keyframes hero-card {
+            0%, 100% { transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1); }
+            25% { transform: translate3d(-12px, -8px, 0) rotateX(6deg) rotateY(-7deg) scale(1.02); }
+            50% { transform: translate3d(0, -16px, 0) rotateX(0deg) rotateY(0deg) scale(1.04); }
+            75% { transform: translate3d(14px, -8px, 0) rotateX(-6deg) rotateY(7deg) scale(1.02); }
+        }
+
+        .floating-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(0);
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.45), rgba(92, 124, 250, 0.08));
+            pointer-events: none;
+            mix-blend-mode: screen;
+            animation: orb-float 18s ease-in-out infinite;
+        }
+
+        .floating-orb:nth-of-type(1) { width: 220px; height: 220px; top: -60px; right: -40px; animation-delay: -2s; }
+        .floating-orb:nth-of-type(2) { width: 160px; height: 160px; bottom: 10%; left: -60px; animation-delay: -5s; }
+        .floating-orb:nth-of-type(3) { width: 140px; height: 140px; top: 35%; right: 15%; animation-delay: -9s; }
+
+        @keyframes orb-float {
+            0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.55; }
+            30% { transform: translate3d(12px, -24px, 0) scale(1.08); opacity: 0.82; }
+            60% { transform: translate3d(-18px, 10px, 0) scale(0.96); opacity: 0.6; }
+        }
+
+        .section {
+            margin-top: clamp(4.5rem, 7vw, 7rem);
+        }
+
+        .section h2 {
+            font-size: clamp(2rem, 5vw, 2.9rem);
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.04em;
+        }
+
+        .section p.lead {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 52ch;
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: var(--radius-medium);
+            padding: clamp(2rem, 3vw, 2.75rem);
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel::before {
+            content: '';
+            position: absolute;
+            inset: -40% -20% 40% 60%;
+            background: radial-gradient(circle at center, rgba(92, 124, 250, 0.18), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.8s var(--transition-base);
+        }
+
+        .panel:hover::before {
+            opacity: 1;
+        }
+
+        .grid-2 {
+            display: grid;
+            gap: clamp(1.75rem, 4vw, 3rem);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .icon-ring {
+            width: 56px;
+            height: 56px;
+            display: inline-grid;
+            place-items: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(92, 124, 250, 0.32), rgba(5, 209, 255, 0.18));
+            border: 1px solid rgba(92, 124, 250, 0.36);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 18px 35px -22px rgba(5, 209, 255, 0.6);
+            margin-bottom: 1.4rem;
+            position: relative;
+        }
+
+        .icon-ring svg {
+            width: 28px;
+            height: 28px;
+            fill: url(#icon-gradient);
+        }
+
+        ul.tick-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 1rem;
+        }
+
+        ul.tick-list li {
+            display: grid;
+            grid-template-columns: 28px 1fr;
+            gap: 0.85rem;
+            align-items: flex-start;
+            color: var(--text-secondary);
+        }
+
+        ul.tick-list li span {
+            display: inline-flex;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent-a), var(--accent-b));
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #050910;
+            transform: translate3d(0, 0, 0);
+            box-shadow: 0 12px 25px -10px rgba(92, 124, 250, 0.65);
+        }
+
+        .persona-packs {
+            position: relative;
+        }
+
+        .persona-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: clamp(1.5rem, 3vw, 2.4rem);
+            margin-top: clamp(2rem, 3vw, 3rem);
+        }
+
+        .persona-card {
+            position: relative;
+            padding: 2.2rem;
+            border-radius: var(--radius-medium);
+            background: linear-gradient(160deg, rgba(9, 14, 28, 0.92), rgba(12, 18, 38, 0.78));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+            transition: transform 0.8s var(--transition-base), border-color 0.6s ease, background 0.6s ease;
+        }
+
+        .persona-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 20%, rgba(92, 124, 250, 0.28), transparent 65%);
+            opacity: 0;
+            transition: opacity 0.7s ease;
+        }
+
+        .persona-card:hover {
+            transform: translateY(-12px) scale(1.01);
+            border-color: rgba(92, 124, 250, 0.6);
+        }
+
+        .persona-card:hover::after {
+            opacity: 1;
+        }
+
+        .persona-card h3 {
+            margin-bottom: 0.85rem;
+            font-size: 1.5rem;
+        }
+
+        .persona-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .persona-services {
+            margin: 1.5rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .persona-services span {
+            padding: 0.45rem 0.9rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: background 0.4s ease, transform 0.4s ease;
+        }
+
+        .persona-card:hover .persona-services span {
+            background: rgba(92, 124, 250, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .persona-tag {
+            position: absolute;
+            inset: auto 1.5rem 1.5rem auto;
+            padding: 0.45rem 0.95rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: rgba(246, 173, 85, 0.18);
+            border: 1px solid rgba(246, 173, 85, 0.6);
+            color: #fbd6a4;
+        }
+
+        .timeline {
+            position: relative;
+            margin-top: clamp(2.2rem, 4vw, 3.5rem);
+            padding-left: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 16px;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(92, 124, 250, 0.8), rgba(5, 209, 255, 0));
+        }
+
+        .timeline-step {
+            position: relative;
+            padding: 1.6rem 0 1.6rem 2.8rem;
+        }
+
+        .timeline-step::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 1.8rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-a), var(--accent-b));
+            box-shadow: 0 0 0 6px rgba(92, 124, 250, 0.18);
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: clamp(1.5rem, 3vw, 2.5rem);
+            margin-top: clamp(2rem, 3vw, 3rem);
+        }
+
+        .stat-card {
+            padding: 2rem 2.4rem;
+            border-radius: var(--radius-medium);
+            background: linear-gradient(160deg, rgba(5, 209, 255, 0.08), rgba(92, 124, 250, 0.1));
+            border: 1px solid rgba(92, 124, 250, 0.35);
+            box-shadow: 0 28px 48px -24px rgba(5, 209, 255, 0.4);
+            text-align: left;
+        }
+
+        .stat-card strong {
+            font-size: clamp(2.25rem, 5vw, 3.1rem);
+            display: block;
+            margin-bottom: 0.6rem;
+            letter-spacing: 0.04em;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: clamp(1.5rem, 3vw, 2.5rem);
+            margin-top: 2.5rem;
+        }
+
+        .team-card {
+            position: relative;
+            padding: 2.4rem;
+            border-radius: var(--radius-medium);
+            background: linear-gradient(160deg, rgba(9, 14, 28, 0.95), rgba(12, 20, 38, 0.78));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+        }
+
+        .team-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 18% 20%, rgba(246, 173, 85, 0.22), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .team-card:hover::after {
+            opacity: 1;
+        }
+
+        .team-card h3 {
+            margin-bottom: 0.4rem;
+        }
+
+        .team-card span {
+            display: inline-block;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            color: rgba(246, 173, 85, 0.8);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .next-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: clamp(1.5rem, 3vw, 2.5rem);
+            margin-top: 2.5rem;
+        }
+
+        .next-step-card {
+            padding: 1.75rem 2rem;
+            border-radius: var(--radius-medium);
+            background: linear-gradient(135deg, rgba(92, 124, 250, 0.16), rgba(5, 209, 255, 0.1));
+            border: 1px solid rgba(92, 124, 250, 0.3);
+            box-shadow: 0 24px 40px -26px rgba(92, 124, 250, 0.5);
+        }
+
+        footer {
+            margin-top: 5rem;
+            padding: 2.5rem 0 4rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.54);
+            font-size: 0.95rem;
+        }
+
+        .animate-item {
+            opacity: 0;
+            transform: translate3d(0, 35px, 0);
+            transition: opacity 0.9s var(--transition-base), transform 0.9s var(--transition-base);
+        }
+
+        .animate-item.is-visible {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .animate-stagger > * {
+            opacity: 0;
+            transform: translate3d(0, 25px, 0);
+        }
+
+        .animate-stagger.is-visible > * {
+            animation: fade-up 0.9s var(--transition-base) forwards;
+        }
+
+        .animate-stagger.is-visible > *:nth-child(2) { animation-delay: 0.12s; }
+        .animate-stagger.is-visible > *:nth-child(3) { animation-delay: 0.24s; }
+        .animate-stagger.is-visible > *:nth-child(4) { animation-delay: 0.36s; }
+        .animate-stagger.is-visible > *:nth-child(5) { animation-delay: 0.48s; }
+        .animate-stagger.is-visible > *:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fade-up {
+            0% { opacity: 0; transform: translate3d(0, 25px, 0); }
+            100% { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+
+        @media (max-width: 640px) {
+            header.hero { padding: clamp(2.5rem, 8vw, 3rem); }
+            .hero-badges { flex-direction: column; align-items: flex-start; }
+            .hero-badges span { width: 100%; justify-content: center; }
+            .timeline::before { left: 10px; }
+            .timeline-step { padding-left: 2.2rem; }
+            .timeline-step::before { left: -11px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrap">
+        <svg width="0" height="0" class="visually-hidden" aria-hidden="true">
+            <defs>
+                <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#5c7cfa" />
+                    <stop offset="100%" stop-color="#05d1ff" />
+                </linearGradient>
+            </defs>
+        </svg>
+
+        <header class="hero animate-item" data-animate>
+            <div class="floating-orb"></div>
+            <div class="floating-orb"></div>
+            <div class="floating-orb"></div>
+            <div class="hero-grid">
+                <div class="hero-copy">
+                    <div class="hero-badges">
+                        <span>Project Keystone</span>
+                        <span>DGTools Market Launch</span>
+                    </div>
+                    <h1>Unlock Algeria's <span>Digital Frontier</span></h1>
+                    <p>
+                        DGTools is the nation's premium gateway to the world's most desired digital services. We deliver trust, simplicity, and unstoppable access—one golden card at a time.
+                    </p>
+                    <div class="hero-badges">
+                        <span>Cash on Delivery Nationwide</span>
+                        <span>All-in-One Subscription Model</span>
+                        <span>58-Wilaya Coverage</span>
+                    </div>
+                </div>
+                <div class="hero-visual" data-tilt>
+                    <img src="https://codboost.pro/wp-content/uploads/2025/10/Untitled-design-2025-09-27T062629.647-1.png" alt="DGTools Golden Card" />
+                    <svg class="hero-gridlines" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="position:absolute;inset:0;opacity:0.22">
+                        <path d="M0 300h600M300 0v600" stroke="rgba(255,255,255,0.25)" stroke-width="0.6" />
+                        <circle cx="300" cy="300" r="260" stroke="rgba(92,124,250,0.35)" stroke-width="0.7" />
+                        <circle cx="300" cy="300" r="180" stroke="rgba(92,124,250,0.25)" stroke-width="0.7" stroke-dasharray="12 10" />
+                    </svg>
+                </div>
+            </div>
+        </header>
+
+        <section class="section animate-item" data-animate>
+            <div class="panel">
+                <div class="icon-ring">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 4.89v8.22L12 21l-9-4.89V7.89L12 3zm0 2.18L5 9.01v5.98l7 3.83 7-3.83V9.01L12 5.18zM11 9h2v5h-2V9zm0 6h2v2h-2v-2z"/></svg>
+                </div>
+                <h2>Our Mission</h2>
+                <p class="lead">
+                    Become Algeria's most trusted bridge to premium global digital services—removing friction with a single, all-inclusive DGTools subscription that arrives right at your door.
+                </p>
+                <div class="grid-2 animate-stagger" data-animate>
+                    <div>
+                        <h3>We Deliver</h3>
+                        <ul class="tick-list">
+                            <li><span>1</span><div>Accessible subscriptions to world-class platforms like Netflix, Canva Pro, ChatGPT, and more.</div></li>
+                            <li><span>2</span><div>Cash-on-delivery trust for every one of Algeria's 58 wilayas.</div></li>
+                            <li><span>3</span><div>Effortless onboarding with a premium unboxing experience.</div></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>We Stand For</h3>
+                        <ul class="tick-list">
+                            <li><span>★</span><div>Radical simplicity with a single golden card unlocking every service.</div></li>
+                            <li><span>★</span><div>Community-first growth powered by influencers, creators, and students.</div></li>
+                            <li><span>★</span><div>Insight-driven iteration with real-time data and feedback loops.</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section animate-item" data-animate>
+            <div class="grid-2">
+                <div class="panel">
+                    <div class="icon-ring">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 019 9 8.85 8.85 0 01-1.24 4.56l2.35 2.35-1.41 1.41-2.35-2.35A8.85 8.85 0 0112 21a9 9 0 110-18zm0 2a7 7 0 100 14 7 7 0 000-14zm1 3v4h3v2h-5V8h2z"/></svg>
+                    </div>
+                    <h2>The Problem</h2>
+                    <p class="lead">Algeria's digital explorers face four relentless barriers.</p>
+                    <ul class="tick-list">
+                        <li><span>⧗</span><div><strong>Payment Friction</strong>: Low access and confidence in international cards.</div></li>
+                        <li><span>⧗</span><div><strong>Subscription Chaos</strong>: Multiple logins, billing cycles, and scattered support.</div></li>
+                        <li><span>⧗</span><div><strong>Onboarding Complexity</strong>: Signup flows and language barriers slow adoption.</div></li>
+                        <li><span>⧗</span><div><strong>Trust Deficit</strong>: Paying before receiving digital goods feels risky.</div></li>
+                    </ul>
+                </div>
+                <div class="panel">
+                    <div class="icon-ring">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 2l1 .003L12 4h8v2h-1l-1.8 12.6A3 3 0 0114.24 21H9.76a3 3 0 01-2.96-2.4L5 6H4V4h8l-.001-1.997L11 2zm1 6a3 3 0 100 6 3 3 0 000-6zm0 2a1 1 0 110 2 1 1 0 010-2z"/></svg>
+                    </div>
+                    <h2>Our Solution</h2>
+                    <p class="lead">DGTools eliminates the pain points with a full-stack launch blueprint.</p>
+                    <ul class="tick-list">
+                        <li><span>∞</span><div><strong>One Card, Infinite Value</strong>: All premium digital services united.</div></li>
+                        <li><span>∞</span><div><strong>Cash-on-Delivery Trust</strong>: Physical cards, golden experience.</div></li>
+                        <li><span>∞</span><div><strong>Hyper-Local Reach</strong>: 58-wilaya logistics and community ambassadors.</div></li>
+                        <li><span>∞</span><div><strong>Simplified Journey</strong>: Order, receive, scan, enjoy.</div></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section persona-packs" data-animate>
+            <div class="panel animate-item">
+                <div class="icon-ring">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14l2 4-2 4h-4.18a3 3 0 01-5.64 0H5L3 7l2-4zm1.62 10.5h2.26A4.99 4.99 0 0012 16c1.41 0 2.68-.58 3.62-1.5h2.26L21 19l-2 4H5l-2-4 3.62-5.5z"/></svg>
+                </div>
+                <h2>Persona Packs Launch Strategy</h2>
+                <p class="lead">A phased, persona-driven rollout that converts fans into evangelists.</p>
+                <div class="persona-grid animate-stagger" data-animate>
+                    <article class="persona-card">
+                        <h3>The Creator &amp; Student Pack</h3>
+                        <p>Powering Algeria's makers with the ultimate productivity arsenal.</p>
+                        <div class="persona-services">
+                            <span>ChatGPT Plus</span>
+                            <span>Canva Pro</span>
+                            <span>Notion AI</span>
+                            <span>Coursera Boost</span>
+                            <span>Grammarly Premium</span>
+                        </div>
+                        <ul class="tick-list">
+                            <li><span>→</span><div>Target: Students, designers, marketers, and ambitious hustlers.</div></li>
+                            <li><span>→</span><div>Impact: Fast word-of-mouth inside campuses &amp; creative hubs.</div></li>
+                            <li><span>→</span><div>Golden Key: First 50 get limited-edition cards + 10% renewal bonus.</div></li>
+                        </ul>
+                        <span class="persona-tag">Phase 1</span>
+                    </article>
+                    <article class="persona-card">
+                        <h3>The Binge-Watcher Pack</h3>
+                        <p>Curated entertainment for families and fandom communities.</p>
+                        <div class="persona-services">
+                            <span>Netflix</span>
+                            <span>Disney+</span>
+                            <span>Crunchyroll</span>
+                            <span>Shahid VIP</span>
+                        </div>
+                        <ul class="tick-list">
+                            <li><span>→</span><div>Target: Mass-market entertainment lovers.</div></li>
+                            <li><span>→</span><div>Momentum: Viral watch-party experiences and shareable content.</div></li>
+                            <li><span>→</span><div>Bundle Perk: Family sharing options &amp; rotating exclusives.</div></li>
+                        </ul>
+                        <span class="persona-tag">Phase 2</span>
+                    </article>
+                    <article class="persona-card">
+                        <h3>The Gamer Pack</h3>
+                        <p>Fuel for Algeria's competitive and casual gamers.</p>
+                        <div class="persona-services">
+                            <span>Xbox Game Pass</span>
+                            <span>PlayStation Plus</span>
+                            <span>Discord Nitro</span>
+                            <span>EA Play</span>
+                        </div>
+                        <ul class="tick-list">
+                            <li><span>→</span><div>Target: Gaming communities, esports clubs, streamers.</div></li>
+                            <li><span>→</span><div>Activation: Tournaments, Discord communities, referral boosts.</div></li>
+                            <li><span>→</span><div>Bonus Drops: Limited-time loot crates + exclusive skins.</div></li>
+                        </ul>
+                        <span class="persona-tag">Phase 3</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" data-animate>
+            <div class="panel animate-item">
+                <div class="icon-ring">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 016.32 17.74l2.13 2.13-1.41 1.41-2.13-2.13A10 10 0 1112 2zm0 2a8 8 0 100 16 8 8 0 000-16zm-.71 4.71L15 12l-3.71 3.29-1.4-1.48L11.17 13H7v-2h4.17l-1.28-1.81 1.4-1.48z"/></svg>
+                </div>
+                <h2>The Golden Customer Journey</h2>
+                <p class="lead">An unforgettable experience from discovery to delight.</p>
+                <div class="timeline">
+                    <div class="timeline-step animate-item" data-animate>
+                        <h3>1. Discovery &amp; Desire</h3>
+                        <p>Persona-focused ads ignite aspiration with daily social storytelling and AI-powered conversations.</p>
+                    </div>
+                    <div class="timeline-step animate-item" data-animate>
+                        <h3>2. Order &amp; Assurance</h3>
+                        <p>Customers choose their persona pack online, book COD delivery, and receive instant confirmation.</p>
+                    </div>
+                    <div class="timeline-step animate-item" data-animate>
+                        <h3>3. Delivery &amp; Unboxing</h3>
+                        <p>Signature “Digital Treasure Chest” packaging, sealed with the limited Golden Key experience.</p>
+                    </div>
+                    <div class="timeline-step animate-item" data-animate>
+                        <h3>4. Activation &amp; Loyalty</h3>
+                        <p>Scan, unlock services, and receive renewal bonuses plus community perks.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" data-animate>
+            <div class="panel animate-item">
+                <div class="icon-ring">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 018.95 8.1l1.96.65-2 5.33-5.33-2 1.3-1.3A5 5 0 007 12.5a5 5 0 009-3.5h2a7 7 0 11-7-7zm-1 13.93a7 7 0 004.3-2.03l1.42 1.42A9 9 0 013 12h2a7 7 0 006 4.93z"/></svg>
+                </div>
+                <h2>Team Alpha: Roles &amp; Firepower</h2>
+                <p class="lead">Each leader owns a decisive stream of the launch campaign.</p>
+                <div class="team-grid animate-stagger" data-animate>
+                    <article class="team-card">
+                        <h3>Sidali</h3>
+                        <span>Product &amp; Strategy</span>
+                        <ul class="tick-list">
+                            <li><span>✶</span><div>Finalize service line-up, pricing, and margins for Persona Packs.</div></li>
+                            <li><span>✶</span><div>Conduct market research for entertainment and gamer expansions.</div></li>
+                            <li><span>✶</span><div>Manage partner deals, monitor sales data, iterate fast.</div></li>
+                        </ul>
+                    </article>
+                    <article class="team-card">
+                        <h3>Chakib &amp; Tahar</h3>
+                        <span>Visual Content Wizards</span>
+                        <ul class="tick-list">
+                            <li><span>✶</span><div>Craft the Creator Pack visual universe &amp; premium mockups.</div></li>
+                            <li><span>✶</span><div>Produce AI-assisted visuals &amp; cinematic unboxing clips.</div></li>
+                            <li><span>✶</span><div>Refresh daily social creatives with trend-driven storytelling.</div></li>
+                        </ul>
+                    </article>
+                    <article class="team-card">
+                        <h3>Lotfi</h3>
+                        <span>Ad Copy &amp; Community Pulse</span>
+                        <ul class="tick-list">
+                            <li><span>✶</span><div>Write magnetic copy that speaks to Algerian ambition.</div></li>
+                            <li><span>✶</span><div>Launch and optimize multi-channel ad campaigns.</div></li>
+                            <li><span>✶</span><div>Engage the community &amp; coordinate with AI Sales Agent.</div></li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" data-animate>
+            <div class="panel animate-item">
+                <div class="icon-ring">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v2H3V4zm3 5h12v2H6V9zm-3 5h18v2H3v-2zm3 5h12v2H6v-2z"/></svg>
+                </div>
+                <h2>Success Metrics &amp; Intelligence</h2>
+                <p class="lead">Four KPIs that guide the launch playbook in real time.</p>
+                <div class="stat-grid" data-counters>
+                    <div class="stat-card">
+                        <strong data-counter="1500">0</strong>
+                        <span>Golden Cards sold first month</span>
+                    </div>
+                    <div class="stat-card">
+                        <strong data-counter="28">0</strong>
+                        <span>Average CPA in USD</span>
+                    </div>
+                    <div class="stat-card">
+                        <strong data-counter="6.5">0</strong>
+                        <span>Conversion rate (%)</span>
+                    </div>
+                    <div class="stat-card">
+                        <strong data-counter="25000">0</strong>
+                        <span>Social engagements</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" data-animate>
+            <div class="panel animate-item">
+                <div class="icon-ring">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1a5 5 0 015 5v2h1a3 3 0 013 3v9a3 3 0 01-3 3H6a3 3 0 01-3-3v-9a3 3 0 013-3h1V6a5 5 0 015-5zm0 2a3 3 0 00-3 3v2h6V6a3 3 0 00-3-3zm8 10H4v7a1 1 0 001 1h14a1 1 0 001-1v-7z"/></svg>
+                </div>
+                <h2>Immediate Next Steps</h2>
+                <p class="lead">Synchronized execution for a flawless launch window.</p>
+                <div class="next-steps animate-stagger" data-animate>
+                    <div class="next-step-card">
+                        <h3>1. Team Kick-off</h3>
+                        <p>Review plan, align on responsibilities, confirm communication cadence.</p>
+                        <small>Owner: All | Deadline: Immediate</small>
+                    </div>
+                    <div class="next-step-card">
+                        <h3>2. Product Finalization</h3>
+                        <p>Sidali locks service stack &amp; pricing for the Creator &amp; Student Pack.</p>
+                        <small>Owner: Sidali | Deadline: End of Week</small>
+                    </div>
+                    <div class="next-step-card">
+                        <h3>3. Visual Concept Reveal</h3>
+                        <p>Chakib &amp; Tahar present mood boards &amp; hero assets for campaigns.</p>
+                        <small>Owner: C &amp; T | Deadline: Early Next Week</small>
+                    </div>
+                    <div class="next-step-card">
+                        <h3>4. Launch Date Confirmation</h3>
+                        <p>Lock go-live window, finalize Golden Key incentives &amp; stock.</p>
+                        <small>Owner: Leadership | Deadline: ASAP</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            Crafted for DGTools · Project Keystone · 2025
+        </footer>
+    </div>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('[data-animate]').forEach((element) => {
+            observer.observe(element);
+        });
+
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll('[data-counter]');
+                    counters.forEach((counter) => animateCounter(counter));
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.4 });
+
+        document.querySelectorAll('[data-counters]').forEach((element) => {
+            counterObserver.observe(element);
+        });
+
+        function animateCounter(element) {
+            const target = parseFloat(element.getAttribute('data-counter'));
+            const isFloat = !Number.isInteger(target);
+            const duration = 1600;
+            const start = performance.now();
+
+            function tick(now) {
+                const progress = Math.min(1, (now - start) / duration);
+                const eased = 1 - Math.pow(1 - progress, 4);
+                const value = target * eased;
+                element.textContent = isFloat ? value.toFixed(1) : Math.round(value).toLocaleString();
+                if (progress < 1) requestAnimationFrame(tick);
+            }
+
+            requestAnimationFrame(tick);
+        }
+
+        document.querySelectorAll('[data-tilt]').forEach((element) => {
+            const strength = 14;
+            const perspective = 1000;
+
+            element.addEventListener('pointermove', (event) => {
+                const rect = element.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * strength;
+                const rotateY = ((centerX - x) / centerX) * strength;
+
+                element.style.transform = `perspective(${perspective}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            element.addEventListener('pointerleave', () => {
+                element.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+            });
+        });
+    </script>
+</body>
+</html>
