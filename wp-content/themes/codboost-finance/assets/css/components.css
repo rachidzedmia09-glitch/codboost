@@ -1,28 +1,49 @@
 .money-manager-wrapper {
-    margin-top: 2rem;
+    margin-top: 2.5rem;
+    position: relative;
+}
+
+.money-manager-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: -40px 10% auto 10%;
+    height: 240px;
+    background: radial-gradient(circle, rgba(17, 20, 255, 0.18), transparent 70%);
+    filter: blur(40px);
+    z-index: 0;
 }
 
 .money-manager-wrapper .codboost-money-manager {
+    position: relative;
+    z-index: 1;
     background: transparent;
 }
 
 .money-manager-wrapper .cbm-panel {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.94);
+}
+
+.money-manager-wrapper .cbm-panel--elevated::after {
+    background: radial-gradient(circle at top left, rgba(215, 255, 0, 0.25), transparent 60%);
 }
 
 .money-manager-wrapper .cbm-card {
-    background: rgba(215, 255, 0, 0.12);
+    background: linear-gradient(135deg, rgba(215, 255, 0, 0.12), rgba(255, 255, 255, 0.9));
     border-left-color: #d7ff00;
 }
 
 .money-manager-wrapper .cbm-card--income {
-    border-left-color: #0f766e;
+    border-left-color: #16a34a;
 }
 
 .money-manager-wrapper .cbm-card--outcome {
-    border-left-color: #dc2626;
+    border-left-color: #ef4444;
 }
 
 .money-manager-wrapper .cbm-card--balance {
-    border-left-color: #1114ff;
+    border-left-color: #1414ff;
+}
+
+.money-manager-wrapper .cbm-card--trend {
+    border-left-color: #d7ff00;
 }

@@ -12,6 +12,8 @@
 .wrap.codboost-money-manager {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     color: var(--cbm-dark);
+    background: linear-gradient(180deg, rgba(20, 20, 255, 0.08) 0%, rgba(15, 23, 42, 0.02) 100%);
+    padding-bottom: 3rem;
 }
 
 .cbm-page-title {
@@ -19,6 +21,8 @@
     align-items: center;
     gap: 0.75rem;
     font-weight: 700;
+    min-height: 80px;
+    background: url('https://money.codboost.pro/wp-content/uploads/2025/10/codboost.png') no-repeat right center / 120px auto;
 }
 
 .cbm-tabs {
@@ -56,6 +60,10 @@
     margin-bottom: 2rem;
 }
 
+.cbm-grid--stats {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
 .cbm-grid--two {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
@@ -65,6 +73,23 @@
     border-radius: 1rem;
     background: linear-gradient(135deg, rgba(20, 20, 255, 0.08), #fff);
     box-shadow: 0 18px 35px rgba(15, 23, 42, 0.08);
+    position: relative;
+    overflow: hidden;
+    animation: cbmFadeIn 0.6s ease;
+}
+
+.cbm-card::before {
+    content: '';
+    position: absolute;
+    inset: -30% 40% auto -20%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(20, 20, 255, 0.14), transparent 65%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cbm-card:hover::before {
+    opacity: 1;
 }
 
 .cbm-card h3 {
@@ -94,11 +119,26 @@
     border-left: 5px solid var(--cbm-blue);
 }
 
+.cbm-card--trend {
+    border-left: 5px solid var(--cbm-yellow);
+}
+
 .cbm-panel {
     background: #fff;
     border-radius: 1rem;
     padding: 1.75rem;
     box-shadow: 0 16px 32px rgba(15, 23, 42, 0.05);
+    position: relative;
+    overflow: hidden;
+    animation: cbmFadeIn 0.6s ease;
+}
+
+.cbm-panel--elevated::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(20, 20, 255, 0.12), transparent 55%);
+    pointer-events: none;
 }
 
 .cbm-panel--success {
@@ -125,7 +165,7 @@
 .cbm-form__grid {
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
 .cbm-field {
@@ -144,6 +184,7 @@
     padding: 0.65rem 0.85rem;
     font-size: 0.95rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background: rgba(255, 255, 255, 0.95);
 }
 
 .cbm-field input:focus,
@@ -152,6 +193,39 @@
     outline: none;
     border-color: var(--cbm-blue);
     box-shadow: 0 0 0 3px rgba(20, 20, 255, 0.15);
+}
+
+.cbm-field--inline {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+.cbm-form__hint {
+    margin: 0;
+    font-size: 0.85rem;
+    color: rgba(15, 23, 42, 0.6);
+    font-style: italic;
+}
+
+.cbm-button--glow {
+    position: relative;
+    overflow: hidden;
+}
+
+.cbm-button--glow::after {
+    content: '';
+    position: absolute;
+    inset: -40%;
+    background: conic-gradient(from 180deg, rgba(20, 20, 255, 0.25), rgba(215, 255, 0, 0.25), rgba(20, 20, 255, 0.25));
+    animation: cbmSpin 6s linear infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cbm-button--glow:hover::after {
+    opacity: 1;
 }
 
 .cbm-table {
@@ -172,6 +246,16 @@
 
 .cbm-table tbody tr:hover {
     background: rgba(20, 20, 255, 0.05);
+}
+
+.cbm-table--compact th,
+.cbm-table--compact td {
+    padding: 0.65rem 0.75rem;
+}
+
+.cbm-table--responsive {
+    width: 100%;
+    overflow-x: auto;
 }
 
 .cbm-pill {
@@ -198,7 +282,79 @@
     color: var(--cbm-danger);
 }
 
-.cbm-list {
+.cbm-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: rgba(20, 20, 255, 0.12);
+    color: var(--cbm-blue);
+}
+
+.cbm-status--pending {
+    background: rgba(215, 255, 0, 0.18);
+    color: #4d7c0f;
+}
+
+.cbm-status--scheduled {
+    background: rgba(37, 99, 235, 0.12);
+    color: #1d4ed8;
+}
+
+.cbm-status--disputed {
+    background: rgba(220, 38, 38, 0.12);
+    color: var(--cbm-danger);
+}
+
+.cbm-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.cbm-status-pill {
+    background: rgba(15, 23, 42, 0.06);
+    border-radius: 999px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(15, 23, 42, 0.7);
+}
+
+.cbm-insights {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.cbm-insights li {
+    display: grid;
+    gap: 0.35rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.85rem;
+    background: rgba(15, 23, 42, 0.04);
+}
+
+.cbm-insights li strong {
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(15, 23, 42, 0.7);
+}
+
+.cbm-insights li span {
+    font-size: 0.95rem;
+}
+
+.cbm-plugin-checklist {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -206,53 +362,99 @@
     gap: 1rem;
 }
 
-.cbm-list li {
+.cbm-plugin-checklist__item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background: var(--cbm-neutral);
-    border-radius: 0.85rem;
+    justify-content: space-between;
+    gap: 1rem;
     padding: 1rem 1.25rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(20, 20, 255, 0.12);
+    background: rgba(255, 255, 255, 0.92);
 }
 
-.cbm-list__title {
+.cbm-plugin-checklist__item.is-active {
+    border-color: rgba(22, 163, 74, 0.35);
+}
+
+.cbm-plugin-checklist__item p {
+    margin: 0.35rem 0 0;
+    font-size: 0.9rem;
+    color: rgba(15, 23, 42, 0.7);
+}
+
+.cbm-status-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
     font-weight: 700;
+    color: var(--cbm-success);
+    background: rgba(22, 163, 74, 0.12);
 }
 
-.cbm-list__meta {
-    display: block;
-    margin-top: 0.25rem;
-    font-size: 0.85rem;
-    color: rgba(15, 23, 42, 0.6);
+.cbm-tags {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
 }
 
-.cbm-list__badge {
-    margin-left: 0.75rem;
-    padding: 0.35rem 0.65rem;
+.cbm-tag {
     background: rgba(20, 20, 255, 0.1);
     color: var(--cbm-blue);
-    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+    border-radius: 0.75rem;
     font-size: 0.75rem;
     font-weight: 600;
 }
 
-.button-link-delete {
-    background: transparent !important;
-    color: var(--cbm-danger) !important;
-    border: none !important;
-    padding: 0;
-    cursor: pointer;
+.cbm-muted {
+    color: rgba(15, 23, 42, 0.4);
 }
 
-.button-link-delete:hover {
-    text-decoration: underline;
+.cbm-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.cbm-list li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.5rem;
+    align-items: center;
+    padding: 0.85rem 1.1rem;
+    border-radius: 0.9rem;
+    background: rgba(20, 20, 255, 0.04);
+}
+
+.cbm-list__title {
+    font-weight: 600;
+}
+
+.cbm-list__badge {
+    font-size: 0.8rem;
+    background: rgba(20, 20, 255, 0.12);
+    color: var(--cbm-blue);
+    border-radius: 999px;
+    padding: 0.2rem 0.75rem;
+    justify-self: start;
+}
+
+.cbm-list__meta {
+    grid-column: 1 / -1;
+    font-size: 0.85rem;
+    color: rgba(15, 23, 42, 0.6);
 }
 
 .cbm-notice {
-    background: var(--cbm-neutral);
+    background: rgba(20, 20, 255, 0.08);
     border-radius: 1rem;
-    padding: 1.25rem;
+    padding: 2rem;
     text-align: center;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.1);
 }
 
 .cbm-link {
@@ -260,14 +462,36 @@
     font-weight: 600;
 }
 
+.cbm-link:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 782px) {
     .cbm-tabs {
-        width: 100%;
-        justify-content: space-between;
+        flex-wrap: wrap;
     }
 
-    .cbm-tab {
-        flex: 1 1 auto;
-        text-align: center;
+    .cbm-page-title {
+        background-position: center right 10px;
+    }
+}
+
+@keyframes cbmFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cbmSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
     }
 }

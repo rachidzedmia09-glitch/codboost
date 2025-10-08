@@ -1,0 +1,189 @@
+{
+  "accounts": [
+    {
+      "name": "Cash Wallet",
+      "description": "Retail petty cash float for on-the-go expenses."
+    },
+    {
+      "name": "Baridi Mob",
+      "description": "Primary mobile payment wallet used for quick settlements."
+    },
+    {
+      "name": "BNP Operations",
+      "description": "Bank account capturing invoiced revenue and payroll runs."
+    },
+    {
+      "name": "Marketing Budget",
+      "description": "Dedicated allocation for growth and community initiatives."
+    }
+  ],
+  "reasons": [
+    {
+      "name": "SaaS Subscriptions",
+      "type": "income",
+      "description": "Recurring Codboost platform subscriptions."
+    },
+    {
+      "name": "Enterprise Deployment",
+      "type": "income",
+      "description": "One-off deployment project for enterprise clients."
+    },
+    {
+      "name": "Talent Payroll",
+      "type": "outcome",
+      "description": "Team salaries, bonuses, and consultant fees."
+    },
+    {
+      "name": "Growth Experiments",
+      "type": "outcome",
+      "description": "Paid campaigns, events, and customer acquisition tests."
+    },
+    {
+      "name": "Product Innovation",
+      "type": "general",
+      "description": "Research and product exploration initiatives."
+    }
+  ],
+  "transactions": [
+    {
+      "type": "income",
+      "amount": 4200,
+      "currency": "EUR",
+      "exchange_rate": 147.6,
+      "status": "cleared",
+      "note": "Q1 SaaS renewal from premium client",
+      "party": "TechNova SA",
+      "reference": "INV-2024-001",
+      "tags": "renewal, q1, enterprise",
+      "account": "BNP Operations",
+      "reason": "SaaS Subscriptions",
+      "date": "2024-01-12"
+    },
+    {
+      "type": "income",
+      "amount": 1850,
+      "currency": "USD",
+      "exchange_rate": 134.8,
+      "status": "scheduled",
+      "note": "Discovery sprint deposit",
+      "party": "Atlas Industries",
+      "reference": "PO-5581",
+      "tags": "sprint, discovery",
+      "account": "BNP Operations",
+      "reason": "Enterprise Deployment",
+      "date": "2024-02-05"
+    },
+    {
+      "type": "outcome",
+      "amount": 950000,
+      "currency": "DZD",
+      "exchange_rate": 1,
+      "status": "cleared",
+      "note": "January payroll run",
+      "party": "Codboost Team",
+      "reference": "PAY-2024-01",
+      "tags": "payroll, hr",
+      "account": "BNP Operations",
+      "reason": "Talent Payroll",
+      "date": "2024-01-28"
+    },
+    {
+      "type": "outcome",
+      "amount": 420000,
+      "currency": "DZD",
+      "exchange_rate": 1,
+      "status": "pending",
+      "note": "Growth marketing experiments",
+      "party": "AdCreative Co",
+      "reference": "GRW-8891",
+      "tags": "marketing, campaign",
+      "account": "Marketing Budget",
+      "reason": "Growth Experiments",
+      "date": "2024-02-10"
+    },
+    {
+      "type": "income",
+      "amount": 2100,
+      "currency": "EUR",
+      "exchange_rate": 146.2,
+      "status": "cleared",
+      "note": "Accelerator partner onboarding",
+      "party": "NorthBridge Accelerator",
+      "reference": "INV-2024-014",
+      "tags": "partner, onboarding",
+      "account": "BNP Operations",
+      "reason": "Enterprise Deployment",
+      "date": "2024-03-02"
+    },
+    {
+      "type": "outcome",
+      "amount": 180000,
+      "currency": "DZD",
+      "exchange_rate": 1,
+      "status": "disputed",
+      "note": "Experimental AI tool subscription",
+      "party": "AI Labs",
+      "reference": "SUB-AL-02",
+      "tags": "innovation, tooling",
+      "account": "Cash Wallet",
+      "reason": "Product Innovation",
+      "date": "2024-03-15"
+    },
+    {
+      "type": "income",
+      "amount": 1150,
+      "currency": "USD",
+      "exchange_rate": 135.2,
+      "status": "cleared",
+      "note": "Monthly SaaS billing",
+      "party": "Visionary Retail",
+      "reference": "INV-2024-020",
+      "tags": "subscription, retail",
+      "account": "BNP Operations",
+      "reason": "SaaS Subscriptions",
+      "date": "2024-03-20"
+    },
+    {
+      "type": "outcome",
+      "amount": 220000,
+      "currency": "DZD",
+      "exchange_rate": 1,
+      "status": "scheduled",
+      "note": "Community hackathon sponsorship",
+      "party": "Codboost Community",
+      "reference": "EVT-2024-07",
+      "tags": "community, event",
+      "account": "Marketing Budget",
+      "reason": "Growth Experiments",
+      "date": "2024-04-05"
+    },
+    {
+      "type": "income",
+      "amount": 3600,
+      "currency": "EUR",
+      "exchange_rate": 145.1,
+      "status": "cleared",
+      "note": "Annual platform renewal",
+      "party": "Bluewave Media",
+      "reference": "INV-2024-034",
+      "tags": "renewal, annual",
+      "account": "BNP Operations",
+      "reason": "SaaS Subscriptions",
+      "date": "2024-04-18"
+    },
+    {
+      "type": "outcome",
+      "amount": 620000,
+      "currency": "DZD",
+      "exchange_rate": 1,
+      "status": "cleared",
+      "note": "April payroll run",
+      "party": "Codboost Team",
+      "reference": "PAY-2024-04",
+      "tags": "payroll, hr",
+      "account": "BNP Operations",
+      "reason": "Talent Payroll",
+      "date": "2024-04-28"
+    }
+  ]
+}

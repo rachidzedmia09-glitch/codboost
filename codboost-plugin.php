@@ -18,8 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
 
     class Codboost_Money_Manager {
-        const VERSION = '1.0.0';
+        const VERSION = '1.1.0';
         const NONCE_ACTION = 'codboost_money_manager_action';
+        const DEMO_OPTION = 'codboost_money_manager_demo_seeded';
 
         /**
          * Singleton instance.
@@ -45,10 +46,12 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
         private function __construct() {
             register_activation_hook( __FILE__, [ $this, 'activate' ] );
 
+            add_action( 'plugins_loaded', [ $this, 'load_textdomain' ] );
+            add_action( 'init', [ $this, 'maybe_upgrade_schema' ] );
+
             add_action( 'admin_menu', [ $this, 'register_admin_menu' ] );
             add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_admin_assets' ] );
             add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_front_assets' ] );
-            add_action( 'plugins_loaded', [ $this, 'load_textdomain' ] );
 
             add_action( 'admin_post_cmm_save_account', [ $this, 'handle_save_account' ] );
             add_action( 'admin_post_cmm_delete_account', [ $this, 'handle_delete_account' ] );
@@ -58,6 +61,8 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
 
             add_action( 'admin_post_cmm_save_transaction', [ $this, 'handle_save_transaction' ] );
             add_action( 'admin_post_cmm_delete_transaction', [ $this, 'handle_delete_transaction' ] );
+
+            add_action( 'admin_post_cmm_import_demo', [ $this, 'handle_import_demo' ] );
 
             add_shortcode( 'codboost_money_manager', [ $this, 'render_shortcode' ] );
         }
@@ -83,6 +88,12 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
                 reason_id BIGINT UNSIGNED NULL,
                 account_id BIGINT UNSIGNED NULL,
                 note TEXT NULL,
+                party VARCHAR(191) NULL,
+                reference VARCHAR(191) NULL,
+                tags TEXT NULL,
+                currency VARCHAR(10) NOT NULL DEFAULT 'DZD',
+                status VARCHAR(40) NOT NULL DEFAULT 'cleared',
+                exchange_rate DECIMAL(14,4) NOT NULL DEFAULT 1,
                 transaction_date DATE NOT NULL,
                 created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY  (id),
@@ -115,14 +126,92 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
             dbDelta( $reasons_sql );
             dbDelta( $transactions_sql );
 
-            $default_accounts = [ 'Cash Wallet', 'Baridi Mob' ];
+            $this->seed_default_terms();
+        }
+
+        /**
+         * Ensure schema stays up to date when new versions introduce columns.
+         */
+        public function maybe_upgrade_schema() : void {
+            global $wpdb;
+
+            $transactions_table = $wpdb->prefix . 'cbm_transactions';
+
+            $columns = [
+                'party'         => "ALTER TABLE {$transactions_table} ADD COLUMN party VARCHAR(191) NULL AFTER note",
+                'reference'     => "ALTER TABLE {$transactions_table} ADD COLUMN reference VARCHAR(191) NULL AFTER party",
+                'tags'          => "ALTER TABLE {$transactions_table} ADD COLUMN tags TEXT NULL AFTER reference",
+                'currency'      => "ALTER TABLE {$transactions_table} ADD COLUMN currency VARCHAR(10) NOT NULL DEFAULT 'DZD' AFTER tags",
+                'status'        => "ALTER TABLE {$transactions_table} ADD COLUMN status VARCHAR(40) NOT NULL DEFAULT 'cleared' AFTER currency",
+                'exchange_rate' => "ALTER TABLE {$transactions_table} ADD COLUMN exchange_rate DECIMAL(14,4) NOT NULL DEFAULT 1 AFTER status",
+            ];
+
+            foreach ( $columns as $column => $sql ) {
+                $has_column = $wpdb->get_results( $wpdb->prepare( "SHOW COLUMNS FROM {$transactions_table} LIKE %s", $column ) );
+                if ( empty( $has_column ) ) {
+                    $wpdb->query( $sql );
+                }
+            }
+        }
+
+        /**
+         * Seed core accounts and reasons when activating or importing demo data.
+         */
+        protected function seed_default_terms() : void {
+            global $wpdb;
+
+            $accounts_table = $wpdb->prefix . 'cbm_accounts';
+            $reasons_table  = $wpdb->prefix . 'cbm_reasons';
+
+            $default_accounts = [
+                [
+                    'name'        => __( 'Cash Wallet', 'codboost-money-manager' ),
+                    'description' => __( 'Physical cash on hand for Codboost operations.', 'codboost-money-manager' ),
+                ],
+                [
+                    'name'        => __( 'Baridi Mob', 'codboost-money-manager' ),
+                    'description' => __( 'Primary mobile payment account.', 'codboost-money-manager' ),
+                ],
+                [
+                    'name'        => __( 'Bank - BNP Paribas', 'codboost-money-manager' ),
+                    'description' => __( 'Corporate current account for settlements and payroll.', 'codboost-money-manager' ),
+                ],
+            ];
+
             foreach ( $default_accounts as $account ) {
-                $existing = $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$accounts_table} WHERE name = %s", $account ) );
+                $existing = $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$accounts_table} WHERE name = %s", $account['name'] ) );
                 if ( ! $existing ) {
-                    $wpdb->insert( $accounts_table, [
-                        'name'        => $account,
-                        'description' => sprintf( __( '%s account added by default during plugin activation.', 'codboost-money-manager' ), $account ),
-                    ] );
+                    $wpdb->insert( $accounts_table, $account );
+                }
+            }
+
+            $default_reasons = [
+                [
+                    'name'        => __( 'Product Revenue', 'codboost-money-manager' ),
+                    'type'        => 'income',
+                    'description' => __( 'Income generated from Codboost product sales and subscriptions.', 'codboost-money-manager' ),
+                ],
+                [
+                    'name'        => __( 'Client Services', 'codboost-money-manager' ),
+                    'type'        => 'income',
+                    'description' => __( 'Consulting and services invoiced to Codboost partners.', 'codboost-money-manager' ),
+                ],
+                [
+                    'name'        => __( 'Team Salaries', 'codboost-money-manager' ),
+                    'type'        => 'outcome',
+                    'description' => __( 'Monthly payroll and benefits.', 'codboost-money-manager' ),
+                ],
+                [
+                    'name'        => __( 'Platform Expenses', 'codboost-money-manager' ),
+                    'type'        => 'outcome',
+                    'description' => __( 'Hosting, marketing, and tooling costs.', 'codboost-money-manager' ),
+                ],
+            ];
+
+            foreach ( $default_reasons as $reason ) {
+                $existing = $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$reasons_table} WHERE name = %s", $reason['name'] ) );
+                if ( ! $existing ) {
+                    $wpdb->insert( $reasons_table, $reason );
                 }
             }
         }
@@ -245,6 +334,9 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
                 case 'reasons':
                     $this->render_reasons_tab();
                     break;
+                case 'setup':
+                    $this->render_setup_tab();
+                    break;
                 case 'dashboard':
                 default:
                     $this->render_dashboard_tab();
@@ -263,6 +355,7 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
                 'transactions' => __( 'Transactions', 'codboost-money-manager' ),
                 'accounts'     => __( 'Accounts', 'codboost-money-manager' ),
                 'reasons'      => __( 'Reasons', 'codboost-money-manager' ),
+                'setup'        => __( 'Setup & Import', 'codboost-money-manager' ),
             ];
 
             echo '<nav class="cbm-tabs">';
@@ -282,38 +375,72 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
          * Render dashboard tab.
          */
         protected function render_dashboard_tab() : void {
-            $totals        = $this->get_totals();
-            $recent        = $this->get_transactions( 5 );
-            $accounts_data = $this->get_account_distribution();
+            $totals          = $this->get_totals();
+            $recent          = $this->get_transactions( 5 );
+            $accounts_data   = $this->get_account_distribution();
+            $chart_data      = $this->get_chart_data();
+            $reason_data     = $chart_data['reasonBreakdown'] ?? [];
+            $insights        = $chart_data['insights'] ?? [];
 
-            echo '<section class="cbm-grid">';
+            echo '<section class="cbm-grid cbm-grid--stats">';
             $this->render_stat_card( __( 'Total Income', 'codboost-money-manager' ), $totals['income'], 'cbm-card--income' );
             $this->render_stat_card( __( 'Total Outcome', 'codboost-money-manager' ), $totals['outcome'], 'cbm-card--outcome' );
             $this->render_stat_card( __( 'Balance', 'codboost-money-manager' ), $totals['balance'], 'cbm-card--balance' );
+            $this->render_stat_card( __( 'Average Monthly Net', 'codboost-money-manager' ), $totals['average_net'], 'cbm-card--trend' );
             echo '</section>';
 
             echo '<section class="cbm-grid cbm-grid--two">';
-            echo '<div class="cbm-panel">';
+            echo '<div class="cbm-panel cbm-panel--elevated">';
             echo '<h2>' . esc_html__( '12-Month Cashflow', 'codboost-money-manager' ) . '</h2>';
-            echo '<canvas id="cbm-cashflow-chart" height="220"></canvas>';
+            echo '<canvas id="cbm-cashflow-chart" height="240"></canvas>';
             echo '</div>';
 
-            echo '<div class="cbm-panel">';
+            echo '<div class="cbm-panel cbm-panel--elevated">';
+            echo '<h2>' . esc_html__( 'Cumulative Balance', 'codboost-money-manager' ) . '</h2>';
+            echo '<canvas id="cbm-balance-chart" height="240"></canvas>';
+            echo '</div>';
+            echo '</section>';
+
+            echo '<section class="cbm-grid cbm-grid--two">';
+            echo '<div class="cbm-panel cbm-panel--elevated">';
             echo '<h2>' . esc_html__( 'Accounts Snapshot', 'codboost-money-manager' ) . '</h2>';
             if ( empty( $accounts_data ) ) {
                 echo '<p>' . esc_html__( 'Add transactions to see distribution per account.', 'codboost-money-manager' ) . '</p>';
             } else {
-                echo '<canvas id="cbm-accounts-chart" height="220"></canvas>';
+                echo '<canvas id="cbm-accounts-chart" height="240"></canvas>';
+            }
+            echo '</div>';
+
+            echo '<div class="cbm-panel cbm-panel--elevated">';
+            echo '<h2>' . esc_html__( 'Reason Efficiency', 'codboost-money-manager' ) . '</h2>';
+            if ( empty( $reason_data ) ) {
+                echo '<p>' . esc_html__( 'Log transactions to understand which initiatives drive your performance.', 'codboost-money-manager' ) . '</p>';
+            } else {
+                echo '<canvas id="cbm-reason-chart" height="240"></canvas>';
             }
             echo '</div>';
             echo '</section>';
 
-            echo '<section class="cbm-panel">';
+            echo '<section class="cbm-grid cbm-grid--two">';
+            echo '<div class="cbm-panel">';
+            echo '<h2>' . esc_html__( 'Insights & Signals', 'codboost-money-manager' ) . '</h2>';
+            if ( empty( $insights ) ) {
+                echo '<p>' . esc_html__( 'Insights will appear after you import or log more transactions.', 'codboost-money-manager' ) . '</p>';
+            } else {
+                echo '<ul class="cbm-insights">';
+                foreach ( $insights as $insight ) {
+                    printf( '<li><strong>%1$s</strong><span>%2$s</span></li>', esc_html( $insight['title'] ), esc_html( $insight['detail'] ) );
+                }
+                echo '</ul>';
+            }
+            echo '</div>';
+
+            echo '<div class="cbm-panel">';
             echo '<h2>' . esc_html__( 'Recent Activity', 'codboost-money-manager' ) . '</h2>';
             if ( empty( $recent ) ) {
                 echo '<p>' . esc_html__( 'No transactions recorded yet.', 'codboost-money-manager' ) . '</p>';
             } else {
-                echo '<table class="cbm-table">';
+                echo '<table class="cbm-table cbm-table--compact">';
                 echo '<thead><tr>';
                 echo '<th>' . esc_html__( 'Date', 'codboost-money-manager' ) . '</th>';
                 echo '<th>' . esc_html__( 'Type', 'codboost-money-manager' ) . '</th>';
@@ -326,7 +453,7 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
                         '<tr><td>%1$s</td><td class="cbm-pill cbm-pill--%6$s">%2$s</td><td>%3$s</td><td>%4$s</td><td>%5$s</td></tr>',
                         esc_html( date_i18n( get_option( 'date_format' ), strtotime( $row->transaction_date ) ) ),
                         esc_html( ucfirst( $row->transaction_type ) ),
-                        esc_html( $this->format_currency( $row->amount ) ),
+                        esc_html( $this->format_transaction_amount( (float) $row->amount, (string) $row->currency, (float) $row->exchange_rate ) ),
                         esc_html( $row->account_name ?: __( 'Unassigned', 'codboost-money-manager' ) ),
                         esc_html( $row->reason_name ?: __( 'Unassigned', 'codboost-money-manager' ) ),
                         esc_attr( $row->transaction_type )
@@ -334,6 +461,7 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
                 }
                 echo '</tbody></table>';
             }
+            echo '</div>';
             echo '</section>';
         }
 
@@ -341,11 +469,16 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
          * Render transactions tab with form + table.
          */
         protected function render_transactions_tab() : void {
-            $accounts   = $this->get_accounts();
-            $reasons    = $this->get_reasons();
-            $rows       = $this->get_transactions( 20 );
-            $form_url   = admin_url( 'admin-post.php' );
-            $delete_url = admin_url( 'admin-post.php' );
+            $accounts          = $this->get_accounts();
+            $reasons           = $this->get_reasons();
+            $rows              = $this->get_transactions( 20 );
+            $form_url          = admin_url( 'admin-post.php' );
+            $delete_url        = admin_url( 'admin-post.php' );
+            $status_breakdown  = $this->get_transaction_status_breakdown();
+            $default_currency  = $this->get_default_currency();
+            $status_options    = $this->get_transaction_statuses();
+            $currency_prefill  = strtoupper( $default_currency );
+            $exchange_prefill  = 1.0;
 
             echo '<section class="cbm-panel">';
             echo '<h2>' . esc_html__( 'Log New Transaction', 'codboost-money-manager' ) . '</h2>';
@@ -361,9 +494,16 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
             echo $this->render_select_field( 'account_id', __( 'Account', 'codboost-money-manager' ), $this->convert_records_to_options( $accounts ) );
             echo $this->render_select_field( 'reason_id', __( 'Reason', 'codboost-money-manager' ), $this->convert_records_to_options( $reasons ) );
             echo $this->render_input_field( 'transaction_date', __( 'Date', 'codboost-money-manager' ), 'date', [ 'value' => wp_date( 'Y-m-d' ) ] );
+            echo $this->render_input_field( 'party', __( 'Stakeholder', 'codboost-money-manager' ), 'text', [ 'placeholder' => __( 'Client, vendor, or internal team', 'codboost-money-manager' ) ], false );
+            echo $this->render_input_field( 'reference', __( 'Reference ID', 'codboost-money-manager' ), 'text', [ 'placeholder' => __( 'Invoice, receipt, or project code', 'codboost-money-manager' ) ], false );
+            echo $this->render_select_field( 'status', __( 'Status', 'codboost-money-manager' ), $status_options, 'cleared' );
+            echo $this->render_input_field( 'currency', __( 'Currency', 'codboost-money-manager' ), 'text', [ 'maxlength' => '10', 'value' => $currency_prefill ], true );
+            echo $this->render_input_field( 'exchange_rate', __( 'Exchange Rate', 'codboost-money-manager' ), 'number', [ 'step' => '0.0001', 'min' => '0', 'value' => (string) $exchange_prefill ], true );
             echo '</div>';
-            echo $this->render_textarea_field( 'note', __( 'Notes (optional)', 'codboost-money-manager' ) );
-            echo '<button type="submit" class="button button-primary">' . esc_html__( 'Save Transaction', 'codboost-money-manager' ) . '</button>';
+            echo $this->render_textarea_field( 'note', __( 'Narrative (optional)', 'codboost-money-manager' ) );
+            echo $this->render_input_field( 'tags', __( 'Tags', 'codboost-money-manager' ), 'text', [ 'placeholder' => __( 'Comma separated insights: marketing, q1, renewal…', 'codboost-money-manager' ) ], false );
+            echo '<p class="cbm-form__hint">' . esc_html__( 'Amounts are stored in your base currency. Provide an exchange rate if the original currency differs.', 'codboost-money-manager' ) . '</p>';
+            echo '<button type="submit" class="button button-primary cbm-button--glow">' . esc_html__( 'Save Transaction', 'codboost-money-manager' ) . '</button>';
             echo '</form>';
             echo '</section>';
 
@@ -372,23 +512,40 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
             if ( empty( $rows ) ) {
                 echo '<p>' . esc_html__( 'No transactions yet. Add your first entry above.', 'codboost-money-manager' ) . '</p>';
             } else {
-                echo '<table class="cbm-table">';
+                echo '<div class="cbm-badges">';
+                foreach ( $status_breakdown as $status => $count ) {
+                    printf(
+                        '<span class="cbm-status-pill"><strong>%1$s</strong> %2$s</span>',
+                        esc_html( $count ),
+                        esc_html( ucfirst( $status ) )
+                    );
+                }
+                echo '</div>';
+                echo '<table class="cbm-table cbm-table--responsive">';
                 echo '<thead><tr>';
                 echo '<th>' . esc_html__( 'Date', 'codboost-money-manager' ) . '</th>';
                 echo '<th>' . esc_html__( 'Type', 'codboost-money-manager' ) . '</th>';
+                echo '<th>' . esc_html__( 'Status', 'codboost-money-manager' ) . '</th>';
                 echo '<th>' . esc_html__( 'Amount', 'codboost-money-manager' ) . '</th>';
                 echo '<th>' . esc_html__( 'Account', 'codboost-money-manager' ) . '</th>';
                 echo '<th>' . esc_html__( 'Reason', 'codboost-money-manager' ) . '</th>';
-                echo '<th>' . esc_html__( 'Notes', 'codboost-money-manager' ) . '</th>';
+                echo '<th>' . esc_html__( 'Stakeholder', 'codboost-money-manager' ) . '</th>';
+                echo '<th>' . esc_html__( 'Reference', 'codboost-money-manager' ) . '</th>';
+                echo '<th>' . esc_html__( 'Tags', 'codboost-money-manager' ) . '</th>';
+                echo '<th>' . esc_html__( 'Narrative', 'codboost-money-manager' ) . '</th>';
                 echo '<th>' . esc_html__( 'Actions', 'codboost-money-manager' ) . '</th>';
                 echo '</tr></thead><tbody>';
                 foreach ( $rows as $row ) {
                     echo '<tr>';
                     echo '<td>' . esc_html( date_i18n( get_option( 'date_format' ), strtotime( $row->transaction_date ) ) ) . '</td>';
                     echo '<td><span class="cbm-pill cbm-pill--' . esc_attr( $row->transaction_type ) . '">' . esc_html( ucfirst( $row->transaction_type ) ) . '</span></td>';
-                    echo '<td>' . esc_html( $this->format_currency( $row->amount ) ) . '</td>';
+                    echo '<td>' . $this->render_status_badge( $row->status ) . '</td>';
+                    echo '<td>' . esc_html( $this->format_transaction_amount( (float) $row->amount, (string) $row->currency, (float) $row->exchange_rate ) ) . '</td>';
                     echo '<td>' . esc_html( $row->account_name ?: __( 'Unassigned', 'codboost-money-manager' ) ) . '</td>';
                     echo '<td>' . esc_html( $row->reason_name ?: __( 'Unassigned', 'codboost-money-manager' ) ) . '</td>';
+                    echo '<td>' . esc_html( $row->party ?: __( '—', 'codboost-money-manager' ) ) . '</td>';
+                    echo '<td>' . esc_html( $row->reference ?: __( '—', 'codboost-money-manager' ) ) . '</td>';
+                    echo '<td>' . $this->render_tag_badges( (string) $row->tags ) . '</td>';
                     echo '<td>' . esc_html( $row->note ) . '</td>';
                     echo '<td>';
                     printf(
@@ -512,6 +669,55 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
         }
 
         /**
+         * Render setup tab for demo import and plugin checklist.
+         */
+        protected function render_setup_tab() : void {
+            $form_url          = admin_url( 'admin-post.php' );
+            $required_plugins  = $this->get_required_plugins();
+            $demo_already_used = (bool) get_option( self::DEMO_OPTION, false );
+
+            echo '<section class="cbm-grid cbm-grid--two">';
+            echo '<div class="cbm-panel cbm-panel--elevated">';
+            echo '<h2>' . esc_html__( 'Required Plugins', 'codboost-money-manager' ) . '</h2>';
+            echo '<p>' . esc_html__( 'Install these essentials to unlock the full Codboost finance experience.', 'codboost-money-manager' ) . '</p>';
+            echo '<ul class="cbm-plugin-checklist">';
+            foreach ( $required_plugins as $plugin ) {
+                $status  = $plugin['status'];
+                $classes = 'cbm-plugin-checklist__item ' . ( 'active' === $status ? 'is-active' : 'is-inactive' );
+                echo '<li class="' . esc_attr( $classes ) . '">';
+                echo '<div>'; 
+                echo '<strong>' . esc_html( $plugin['name'] ) . '</strong>';
+                if ( ! empty( $plugin['description'] ) ) {
+                    echo '<p>' . esc_html( $plugin['description'] ) . '</p>';
+                }
+                echo '</div>';
+                if ( 'active' !== $status && ! empty( $plugin['action'] ) ) {
+                    printf( '<a class="button" href="%1$s">%2$s</a>', esc_url( $plugin['action'] ), esc_html__( 'Install / Activate', 'codboost-money-manager' ) );
+                } else {
+                    echo '<span class="cbm-status-chip">' . esc_html__( 'Ready', 'codboost-money-manager' ) . '</span>';
+                }
+                echo '</li>';
+            }
+            echo '</ul>';
+            echo '</div>';
+
+            echo '<div class="cbm-panel cbm-panel--elevated">';
+            echo '<h2>' . esc_html__( 'One-Click Demo Data', 'codboost-money-manager' ) . '</h2>';
+            echo '<p>' . esc_html__( 'Import storytelling-ready accounts, reasons, and multi-channel transactions to explore analytics instantly.', 'codboost-money-manager' ) . '</p>';
+            echo '<form method="post" action="' . esc_url( $form_url ) . '">';
+            wp_nonce_field( self::NONCE_ACTION, '_cbm_nonce' );
+            echo '<input type="hidden" name="action" value="cmm_import_demo">';
+            if ( $demo_already_used ) {
+                echo '<p class="cbm-form__hint">' . esc_html__( 'Demo data was imported previously. Re-importing will append any missing records and refresh performance analytics.', 'codboost-money-manager' ) . '</p>';
+                echo '<label class="cbm-field cbm-field--inline"><input type="checkbox" name="force" value="1"> <span>' . esc_html__( 'Re-import demo data', 'codboost-money-manager' ) . '</span></label>';
+            }
+            echo '<button type="submit" class="button button-primary cbm-button--glow">' . esc_html__( 'Import Codboost Demo', 'codboost-money-manager' ) . '</button>';
+            echo '</form>';
+            echo '</div>';
+            echo '</section>';
+        }
+
+        /**
          * Handle account creation.
          */
         public function handle_save_account() : void {
@@ -609,6 +815,12 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
             $reason_id        = isset( $_POST['reason_id'] ) ? absint( $_POST['reason_id'] ) : 0;
             $transaction_date = isset( $_POST['transaction_date'] ) ? sanitize_text_field( wp_unslash( $_POST['transaction_date'] ) ) : '';
             $note             = isset( $_POST['note'] ) ? sanitize_textarea_field( wp_unslash( $_POST['note'] ) ) : '';
+            $party            = isset( $_POST['party'] ) ? sanitize_text_field( wp_unslash( $_POST['party'] ) ) : '';
+            $reference        = isset( $_POST['reference'] ) ? sanitize_text_field( wp_unslash( $_POST['reference'] ) ) : '';
+            $status           = isset( $_POST['status'] ) ? sanitize_key( wp_unslash( $_POST['status'] ) ) : 'cleared';
+            $currency         = isset( $_POST['currency'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_POST['currency'] ) ) ) : $this->get_default_currency();
+            $exchange_rate    = isset( $_POST['exchange_rate'] ) ? floatval( wp_unslash( $_POST['exchange_rate'] ) ) : 1;
+            $tags             = isset( $_POST['tags'] ) ? sanitize_text_field( wp_unslash( $_POST['tags'] ) ) : '';
 
             if ( $amount <= 0 ) {
                 $this->redirect_with_message( __( 'Amount must be greater than zero.', 'codboost-money-manager' ), 'error', 'transactions' );
@@ -616,6 +828,23 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
 
             if ( ! in_array( $type, [ 'income', 'outcome' ], true ) ) {
                 $type = 'income';
+            }
+
+            $statuses = $this->get_transaction_statuses();
+            if ( ! array_key_exists( $status, $statuses ) ) {
+                $status = 'cleared';
+            }
+
+            if ( $exchange_rate <= 0 ) {
+                $exchange_rate = 1;
+            }
+
+            if ( empty( $currency ) ) {
+                $currency = $this->get_default_currency();
+            }
+
+            if ( strlen( $currency ) > 10 ) {
+                $currency = substr( $currency, 0, 10 );
             }
 
             $timestamp = $transaction_date ? strtotime( $transaction_date ) : false;
@@ -635,13 +864,26 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
                 'account_id'       => $account_id ?: null,
                 'reason_id'        => $reason_id ?: null,
                 'note'             => $note,
+                'party'            => $party ?: null,
+                'reference'        => $reference ?: null,
+                'tags'             => $tags ?: null,
+                'currency'         => $currency,
+                'status'           => $status,
+                'exchange_rate'    => $exchange_rate,
                 'transaction_date' => $transaction_date,
+                'created_at'       => current_time( 'mysql' ),
             ], [
                 '%d',
                 '%s',
                 '%f',
                 '%d',
                 '%d',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%f',
                 '%s',
                 '%s',
             ] );
@@ -665,6 +907,32 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
             $wpdb->delete( $transactions_table, [ 'id' => $transaction_id ], [ '%d' ] );
 
             $this->redirect_with_message( __( 'Transaction deleted.', 'codboost-money-manager' ), 'success', 'transactions' );
+        }
+
+        /**
+         * Handle demo data import.
+         */
+        public function handle_import_demo() : void {
+            $this->verify_permissions();
+
+            $force  = isset( $_POST['force'] ) && '1' === $_POST['force'];
+            $result = $this->import_demo_dataset( $force );
+
+            if ( ! empty( $result['error'] ) ) {
+                $this->redirect_with_message( $result['error'], 'error', 'setup' );
+            }
+
+            update_option( self::DEMO_OPTION, time() );
+
+            $message = sprintf(
+                /* translators: 1: number of accounts, 2: number of reasons, 3: number of transactions */
+                __( 'Imported %1$s accounts, %2$s reasons, and %3$s transactions ready for analytics.', 'codboost-money-manager' ),
+                number_format_i18n( (int) $result['accounts'] ),
+                number_format_i18n( (int) $result['reasons'] ),
+                number_format_i18n( (int) $result['transactions'] )
+            );
+
+            $this->redirect_with_message( $message, 'success', 'setup' );
         }
 
         /**
@@ -717,7 +985,7 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
             global $wpdb;
             $table = $wpdb->prefix . 'cbm_transactions';
 
-            $results = $wpdb->get_results( "SELECT transaction_type, SUM(amount) AS total FROM {$table} GROUP BY transaction_type" );
+            $results = $wpdb->get_results( "SELECT transaction_type, SUM(amount * exchange_rate) AS total FROM {$table} GROUP BY transaction_type" );
             $totals  = [ 'income' => 0.0, 'outcome' => 0.0 ];
 
             foreach ( $results as $row ) {
@@ -725,6 +993,17 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
             }
 
             $totals['balance'] = $totals['income'] - $totals['outcome'];
+            $totals['average_net'] = 0.0;
+
+            $chart_data = $this->get_chart_data();
+            if ( ! empty( $chart_data['net'] ) ) {
+                $valid_months = array_filter( $chart_data['net'], static function ( $value ) {
+                    return abs( (float) $value ) > 0.01;
+                } );
+                if ( ! empty( $valid_months ) ) {
+                    $totals['average_net'] = array_sum( $valid_months ) / count( $valid_months );
+                }
+            }
 
             return $totals;
         }
@@ -772,6 +1051,38 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
         }
 
         /**
+         * Return required plugin checklist entries.
+         */
+        protected function get_required_plugins() : array {
+            include_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+            $plugins = [];
+
+            $plugins[] = [
+                'name'        => __( 'Codboost Money Manager', 'codboost-money-manager' ),
+                'description' => __( 'Core plugin powering transactions, analytics, and the finance dashboard.', 'codboost-money-manager' ),
+                'status'      => 'active',
+                'action'      => '',
+            ];
+
+            $plugins[] = $this->resolve_plugin_state(
+                'wordpress-importer',
+                'wordpress-importer/wordpress-importer.php',
+                __( 'WordPress Importer', 'codboost-money-manager' ),
+                __( 'Allow importing additional demo templates or migrating data between sites.', 'codboost-money-manager' )
+            );
+
+            $plugins[] = $this->resolve_plugin_state(
+                'woocommerce',
+                'woocommerce/woocommerce.php',
+                __( 'WooCommerce', 'codboost-money-manager' ),
+                __( 'Provides enterprise-grade currency formatting and payment integrations.', 'codboost-money-manager' )
+            );
+
+            return apply_filters( 'codboost_money_manager_required_plugins', $plugins );
+        }
+
+        /**
          * Build chart data for JS.
          */
         protected function get_chart_data() : array {
@@ -783,12 +1094,16 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
             $income_data = [];
             $out_data    = [];
 
+            $net_data        = [];
+            $cumulative_data = [];
+            $running_total   = 0.0;
+
             for ( $i = 11; $i >= 0; $i -- ) {
                 $month_key = gmdate( 'Y-m', strtotime( '-' . $i . ' months' ) );
                 $labels[]  = date_i18n( 'M Y', strtotime( $month_key . '-01' ) );
 
                 $prepared = $wpdb->prepare(
-                    "SELECT transaction_type, SUM(amount) as total
+                    "SELECT transaction_type, SUM(amount * exchange_rate) as total
                     FROM {$transactions_table}
                     WHERE DATE_FORMAT(transaction_date, '%%Y-%%m') = %s
                     GROUP BY transaction_type",
@@ -808,20 +1123,49 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
                 }
                 $income_data[] = $income;
                 $out_data[]    = $outcome;
+                $net_value     = $income - $outcome;
+                $net_data[]    = $net_value;
+                $running_total += $net_value;
+                $cumulative_data[] = $running_total;
             }
 
             $accounts_distribution = $wpdb->get_results(
-                "SELECT a.name AS account, SUM(CASE WHEN t.transaction_type = 'income' THEN t.amount ELSE -t.amount END) AS balance
+                "SELECT a.name AS account, SUM(CASE WHEN t.transaction_type = 'income' THEN t.amount * t.exchange_rate ELSE -t.amount * t.exchange_rate END) AS balance
                 FROM {$transactions_table} t
                 LEFT JOIN {$accounts_table} a ON a.id = t.account_id
                 GROUP BY a.name"
             );
 
+            $reason_breakdown = $wpdb->get_results(
+                "SELECT COALESCE(r.name, 'Unassigned') AS reason,
+                    SUM(CASE WHEN t.transaction_type = 'income' THEN t.amount * t.exchange_rate ELSE 0 END) AS income_total,
+                    SUM(CASE WHEN t.transaction_type = 'outcome' THEN t.amount * t.exchange_rate ELSE 0 END) AS outcome_total
+                FROM {$transactions_table} t
+                LEFT JOIN {$reasons_table} r ON r.id = t.reason_id
+                GROUP BY r.name
+                ORDER BY income_total DESC"
+            );
+
+            $insights = $this->build_insights_from_chart( $labels, $net_data, $income_data, $out_data );
+
             return [
                 'labels'               => $labels,
                 'income'               => $income_data,
                 'outcome'              => $out_data,
+                'net'                  => $net_data,
+                'cumulative'           => $cumulative_data,
                 'accountsDistribution' => $accounts_distribution,
+                'reasonBreakdown'      => array_map( static function ( $row ) {
+                    $income  = (float) $row->income_total;
+                    $outcome = (float) $row->outcome_total;
+                    return [
+                        'reason' => (string) $row->reason,
+                        'income' => $income,
+                        'outcome' => $outcome,
+                        'net'    => $income - $outcome,
+                    ];
+                }, $reason_breakdown ?? [] ),
+                'insights'             => $insights,
             ];
         }
 
@@ -930,17 +1274,411 @@ if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
         }
 
         /**
-         * Format currency helper.
+         * Describe plugin activation status for checklist UI.
          */
-        protected function format_currency( float $value ) : string {
-            $symbol = get_option( 'woocommerce_currency_symbol' );
-            if ( empty( $symbol ) ) {
-                $symbol = 'DZD';
+        protected function resolve_plugin_state( string $slug, string $plugin_file, string $name, string $description ) : array {
+            include_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+            $plugin_path   = WP_PLUGIN_DIR . '/' . $plugin_file;
+            $is_installed  = file_exists( $plugin_path );
+            $is_active     = function_exists( 'is_plugin_active' ) && is_plugin_active( $plugin_file );
+            $status        = 'missing';
+            $action        = '';
+
+            if ( $is_active ) {
+                $status = 'active';
+            } elseif ( $is_installed ) {
+                $status = 'inactive';
+                $action = wp_nonce_url( self_admin_url( 'plugins.php?action=activate&plugin=' . $plugin_file ), 'activate-plugin_' . $plugin_file );
+            } else {
+                $status = 'missing';
+                $action = wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=' . $slug ), 'install-plugin_' . $slug );
             }
 
-            $symbol = apply_filters( 'codboost_money_manager_currency_symbol', $symbol, $value );
+            return [
+                'name'        => $name,
+                'description' => $description,
+                'status'      => $status,
+                'action'      => $action,
+            ];
+        }
+
+        /**
+         * Import bundled demo dataset.
+         */
+        protected function import_demo_dataset( bool $force = false ) : array {
+            $file = plugin_dir_path( __FILE__ ) . 'data/demo-finance-data.json';
+
+            if ( ! file_exists( $file ) ) {
+                return [
+                    'accounts'     => 0,
+                    'reasons'      => 0,
+                    'transactions' => 0,
+                    'error'        => __( 'Demo data file is missing.', 'codboost-money-manager' ),
+                ];
+            }
+
+            $raw  = file_get_contents( $file );
+            $data = json_decode( (string) $raw, true );
+
+            if ( empty( $data ) || ! is_array( $data ) ) {
+                return [
+                    'accounts'     => 0,
+                    'reasons'      => 0,
+                    'transactions' => 0,
+                    'error'        => __( 'Demo dataset could not be parsed.', 'codboost-money-manager' ),
+                ];
+            }
+
+            $this->seed_default_terms();
+
+            global $wpdb;
+            $accounts_table     = $wpdb->prefix . 'cbm_accounts';
+            $reasons_table      = $wpdb->prefix . 'cbm_reasons';
+            $transactions_table = $wpdb->prefix . 'cbm_transactions';
+
+            $created = [ 'accounts' => 0, 'reasons' => 0, 'transactions' => 0, 'error' => '' ];
+
+            $accounts_map = [];
+            foreach ( $this->get_accounts() as $account ) {
+                $accounts_map[ strtolower( $account->name ) ] = (int) $account->id;
+            }
+
+            if ( ! empty( $data['accounts'] ) && is_array( $data['accounts'] ) ) {
+                foreach ( $data['accounts'] as $account ) {
+                    $name        = sanitize_text_field( $account['name'] ?? '' );
+                    $description = sanitize_textarea_field( $account['description'] ?? '' );
+                    if ( empty( $name ) ) {
+                        continue;
+                    }
+
+                    $key = strtolower( $name );
+                    if ( isset( $accounts_map[ $key ] ) ) {
+                        continue;
+                    }
+
+                    $wpdb->insert( $accounts_table, [
+                        'name'        => $name,
+                        'description' => $description,
+                    ] );
+                    $accounts_map[ $key ] = (int) $wpdb->insert_id;
+                    $created['accounts'] ++;
+                }
+            }
+
+            $reasons_map = [];
+            foreach ( $this->get_reasons() as $reason ) {
+                $reasons_map[ strtolower( $reason->name ) ] = (int) $reason->id;
+            }
+
+            if ( ! empty( $data['reasons'] ) && is_array( $data['reasons'] ) ) {
+                foreach ( $data['reasons'] as $reason ) {
+                    $name        = sanitize_text_field( $reason['name'] ?? '' );
+                    $description = sanitize_textarea_field( $reason['description'] ?? '' );
+                    $type        = sanitize_key( $reason['type'] ?? 'general' );
+                    if ( empty( $name ) ) {
+                        continue;
+                    }
+
+                    $key = strtolower( $name );
+                    if ( isset( $reasons_map[ $key ] ) ) {
+                        continue;
+                    }
+
+                    if ( ! in_array( $type, [ 'income', 'outcome', 'general' ], true ) ) {
+                        $type = 'general';
+                    }
+
+                    $wpdb->insert( $reasons_table, [
+                        'name'        => $name,
+                        'type'        => $type,
+                        'description' => $description,
+                    ] );
+                    $reasons_map[ $key ] = (int) $wpdb->insert_id;
+                    $created['reasons'] ++;
+                }
+            }
+
+            if ( empty( $data['transactions'] ) || ! is_array( $data['transactions'] ) ) {
+                return $created;
+            }
+
+            if ( ! $force ) {
+                $existing = (int) $wpdb->get_var( "SELECT COUNT(id) FROM {$transactions_table}" );
+                if ( $existing > 0 ) {
+                    $created['transactions'] = 0;
+                    $created['error']        = __( 'Demo data skipped because transactions already exist. Enable re-import to append the scenario.', 'codboost-money-manager' );
+                    return $created;
+                }
+            }
+
+            foreach ( $data['transactions'] as $transaction ) {
+                $type          = sanitize_key( $transaction['type'] ?? 'income' );
+                $amount        = isset( $transaction['amount'] ) ? (float) $transaction['amount'] : 0.0;
+                $currency      = strtoupper( sanitize_text_field( $transaction['currency'] ?? $this->get_default_currency() ) );
+                $exchange_rate = isset( $transaction['exchange_rate'] ) ? (float) $transaction['exchange_rate'] : 1.0;
+                $status        = sanitize_key( $transaction['status'] ?? 'cleared' );
+                $note          = sanitize_textarea_field( $transaction['note'] ?? '' );
+                $party         = sanitize_text_field( $transaction['party'] ?? '' );
+                $reference     = sanitize_text_field( $transaction['reference'] ?? '' );
+                $tags          = sanitize_text_field( $transaction['tags'] ?? '' );
+                $account_name  = isset( $transaction['account'] ) ? strtolower( sanitize_text_field( $transaction['account'] ) ) : '';
+                $reason_name   = isset( $transaction['reason'] ) ? strtolower( sanitize_text_field( $transaction['reason'] ) ) : '';
+                $date_string   = sanitize_text_field( $transaction['date'] ?? '' );
+
+                if ( $amount <= 0 ) {
+                    continue;
+                }
+
+                if ( ! in_array( $type, [ 'income', 'outcome' ], true ) ) {
+                    $type = 'income';
+                }
+
+                $statuses = $this->get_transaction_statuses();
+                if ( ! array_key_exists( $status, $statuses ) ) {
+                    $status = 'cleared';
+                }
+
+                $account_id = $account_name && isset( $accounts_map[ $account_name ] ) ? $accounts_map[ $account_name ] : null;
+                $reason_id  = $reason_name && isset( $reasons_map[ $reason_name ] ) ? $reasons_map[ $reason_name ] : null;
+
+                $timestamp = strtotime( $date_string );
+                $date      = $timestamp ? wp_date( 'Y-m-d', $timestamp ) : wp_date( 'Y-m-d' );
+
+                $wpdb->insert( $transactions_table, [
+                    'user_id'          => get_current_user_id(),
+                    'transaction_type' => $type,
+                    'amount'           => $amount,
+                    'account_id'       => $account_id,
+                    'reason_id'        => $reason_id,
+                    'note'             => $note,
+                    'party'            => $party ?: null,
+                    'reference'        => $reference ?: null,
+                    'tags'             => $tags ?: null,
+                    'currency'         => $currency ?: $this->get_default_currency(),
+                    'status'           => $status,
+                    'exchange_rate'    => $exchange_rate > 0 ? $exchange_rate : 1,
+                    'transaction_date' => $date,
+                    'created_at'       => current_time( 'mysql' ),
+                ] );
+
+                $created['transactions'] ++;
+            }
+
+            return $created;
+        }
+
+        /**
+         * Format currency helper.
+         */
+        protected function format_currency( float $value, string $currency = '' ) : string {
+            $currency = $currency ?: $this->get_default_currency();
+            $symbol   = $this->get_currency_symbol( $currency );
 
             return sprintf( '%s %s', $symbol, number_format_i18n( $value, 2 ) );
+        }
+
+        /**
+         * Format amounts for display, including original currency if different.
+         */
+        protected function format_transaction_amount( float $amount, string $currency, float $exchange_rate ) : string {
+            $currency      = $currency ? strtoupper( $currency ) : $this->get_default_currency();
+            $base_currency = $this->get_default_currency();
+            $exchange_rate = $exchange_rate > 0 ? $exchange_rate : 1;
+            $base_value    = $amount * $exchange_rate;
+
+            $display = $this->format_currency( $base_value, $base_currency );
+
+            if ( $currency !== $base_currency ) {
+                $display .= sprintf(
+                    ' (%1$s %2$s @ %3$s)',
+                    $currency,
+                    number_format_i18n( $amount, 2 ),
+                    number_format_i18n( $exchange_rate, 3 )
+                );
+            }
+
+            return $display;
+        }
+
+        /**
+         * Determine default currency.
+         */
+        protected function get_default_currency() : string {
+            $currency = get_option( 'woocommerce_currency' );
+            if ( empty( $currency ) ) {
+                $currency = 'DZD';
+            }
+
+            $currency = apply_filters( 'codboost_money_manager_default_currency', $currency );
+
+            return strtoupper( (string) $currency );
+        }
+
+        /**
+         * Resolve currency symbol for display.
+         */
+        protected function get_currency_symbol( string $currency ) : string {
+            $currency = strtoupper( $currency );
+
+            if ( function_exists( 'get_woocommerce_currency_symbol' ) ) {
+                $symbol = get_woocommerce_currency_symbol( $currency );
+                if ( $symbol ) {
+                    return (string) $symbol;
+                }
+            }
+
+            $fallback = [
+                'DZD' => 'DA',
+                'USD' => '$',
+                'EUR' => '€',
+                'GBP' => '£',
+                'CAD' => 'C$',
+                'AUD' => 'A$',
+                'SAR' => '﷼',
+                'AED' => 'د.إ',
+            ];
+
+            $symbol = $fallback[ $currency ] ?? $currency;
+
+            return apply_filters( 'codboost_money_manager_currency_symbol', $symbol, $currency );
+        }
+
+        /**
+         * Compute status options.
+         */
+        protected function get_transaction_statuses() : array {
+            $statuses = [
+                'cleared'   => __( 'Cleared', 'codboost-money-manager' ),
+                'pending'   => __( 'Pending', 'codboost-money-manager' ),
+                'scheduled' => __( 'Scheduled', 'codboost-money-manager' ),
+                'disputed'  => __( 'Disputed', 'codboost-money-manager' ),
+            ];
+
+            return apply_filters( 'codboost_money_manager_statuses', $statuses );
+        }
+
+        /**
+         * Aggregate status counts for the dashboard.
+         */
+        protected function get_transaction_status_breakdown() : array {
+            global $wpdb;
+            $table    = $wpdb->prefix . 'cbm_transactions';
+            $statuses = array_fill_keys( array_keys( $this->get_transaction_statuses() ), 0 );
+
+            $results = $wpdb->get_results( "SELECT status, COUNT(id) AS total FROM {$table} GROUP BY status" );
+            foreach ( $results as $row ) {
+                $key = sanitize_key( $row->status );
+                if ( isset( $statuses[ $key ] ) ) {
+                    $statuses[ $key ] = (int) $row->total;
+                }
+            }
+
+            return $statuses;
+        }
+
+        /**
+         * Render status badge HTML.
+         */
+        protected function render_status_badge( ?string $status ) : string {
+            $status  = $status ? sanitize_key( $status ) : 'cleared';
+            $labels  = $this->get_transaction_statuses();
+            $label   = $labels[ $status ] ?? ucfirst( $status );
+
+            return '<span class="cbm-status cbm-status--' . esc_attr( $status ) . '">' . esc_html( $label ) . '</span>';
+        }
+
+        /**
+         * Render tag chips from comma separated list.
+         */
+        protected function render_tag_badges( string $tags ) : string {
+            $parts = array_filter( array_map( 'trim', explode( ',', $tags ) ) );
+
+            if ( empty( $parts ) ) {
+                return '<span class="cbm-muted">' . esc_html__( '—', 'codboost-money-manager' ) . '</span>';
+            }
+
+            $html = '<span class="cbm-tags">';
+            foreach ( $parts as $tag ) {
+                $html .= '<span class="cbm-tag">' . esc_html( $tag ) . '</span>';
+            }
+            $html .= '</span>';
+
+            return $html;
+        }
+
+        /**
+         * Compose story-driven insights from monthly data.
+         */
+        protected function build_insights_from_chart( array $labels, array $net, array $income, array $outcome ) : array {
+            $insights = [];
+
+            if ( empty( $net ) ) {
+                return $insights;
+            }
+
+            $base_currency = $this->get_default_currency();
+
+            $max_net   = max( $net );
+            $min_net   = min( $net );
+            $max_index = array_search( $max_net, $net, true );
+            $min_index = array_search( $min_net, $net, true );
+
+            if ( false !== $max_index && isset( $labels[ $max_index ] ) ) {
+                $insights[] = [
+                    'title'  => __( 'Best Month', 'codboost-money-manager' ),
+                    'detail' => sprintf(
+                        /* translators: 1: month label, 2: amount */
+                        __( '%1$s delivered %2$s net contribution.', 'codboost-money-manager' ),
+                        $labels[ $max_index ],
+                        $this->format_currency( $max_net, $base_currency )
+                    ),
+                ];
+            }
+
+            if ( false !== $min_index && isset( $labels[ $min_index ] ) ) {
+                $insights[] = [
+                    'title'  => __( 'Pressure Point', 'codboost-money-manager' ),
+                    'detail' => sprintf(
+                        __( '%1$s saw a %2$s dip — review spending or pricing.', 'codboost-money-manager' ),
+                        $labels[ $min_index ],
+                        $this->format_currency( abs( $min_net ), $base_currency )
+                    ),
+                ];
+            }
+
+            $recent_net    = end( $net );
+            $previous_net  = count( $net ) > 1 ? $net[ count( $net ) - 2 ] : 0;
+            $momentum_diff = $recent_net - $previous_net;
+            $momentum_copy = $momentum_diff >= 0
+                ? sprintf( __( 'Momentum up %s vs last month.', 'codboost-money-manager' ), $this->format_currency( $momentum_diff, $base_currency ) )
+                : sprintf( __( 'Momentum down %s vs last month.', 'codboost-money-manager' ), $this->format_currency( abs( $momentum_diff ), $base_currency ) );
+            $insights[]     = [
+                'title'  => __( 'Momentum', 'codboost-money-manager' ),
+                'detail' => $momentum_copy,
+            ];
+
+            $income_months = array_filter( $income, static function ( $value ) {
+                return abs( (float) $value ) > 0.01;
+            } );
+            $out_months = array_filter( $outcome, static function ( $value ) {
+                return abs( (float) $value ) > 0.01;
+            } );
+
+            if ( ! empty( $income_months ) ) {
+                $avg_income  = array_sum( $income_months ) / count( $income_months );
+                $avg_outcome = ! empty( $out_months ) ? array_sum( $out_months ) / count( $out_months ) : 0;
+                $insights[]  = [
+                    'title'  => __( 'Monthly Run Rate', 'codboost-money-manager' ),
+                    'detail' => sprintf(
+                        __( '%1$s inflow vs %2$s outflow on average.', 'codboost-money-manager' ),
+                        $this->format_currency( $avg_income, $base_currency ),
+                        $this->format_currency( $avg_outcome, $base_currency )
+                    ),
+                ];
+            }
+
+            return $insights;
         }
 
         /**

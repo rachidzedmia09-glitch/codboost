@@ -55,3 +55,41 @@ add_filter( 'the_content', function ( string $content ) : string {
 
     return $content;
 } );
+
+add_action( 'admin_notices', function () : void {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+
+    $screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+    if ( $screen && 'dashboard' !== $screen->id && 'toplevel_page_codboost-money-manager' !== $screen->id ) {
+        return;
+    }
+
+    if ( ! class_exists( 'Codboost_Money_Manager' ) ) {
+        echo '<div class="notice notice-warning"><p>' . wp_kses_post( sprintf(
+            /* translators: %s is a link */
+            __( 'Activate the Codboost Money Manager plugin to unlock the finance dashboard. %s', 'codboost-finance' ),
+            '<a href="' . esc_url( admin_url( 'plugins.php' ) ) . '">' . esc_html__( 'Activate now', 'codboost-finance' ) . '</a>'
+        ) ) . '</p></div>';
+        return;
+    }
+
+    if ( get_option( 'codboost_money_manager_demo_seeded' ) ) {
+        return;
+    }
+
+    $link = add_query_arg(
+        [
+            'page' => 'codboost-money-manager',
+            'tab'  => 'setup',
+        ],
+        admin_url( 'admin.php' )
+    );
+
+    echo '<div class="notice notice-info is-dismissible"><p>' . wp_kses_post( sprintf(
+        /* translators: %s is a link */
+        __( 'Import the Codboost finance demo data to explore analytics instantly. %s', 'codboost-finance' ),
+        '<a href="' . esc_url( $link ) . '">' . esc_html__( 'Launch setup', 'codboost-finance' ) . '</a>'
+    ) ) . '</p></div>';
+} );
