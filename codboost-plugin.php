@@ -62,9 +62,10 @@ if ( ! class_exists( 'Codboost_Marketing_Tools' ) ) {
             if ( is_admin() ) {
                 add_action( 'admin_menu', array( $this, 'register_settings_page' ) );
                 add_action( 'admin_init', array( $this, 'register_settings' ) );
-                add_action( 'add_meta_boxes', array( $this, 'register_product_metabox' ) );
-                add_action( 'save_post_product', array( $this, 'save_product_meta' ), 10, 2 );
                 add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
+                add_filter( 'woocommerce_product_data_tabs', array( $this, 'add_product_data_tab' ) );
+                add_action( 'woocommerce_product_data_panels', array( $this, 'render_product_data_panel' ) );
+                add_action( 'woocommerce_process_product_meta', array( $this, 'save_product_meta' ) );
             }
 
             add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_front_assets' ) );
@@ -87,13 +88,22 @@ if ( ! class_exists( 'Codboost_Marketing_Tools' ) ) {
          * @param string $hook Hook en cours.
          */
         public function enqueue_admin_assets( $hook ) {
-            if ( 'toplevel_page_codboost-bundle-settings' !== $hook ) {
+            if ( 'toplevel_page_codboost-bundle-settings' === $hook ) {
+                wp_enqueue_style( 'wp-color-picker' );
+                wp_enqueue_script( 'wp-color-picker' );
+                wp_add_inline_script( 'wp-color-picker', 'jQuery(function($){$(".codboost-color-field").wpColorPicker();});' );
+
                 return;
             }
 
-            wp_enqueue_style( 'wp-color-picker' );
-            wp_enqueue_script( 'wp-color-picker' );
-            wp_add_inline_script( 'wp-color-picker', 'jQuery(function($){$(".codboost-color-field").wpColorPicker();});' );
+            if ( in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) {
+                $screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+
+                if ( $screen && 'product' === $screen->post_type ) {
+                    wp_enqueue_script( 'wc-enhanced-select' );
+                    wp_enqueue_script( 'codboost-admin-product' );
+                }
+            }
         }
 
         /**
@@ -114,6 +124,16 @@ if ( ! class_exists( 'Codboost_Marketing_Tools' ) ) {
                 filemtime( plugin_dir_path( __FILE__ ) . 'assets/js/popup.js' ),
                 true
             );
+
+            if ( is_admin() ) {
+                wp_register_script(
+                    'codboost-admin-product',
+                    plugins_url( 'assets/js/admin-product.js', __FILE__ ),
+                    array( 'jquery' ),
+                    filemtime( plugin_dir_path( __FILE__ ) . 'assets/js/admin-product.js' ),
+                    true
+                );
+            }
         }
 
         /**
@@ -214,98 +234,115 @@ if ( ! class_exists( 'Codboost_Marketing_Tools' ) ) {
         }
 
         /**
-         * Ajoute la meta box sur le produit.
+         * Ajoute l'onglet personnalisé dans la fiche produit.
          */
-        public function register_product_metabox() {
-            add_meta_box(
-                'codboost_bundle_offer',
-                __( 'Offre Pop-up Codboost', 'codboost-marketing-tools' ),
-                array( $this, 'render_product_metabox' ),
-                'product',
-                'side',
-                'high'
+        public function add_product_data_tab( $tabs ) {
+            $tabs['codboost_bundle'] = array(
+                'label'    => __( 'Offre Codboost', 'codboost-marketing-tools' ),
+                'target'   => 'codboost_bundle_data',
+                'priority' => 75,
+                'class'    => array( 'show_if_simple', 'show_if_variable', 'show_if_grouped', 'show_if_external' ),
             );
+
+            return $tabs;
         }
 
         /**
-         * Affiche les champs de la meta box produit.
-         *
-         * @param WP_Post $post Current product.
+         * Affiche les champs personnalisés dans l'onglet produit.
          */
-        public function render_product_metabox( $post ) {
-            wp_nonce_field( 'codboost_bundle_meta', 'codboost_bundle_meta_nonce' );
+        public function render_product_data_panel() {
+            global $post;
 
-            $enabled  = (bool) get_post_meta( $post->ID, self::META_ENABLED, true );
-            $product  = (int) get_post_meta( $post->ID, self::META_PRODUCT, true );
-            $total    = get_post_meta( $post->ID, self::META_TOTAL, true );
-            $message  = get_post_meta( $post->ID, self::META_MESSAGE, true );
-
-            echo '<p><label for="codboost_bundle_enabled">';
-            esc_html_e( 'Activer l\'offre pop-up pour ce produit', 'codboost-marketing-tools' );
-            echo '</label></p>';
-            printf(
-                '<p><label><input type="checkbox" id="codboost_bundle_enabled" name="codboost_bundle_enabled" value="1" %s> %s</label></p>',
-                checked( $enabled, true, false ),
-                esc_html__( 'Oui, afficher la proposition après l\'ajout au panier', 'codboost-marketing-tools' )
-            );
-
-            if ( function_exists( 'wc_dropdown_products' ) ) {
-                echo '<p><label for="codboost_bundle_product_id">' . esc_html__( 'Produit mis en avant', 'codboost-marketing-tools' ) . '</label></p>';
-                echo wp_kses_post(
-                    wc_dropdown_products(
-                        array(
-                            'name'             => 'codboost_bundle_product_id',
-                            'id'               => 'codboost_bundle_product_id',
-                            'class'            => 'wc-product-search',
-                            'data-placeholder' => esc_attr__( 'Recherchez un produit…', 'codboost-marketing-tools' ),
-                            'limit'            => -1,
-                            'selected'         => $product,
-                            'return'           => 'id',
-                            'exclude'          => array( $post->ID ),
-                            'show_variations'  => false,
-                            'echo'             => false,
-                        )
-                    )
-                );
+            if ( ! $post || 'product' !== $post->post_type ) {
+                return;
             }
 
-            echo '<p><label for="codboost_bundle_total_price">' . esc_html__( 'Tarif total du pack (TTC)', 'codboost-marketing-tools' ) . '</label></p>';
-            printf(
-                '<p><input type="number" step="0.01" min="0" class="widefat" name="codboost_bundle_total_price" id="codboost_bundle_total_price" value="%s" placeholder="199.00"></p>',
-                esc_attr( $total )
-            );
+            $enabled   = (bool) get_post_meta( $post->ID, self::META_ENABLED, true );
+            $product   = (int) get_post_meta( $post->ID, self::META_PRODUCT, true );
+            $total     = get_post_meta( $post->ID, self::META_TOTAL, true );
+            $message   = get_post_meta( $post->ID, self::META_MESSAGE, true );
+            $selection = $product ? wc_get_product( $product ) : false;
 
-            echo '<p><label for="codboost_bundle_message">' . esc_html__( 'Message personnalisé', 'codboost-marketing-tools' ) . '</label></p>';
-            printf(
-                '<p><textarea class="widefat" rows="3" name="codboost_bundle_message" id="codboost_bundle_message" placeholder="%s">%s</textarea></p>',
-                esc_attr__( 'Ajoutez ce produit pour compléter votre univers Kids Luxe.', 'codboost-marketing-tools' ),
-                esc_textarea( $message )
-            );
+            wp_nonce_field( 'codboost_bundle_meta', 'codboost_bundle_meta_nonce' );
+            ?>
+            <div id="codboost_bundle_data" class="panel woocommerce_options_panel hidden">
+                <div class="options_group">
+                    <?php
+                    woocommerce_wp_checkbox(
+                        array(
+                            'id'          => 'codboost_bundle_enabled',
+                            'label'       => __( 'Activer le pop-up', 'codboost-marketing-tools' ),
+                            'description' => __( 'Affiche la fenêtre promotionnelle après l\'ajout au panier.', 'codboost-marketing-tools' ),
+                            'value'       => $enabled ? 'yes' : 'no',
+                            'desc_tip'    => true,
+                        )
+                    );
+                    ?>
+                </div>
+                <div class="options_group codboost-bundle-dependent-group">
+                    <p class="form-field codboost_bundle_product_field codboost-bundle-dependent">
+                        <label for="codboost_bundle_product_id"><?php esc_html_e( 'Produit proposé', 'codboost-marketing-tools' ); ?></label>
+                        <select class="wc-product-search" id="codboost_bundle_product_id" name="codboost_bundle_product_id" data-action="woocommerce_json_search_products_and_variations" data-placeholder="<?php esc_attr_e( 'Recherchez un produit…', 'codboost-marketing-tools' ); ?>" data-exclude="<?php echo esc_attr( $post->ID ); ?>">
+                            <?php
+                            if ( $selection ) {
+                                echo '<option value="' . esc_attr( $selection->get_id() ) . '" selected>' . wp_kses_post( $selection->get_formatted_name() ) . '</option>';
+                            }
+                            ?>
+                        </select>
+                        <span class="description"><?php esc_html_e( 'Choisissez le produit complémentaire à mettre en avant.', 'codboost-marketing-tools' ); ?></span>
+                    </p>
+                    <?php
+                    woocommerce_wp_text_input(
+                        array(
+                            'id'            => 'codboost_bundle_total_price',
+                            'label'         => __( 'Tarif total du pack (TTC)', 'codboost-marketing-tools' ),
+                            'type'          => 'number',
+                            'custom_attributes' => array(
+                                'step' => '0.01',
+                                'min'  => '0',
+                            ),
+                            'value'         => $total,
+                            'wrapper_class' => 'codboost-bundle-dependent',
+                            'description'   => __( 'Définissez le prix promotionnel global pour les deux produits.', 'codboost-marketing-tools' ),
+                            'desc_tip'      => true,
+                        )
+                    );
+
+                    woocommerce_wp_textarea_input(
+                        array(
+                            'id'            => 'codboost_bundle_message',
+                            'label'         => __( 'Message personnalisé', 'codboost-marketing-tools' ),
+                            'value'         => $message,
+                            'description'   => __( 'Texte affiché sous l\'offre pour convaincre le client.', 'codboost-marketing-tools' ),
+                            'wrapper_class' => 'codboost-bundle-dependent',
+                            'desc_tip'      => true,
+                            'placeholder'   => __( 'Ajoutez ce produit pour compléter votre univers Kids Luxe.', 'codboost-marketing-tools' ),
+                        )
+                    );
+                    ?>
+                </div>
+            </div>
+            <?php
         }
 
         /**
-         * Sauvegarde les données de la meta box.
+         * Sauvegarde les données personnalisées du produit.
          *
-         * @param int     $post_id Post ID.
-         * @param WP_Post $post    Post object.
+         * @param int $post_id Product ID.
          */
-        public function save_product_meta( $post_id, $post ) {
+        public function save_product_meta( $post_id ) {
             if ( ! isset( $_POST['codboost_bundle_meta_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['codboost_bundle_meta_nonce'] ), 'codboost_bundle_meta' ) ) {
                 return;
             }
 
-            if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+            if ( ! current_user_can( 'edit_product', $post_id ) ) {
                 return;
             }
 
-            if ( 'product' !== $post->post_type || ! current_user_can( 'edit_product', $post_id ) ) {
-                return;
-            }
-
-            $enabled = isset( $_POST['codboost_bundle_enabled'] ) ? '1' : '';
+            $enabled = isset( $_POST['codboost_bundle_enabled'] ) && 'yes' === wc_clean( wp_unslash( $_POST['codboost_bundle_enabled'] ) ) ? '1' : '';
             update_post_meta( $post_id, self::META_ENABLED, $enabled );
 
-            $product_id = isset( $_POST['codboost_bundle_product_id'] ) ? absint( $_POST['codboost_bundle_product_id'] ) : 0;
+            $product_id = isset( $_POST['codboost_bundle_product_id'] ) ? absint( wp_unslash( $_POST['codboost_bundle_product_id'] ) ) : 0;
             update_post_meta( $post_id, self::META_PRODUCT, $product_id );
 
             $total_price = isset( $_POST['codboost_bundle_total_price'] ) ? wc_format_decimal( wp_unslash( $_POST['codboost_bundle_total_price'] ) ) : '';
