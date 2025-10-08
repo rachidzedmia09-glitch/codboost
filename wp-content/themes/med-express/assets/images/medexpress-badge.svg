@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title desc">
+  <title id="title">Med Express Delivery Badge</title>
+  <desc id="desc">A circular badge with parcel icon and swoosh.</desc>
+  <defs>
+    <linearGradient id="gradBadge" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff8a24"/>
+      <stop offset="100%" stop-color="#ff512f"/>
+    </linearGradient>
+  </defs>
+  <circle cx="60" cy="60" r="58" fill="#0c0c0f" stroke="url(#gradBadge)" stroke-width="4"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="5">
+    <path d="M40 80h40c4.4 0 8-3.6 8-8V48L72 32H48l-16 16v24c0 4.4 3.6 8 8 8z" stroke="#ffffff"/>
+    <path d="M48 52h24" stroke="#ffffff"/>
+    <path d="M38 70c10 12 38 18 58-4" stroke="url(#gradBadge)"/>
+  </g>
+</svg>

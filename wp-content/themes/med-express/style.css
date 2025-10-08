@@ -1,0 +1,23 @@
+/*
+Theme Name: Med Express Delivery
+Theme URI: https://medexpress.example.com
+Author: Codex AI
+Author URI: https://openai.com/
+Description: A vibrant, conversion-focused WordPress theme crafted for Algerian courier and logistics companies. It features a bold hero area, service highlights, pricing tables, testimonials, FAQs, and fully responsive design tuned for lead generation.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.5
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: med-express
+Tags: custom-colors, custom-logo, custom-menu, featured-images, footer-widgets, full-width-template, theme-options, translation-ready
+*/
+
+/*
+ * The main stylesheet intentionally only defines the theme header and imports
+ * the compiled styles located in assets/css/main.css. This keeps WordPress
+ * compatibility while allowing modular CSS organization.
+ */
+
+@import url('assets/css/main.css');
