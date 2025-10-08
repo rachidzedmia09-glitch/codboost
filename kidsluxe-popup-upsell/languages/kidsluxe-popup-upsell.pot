@@ -1,0 +1,144 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Kids-Luxe Pop-Up Upsell 1.0.0\n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: kidsluxe-popup-upsell\n"
+
+#. translators: plugin name
+msgid "Kids-Luxe Pop-Up Upsell by Codboost"
+msgstr ""
+
+msgid "Pop-Up Upsell Kids-Luxe"
+msgstr ""
+
+msgid "Kids-Luxe Pop-Up Upsell"
+msgstr ""
+
+msgid "Kids-Luxe Pop-Up"
+msgstr ""
+
+msgid "Activer le pop-up pour ce produit"
+msgstr ""
+
+msgid "Active l’upsell Kids-Luxe pour ce produit."
+msgstr ""
+
+msgid "Produit à proposer"
+msgstr ""
+
+msgid "Sélectionnez le produit à proposer dans le pop-up."
+msgstr ""
+
+msgid "Type de profit"
+msgstr ""
+
+msgid "Montant fixe"
+msgstr ""
+
+msgid "Pourcentage"
+msgstr ""
+
+msgid "Valeur du profit"
+msgstr ""
+
+msgid "Montant ou pourcentage ajouté au prix du produit proposé."
+msgstr ""
+
+msgid "Déclencheurs"
+msgstr ""
+
+msgid "Ajouter au panier"
+msgstr ""
+
+msgid "Acheter maintenant"
+msgstr ""
+
+msgid "Activer globalement"
+msgstr ""
+
+msgid "Activer tous les pop-ups Kids-Luxe."
+msgstr ""
+
+msgid "Sélecteur CSS « Acheter maintenant »"
+msgstr ""
+
+msgid "Définissez le sélecteur CSS pour détecter le bouton « Acheter maintenant »."
+msgstr ""
+
+msgid "Textes du pop-up"
+msgstr ""
+
+msgid "Configuration générale"
+msgstr ""
+
+msgid "Titre"
+msgstr ""
+
+msgid "Sous-titre"
+msgstr ""
+
+msgid "Bouton accepter"
+msgstr ""
+
+msgid "Bouton refuser"
+msgstr ""
+
+msgid "Afficher la mention de marge"
+msgstr ""
+
+msgid "Afficher l’information « inclut une marge Kids-Luxe »."
+msgstr ""
+
+msgid "Complétez votre commande"
+msgstr ""
+
+msgid "Profitez de notre sélection exclusive Kids-Luxe."
+msgstr ""
+
+msgid "Ajouter l’offre"
+msgstr ""
+
+msgid "Non merci"
+msgstr ""
+
+msgid "Prix spécial :"
+msgstr ""
+
+msgid "Inclut une marge Kids-Luxe."
+msgstr ""
+
+msgid "Rechercher un produit…"
+msgstr ""
+
+msgid "Kids-Luxe Pop-Up Upsell nécessite WooCommerce pour fonctionner."
+msgstr ""
+
+msgid "Offre Kids-Luxe"
+msgstr ""
+
+msgid "Prix spécial"
+msgstr ""
+
+msgid "Offre ajoutée au panier."
+msgstr ""
+
+msgid "Impossible d’ajouter l’offre."
+msgstr ""
+
+msgid "Produit invalide."
+msgstr ""
+
+msgid "Produit indisponible."
+msgstr ""
+
+msgid "Panier indisponible."
+msgstr ""
+
+msgid "Upsell désactivé."
+msgstr ""
+
+msgid "Fermer le pop-up"
+msgstr ""
