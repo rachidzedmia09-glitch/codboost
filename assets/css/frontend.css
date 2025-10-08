@@ -1,0 +1,195 @@
+.codboost-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 20, 40, 0.55);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+body.codboost-popup-open {
+    overflow: hidden;
+}
+
+.codboost-overlay.is-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.codboost-popup {
+    width: min(560px, 92vw);
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 32px 60px rgba(0, 26, 64, 0.18);
+    position: relative;
+    animation: codboost-slide-up 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    color: #1f2a44;
+}
+
+.codboost-popup-header {
+    padding: 28px 32px 12px;
+    border-bottom: 1px solid rgba(15, 33, 64, 0.08);
+}
+
+.codboost-popup-header span.codboost-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12px;
+    color: #fff;
+    background: #274472;
+    border-radius: 999px;
+    padding: 6px 14px;
+}
+
+.codboost-popup-header h3 {
+    font-size: 28px;
+    line-height: 1.2;
+    margin: 18px 0 10px;
+}
+
+.codboost-popup-header p {
+    margin: 0;
+    font-size: 16px;
+    color: rgba(31, 42, 68, 0.75);
+}
+
+.codboost-popup-body {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 24px;
+    padding: 28px 32px 32px;
+}
+
+.codboost-popup-product img {
+    width: 100%;
+    border-radius: 18px;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+}
+
+.codboost-popup-product h4 {
+    font-size: 18px;
+    margin: 0 0 10px;
+}
+
+.codboost-popup-pricing {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.codboost-popup-pricing .codboost-original {
+    font-size: 15px;
+}
+
+.codboost-popup-pricing .codboost-economy {
+    font-size: 16px;
+    color: #1f8445;
+}
+
+.codboost-popup-pricing .codboost-total {
+    font-size: 22px;
+    font-weight: 700;
+    color: #274472;
+}
+
+.codboost-popup-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.codboost-popup-actions .codboost-btn {
+    padding: 14px 24px;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.codboost-btn-primary {
+    background: #274472;
+    color: #fff;
+    box-shadow: 0 12px 30px rgba(39, 68, 114, 0.25);
+}
+
+.codboost-btn-primary:hover,
+.codboost-btn-primary:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 18px 36px rgba(39, 68, 114, 0.35);
+}
+
+.codboost-btn-ghost {
+    background: transparent;
+    color: #274472;
+    border-color: rgba(39, 68, 114, 0.4);
+}
+
+.codboost-btn-ghost:hover,
+.codboost-btn-ghost:focus {
+    border-color: #274472;
+}
+
+.codboost-close-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: rgba(255, 255, 255, 0.85);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+    color: #1f2a44;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(12, 20, 36, 0.1);
+}
+
+.codboost-close-btn:hover,
+.codboost-close-btn:focus {
+    background: #274472;
+    color: #fff;
+}
+
+@media (max-width: 720px) {
+    .codboost-popup-body {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .codboost-popup-actions {
+        justify-content: center;
+    }
+
+    .codboost-popup-header {
+        padding: 24px 24px 12px;
+    }
+
+    .codboost-popup-body {
+        padding: 24px;
+    }
+}
+
+@keyframes codboost-slide-up {
+    from {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
