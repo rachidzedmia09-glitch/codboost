@@ -1,0 +1,27 @@
+/*
+ * Styles de base – les couleurs sont injectées dynamiquement via wp_add_inline_style.
+ */
+.codboost-marketing-block .products .product img {
+    border-radius: 14px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.codboost-marketing-block .products .product:hover img {
+    transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+    .codboost-marketing-block {
+        padding: 24px;
+    }
+
+    .codboost-marketing-popup {
+        right: 20px;
+        left: 20px;
+        bottom: 20px;
+        max-width: none;
+    }
+}
