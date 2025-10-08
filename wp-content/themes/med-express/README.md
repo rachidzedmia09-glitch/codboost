@@ -11,6 +11,7 @@ A clean, Elementor-ready WordPress theme crafted for Algerian courier, last-mile
 - **Translation-ready** strings using the `med-express` text domain and support for custom logos.
 - **One-click demo kit** – import Elementor layouts, pages, menus, and widgets that mirror the Med Express demo in a single action.
 - **Plugin onboarding** – bundled integration with TGM Plugin Activation to prompt installation of Elementor, Header & Footer Builder, One Click Demo Import, Contact Form 7, and WP Mail SMTP.
+- **Brand style guide** – Elementor template showcasing official logos, palette, typography, and component guidance for collaborators.
 
 ## Installation
 
@@ -37,7 +38,7 @@ The starter kit consumed by One Click Demo Import lives in the theme at `demo/`:
 - `content.xml` – base pages, blog post, and taxonomy terms.
 - `widgets.json` – footer widget configuration to mirror the preview site.
 - `customizer.dat` – placeholder Customizer data to ensure a clean import.
-- `elementor/` – Elementor JSON exports for the home, services, pricing, contact, header, and footer layouts.
+- `elementor/` – Elementor JSON exports for the home, services, pricing, contact, header, footer, and brand guide layouts.
 
 Feel free to modify these files or add additional Elementor templates. Any `.json` file added to `demo/elementor/` will be imported automatically and can optionally target a page by including an `assign_to` block or define a Theme Builder location via the `location` key.
 

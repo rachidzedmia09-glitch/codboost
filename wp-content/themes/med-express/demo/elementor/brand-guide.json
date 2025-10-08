@@ -1,0 +1,1273 @@
+{
+  "version": "0.4",
+  "title": "Brand Guide",
+  "type": "page",
+  "assign_to": {
+    "post_title": "Brand Guide",
+    "post_type": "page"
+  },
+  "page_settings": {
+    "page_title": "Brand Guide",
+    "hide_title": "yes"
+  },
+  "content": [
+    {
+      "id": "brand-hero",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "content_width": "boxed",
+        "gap": "extended",
+        "padding": {
+          "unit": "px",
+          "top": "120",
+          "right": "40",
+          "bottom": "100",
+          "left": "40",
+          "isLinked": false
+        },
+        "background_background": "gradient",
+        "background_color": "#0f172a",
+        "background_color_b": "#1e293b",
+        "background_gradient_type": "linear",
+        "background_gradient_angle": 135,
+        "shape_divider_bottom": "tilt"
+      },
+      "elements": [
+        {
+          "id": "brand-hero-column",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "brand-hero-badge",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Med Express Delivery",
+                "header_size": "h6",
+                "typography_typography": "custom",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 16
+                },
+                "typography_font_weight": "600",
+                "text_color": "#22d3ee",
+                "align": "center"
+              }
+            },
+            {
+              "id": "brand-hero-heading",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Brand Identity System",
+                "header_size": "h1",
+                "align": "center",
+                "typography_typography": "custom",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 48
+                },
+                "typography_font_weight": "700",
+                "text_color": "#f8fafc"
+              }
+            },
+            {
+              "id": "brand-hero-text",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"text-align:center;color:#e2e8f0;font-size:18px;line-height:1.7\">Our mission is to make Algeria’s marketplaces move faster with human-first courier experiences. This brand guide keeps every Med Express touchpoint consistent, confident, and conversion-driven.</p>"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brand-logos",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "content_width": "boxed",
+        "gap": "extended",
+        "padding": {
+          "unit": "px",
+          "top": "80",
+          "right": "0",
+          "bottom": "40",
+          "left": "0",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "brand-logos-column",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "brand-logos-heading",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Logo Usage",
+                "header_size": "h2",
+                "align": "center",
+                "typography_typography": "custom",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 36
+                },
+                "typography_font_weight": "600"
+              }
+            },
+            {
+              "id": "brand-logos-text",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"text-align:center;color:#475569;font-size:17px\">Use the full lockup in primary communications and the badge for app icons and compact placements. Maintain generous clear space equal to the width of the \u201cM\u201d around the logo.</p>"
+              }
+            },
+            {
+              "id": "brand-logos-inner",
+              "elType": "section",
+              "isInner": true,
+              "settings": {
+                "gap": "wide"
+              },
+              "elements": [
+                {
+                  "id": "brand-logo-primary",
+                  "elType": "column",
+                  "isInner": true,
+                  "settings": {
+                    "_column_size": 50,
+                    "background_background": "classic",
+                    "background_color": "#f8fafc",
+                    "padding": {
+                      "unit": "px",
+                      "top": "40",
+                      "right": "40",
+                      "bottom": "40",
+                      "left": "40",
+                      "isLinked": true
+                    },
+                    "border_radius": {
+                      "unit": "px",
+                      "top": "20",
+                      "right": "20",
+                      "bottom": "20",
+                      "left": "20",
+                      "isLinked": true
+                    },
+                    "box_shadow_box_shadow_type": "yes",
+                    "box_shadow_box_shadow": {
+                      "horizontal": 0,
+                      "vertical": 20,
+                      "blur": 45,
+                      "spread": -25,
+                      "color": "rgba(15,23,42,0.16)"
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "brand-logo-primary-image",
+                      "elType": "widget",
+                      "widgetType": "image",
+                      "settings": {
+                        "image": {
+                          "url": "{{site_url}}/wp-content/themes/med-express/assets/images/medexpress-logo-dark.svg"
+                        },
+                        "align": "center"
+                      }
+                    },
+                    {
+                      "id": "brand-logo-primary-caption",
+                      "elType": "widget",
+                      "widgetType": "text-editor",
+                      "settings": {
+                        "editor": "<p style=\"text-align:center;color:#0f172a;font-weight:600\">Primary logotype for light backgrounds</p>"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "brand-logo-badge",
+                  "elType": "column",
+                  "isInner": true,
+                  "settings": {
+                    "_column_size": 50,
+                    "background_background": "classic",
+                    "background_color": "#0f172a",
+                    "padding": {
+                      "unit": "px",
+                      "top": "40",
+                      "right": "40",
+                      "bottom": "40",
+                      "left": "40",
+                      "isLinked": true
+                    },
+                    "border_radius": {
+                      "unit": "px",
+                      "top": "20",
+                      "right": "20",
+                      "bottom": "20",
+                      "left": "20",
+                      "isLinked": true
+                    },
+                    "box_shadow_box_shadow_type": "yes",
+                    "box_shadow_box_shadow": {
+                      "horizontal": 0,
+                      "vertical": 20,
+                      "blur": 45,
+                      "spread": -25,
+                      "color": "rgba(15,23,42,0.45)"
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "brand-logo-badge-image",
+                      "elType": "widget",
+                      "widgetType": "image",
+                      "settings": {
+                        "image": {
+                          "url": "{{site_url}}/wp-content/themes/med-express/assets/images/medexpress-badge.svg"
+                        },
+                        "align": "center"
+                      }
+                    },
+                    {
+                      "id": "brand-logo-badge-caption",
+                      "elType": "widget",
+                      "widgetType": "text-editor",
+                      "settings": {
+                        "editor": "<p style=\"text-align:center;color:#f8fafc;font-weight:600\">Badge for dark backgrounds &amp; avatar use</p>"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brand-colors",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "content_width": "boxed",
+        "gap": "wide",
+        "padding": {
+          "unit": "px",
+          "top": "80",
+          "right": "0",
+          "bottom": "80",
+          "left": "0",
+          "isLinked": false
+        },
+        "background_background": "classic",
+        "background_color": "#f1f5f9"
+      },
+      "elements": [
+        {
+          "id": "brand-colors-column",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "brand-colors-heading",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Color Palette",
+                "header_size": "h2",
+                "align": "center",
+                "typography_typography": "custom",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 36
+                },
+                "typography_font_weight": "600"
+              }
+            },
+            {
+              "id": "brand-colors-text",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"text-align:center;color:#475569;font-size:17px\">Our palette balances trustworthy navy with energetic aqua and commerce-driven accents. Use neutral fog for spacious layouts.</p>"
+              }
+            },
+            {
+              "id": "brand-colors-swatches",
+              "elType": "section",
+              "isInner": true,
+              "settings": {
+                "gap": "wide"
+              },
+              "elements": [
+                {
+                  "id": "swatch-primary",
+                  "elType": "column",
+                  "isInner": true,
+                  "settings": {
+                    "_column_size": 25,
+                    "background_background": "classic",
+                    "background_color": "#0f172a",
+                    "padding": {
+                      "unit": "px",
+                      "top": "40",
+                      "right": "20",
+                      "bottom": "40",
+                      "left": "20",
+                      "isLinked": true
+                    },
+                    "border_radius": {
+                      "unit": "px",
+                      "top": "16",
+                      "right": "16",
+                      "bottom": "16",
+                      "left": "16",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "swatch-primary-heading",
+                      "elType": "widget",
+                      "widgetType": "heading",
+                      "settings": {
+                        "title": "Primary Navy",
+                        "header_size": "h4",
+                        "align": "center",
+                        "text_color": "#f8fafc"
+                      }
+                    },
+                    {
+                      "id": "swatch-primary-code",
+                      "elType": "widget",
+                      "widgetType": "text-editor",
+                      "settings": {
+                        "editor": "<p style=\"text-align:center;color:#cbd5f5;font-weight:600\">#0F172A</p><p style=\"text-align:center;color:#cbd5f5;font-size:14px\">Backgrounds, headlines, buttons</p>"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "swatch-secondary",
+                  "elType": "column",
+                  "isInner": true,
+                  "settings": {
+                    "_column_size": 25,
+                    "background_background": "classic",
+                    "background_color": "#22d3ee",
+                    "padding": {
+                      "unit": "px",
+                      "top": "40",
+                      "right": "20",
+                      "bottom": "40",
+                      "left": "20",
+                      "isLinked": true
+                    },
+                    "border_radius": {
+                      "unit": "px",
+                      "top": "16",
+                      "right": "16",
+                      "bottom": "16",
+                      "left": "16",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "swatch-secondary-heading",
+                      "elType": "widget",
+                      "widgetType": "heading",
+                      "settings": {
+                        "title": "Express Aqua",
+                        "header_size": "h4",
+                        "align": "center",
+                        "text_color": "#0f172a"
+                      }
+                    },
+                    {
+                      "id": "swatch-secondary-code",
+                      "elType": "widget",
+                      "widgetType": "text-editor",
+                      "settings": {
+                        "editor": "<p style=\"text-align:center;color:#083344;font-weight:600\">#22D3EE</p><p style=\"text-align:center;color:#083344;font-size:14px\">Highlights, icons, CTAs</p>"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "swatch-accent",
+                  "elType": "column",
+                  "isInner": true,
+                  "settings": {
+                    "_column_size": 25,
+                    "background_background": "classic",
+                    "background_color": "#f97316",
+                    "padding": {
+                      "unit": "px",
+                      "top": "40",
+                      "right": "20",
+                      "bottom": "40",
+                      "left": "20",
+                      "isLinked": true
+                    },
+                    "border_radius": {
+                      "unit": "px",
+                      "top": "16",
+                      "right": "16",
+                      "bottom": "16",
+                      "left": "16",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "swatch-accent-heading",
+                      "elType": "widget",
+                      "widgetType": "heading",
+                      "settings": {
+                        "title": "Marketplace Orange",
+                        "header_size": "h4",
+                        "align": "center",
+                        "text_color": "#0f172a"
+                      }
+                    },
+                    {
+                      "id": "swatch-accent-code",
+                      "elType": "widget",
+                      "widgetType": "text-editor",
+                      "settings": {
+                        "editor": "<p style=\"text-align:center;color:#431407;font-weight:600\">#F97316</p><p style=\"text-align:center;color:#431407;font-size:14px\">Promotions, urgency</p>"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "swatch-neutral",
+                  "elType": "column",
+                  "isInner": true,
+                  "settings": {
+                    "_column_size": 25,
+                    "background_background": "classic",
+                    "background_color": "#f8fafc",
+                    "padding": {
+                      "unit": "px",
+                      "top": "40",
+                      "right": "20",
+                      "bottom": "40",
+                      "left": "20",
+                      "isLinked": true
+                    },
+                    "border_radius": {
+                      "unit": "px",
+                      "top": "16",
+                      "right": "16",
+                      "bottom": "16",
+                      "left": "16",
+                      "isLinked": true
+                    },
+                    "border_border": "solid",
+                    "border_width": {
+                      "unit": "px",
+                      "top": "1",
+                      "right": "1",
+                      "bottom": "1",
+                      "left": "1",
+                      "isLinked": true
+                    },
+                    "border_color": "#e2e8f0"
+                  },
+                  "elements": [
+                    {
+                      "id": "swatch-neutral-heading",
+                      "elType": "widget",
+                      "widgetType": "heading",
+                      "settings": {
+                        "title": "Fog Neutral",
+                        "header_size": "h4",
+                        "align": "center",
+                        "text_color": "#0f172a"
+                      }
+                    },
+                    {
+                      "id": "swatch-neutral-code",
+                      "elType": "widget",
+                      "widgetType": "text-editor",
+                      "settings": {
+                        "editor": "<p style=\"text-align:center;color:#475569;font-weight:600\">#F8FAFC</p><p style=\"text-align:center;color:#475569;font-size:14px\">Backgrounds, cards</p>"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brand-typography",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "content_width": "boxed",
+        "gap": "extended",
+        "padding": {
+          "unit": "px",
+          "top": "80",
+          "right": "0",
+          "bottom": "80",
+          "left": "0",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "brand-typography-column",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "brand-typography-heading",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Typography",
+                "header_size": "h2",
+                "align": "center",
+                "typography_typography": "custom",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 36
+                },
+                "typography_font_weight": "600"
+              }
+            },
+            {
+              "id": "brand-typography-text",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"text-align:center;color:#475569;font-size:17px\">Inter keeps digital experiences crisp while DM Serif Display adds warmth to hero statements. Maintain generous spacing for legibility.</p>"
+              }
+            },
+            {
+              "id": "brand-typography-inner",
+              "elType": "section",
+              "isInner": true,
+              "settings": {
+                "gap": "wide"
+              },
+              "elements": [
+                {
+                  "id": "typography-display",
+                  "elType": "column",
+                  "isInner": true,
+                  "settings": {
+                    "_column_size": 50,
+                    "background_background": "classic",
+                    "background_color": "#f8fafc",
+                    "padding": {
+                      "unit": "px",
+                      "top": "40",
+                      "right": "40",
+                      "bottom": "40",
+                      "left": "40",
+                      "isLinked": true
+                    },
+                    "border_radius": {
+                      "unit": "px",
+                      "top": "16",
+                      "right": "16",
+                      "bottom": "16",
+                      "left": "16",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "typography-display-heading",
+                      "elType": "widget",
+                      "widgetType": "heading",
+                      "settings": {
+                        "title": "DM Serif Display",
+                        "header_size": "h3",
+                        "text_color": "#0f172a",
+                        "typography_typography": "custom",
+                        "typography_font_family": "\"DM Serif Display\"",
+                        "typography_font_size": {
+                          "unit": "px",
+                          "size": 32
+                        }
+                      }
+                    },
+                    {
+                      "id": "typography-display-sample",
+                      "elType": "widget",
+                      "widgetType": "heading",
+                      "settings": {
+                        "title": "Reliable logistics for every Algerian city",
+                        "header_size": "h2",
+                        "text_color": "#0f172a",
+                        "typography_typography": "custom",
+                        "typography_font_family": "\"DM Serif Display\"",
+                        "typography_font_size": {
+                          "unit": "px",
+                          "size": 42
+                        },
+                        "typography_line_height": {
+                          "unit": "em",
+                          "size": 1.2
+                        }
+                      }
+                    },
+                    {
+                      "id": "typography-display-details",
+                      "elType": "widget",
+                      "widgetType": "text-editor",
+                      "settings": {
+                        "editor": "<p style=\"color:#475569;font-size:15px\">Use in hero headings, pull quotes, and premium CTAs. Track at 0.5% for uppercase applications.</p>"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "typography-body",
+                  "elType": "column",
+                  "isInner": true,
+                  "settings": {
+                    "_column_size": 50,
+                    "background_background": "classic",
+                    "background_color": "#0f172a",
+                    "padding": {
+                      "unit": "px",
+                      "top": "40",
+                      "right": "40",
+                      "bottom": "40",
+                      "left": "40",
+                      "isLinked": true
+                    },
+                    "border_radius": {
+                      "unit": "px",
+                      "top": "16",
+                      "right": "16",
+                      "bottom": "16",
+                      "left": "16",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "typography-body-heading",
+                      "elType": "widget",
+                      "widgetType": "heading",
+                      "settings": {
+                        "title": "Inter",
+                        "header_size": "h3",
+                        "text_color": "#22d3ee",
+                        "typography_typography": "custom",
+                        "typography_font_family": "Inter",
+                        "typography_font_size": {
+                          "unit": "px",
+                          "size": 32
+                        }
+                      }
+                    },
+                    {
+                      "id": "typography-body-sample",
+                      "elType": "widget",
+                      "widgetType": "text-editor",
+                      "settings": {
+                        "editor": "<p style=\"color:#f8fafc;font-size:18px;line-height:1.8\">From parcel notifications to help center articles, Inter keeps our tone approachable and high-performance. Maintain 24px line height for paragraphs and 12px minimum font size for microcopy.</p>"
+                      }
+                    },
+                    {
+                      "id": "typography-body-details",
+                      "elType": "widget",
+                      "widgetType": "text-editor",
+                      "settings": {
+                        "editor": "<p style=\"color:#cbd5f5;font-size:14px\"><strong>Weights:</strong> 400, 500, 600 <br><strong>Letter spacing:</strong> 0 to 1% <br><strong>Use cases:</strong> Body copy, buttons, inputs, labels</p>"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brand-imagery",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "content_width": "boxed",
+        "gap": "extended",
+        "padding": {
+          "unit": "px",
+          "top": "80",
+          "right": "0",
+          "bottom": "80",
+          "left": "0",
+          "isLinked": false
+        },
+        "background_background": "classic",
+        "background_color": "#ffffff"
+      },
+      "elements": [
+        {
+          "id": "brand-imagery-columns",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "brand-imagery-heading",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Imagery & Voice",
+                "header_size": "h2",
+                "align": "center",
+                "typography_typography": "custom",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 36
+                },
+                "typography_font_weight": "600"
+              }
+            },
+            {
+              "id": "brand-imagery-text",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"text-align:center;color:#475569;font-size:17px\">Pair kinetic courier photography with real marketplace merchants. Communicate with confident, supportive language that removes friction for busy sellers.</p>"
+              }
+            },
+            {
+              "id": "brand-imagery-inner",
+              "elType": "section",
+              "isInner": true,
+              "settings": {
+                "gap": "wide"
+              },
+              "elements": [
+                {
+                  "id": "imagery-photo",
+                  "elType": "column",
+                  "isInner": true,
+                  "settings": {
+                    "_column_size": 50,
+                    "background_background": "classic",
+                    "background_color": "#f8fafc",
+                    "padding": {
+                      "unit": "px",
+                      "top": "40",
+                      "right": "40",
+                      "bottom": "40",
+                      "left": "40",
+                      "isLinked": true
+                    },
+                    "border_radius": {
+                      "unit": "px",
+                      "top": "16",
+                      "right": "16",
+                      "bottom": "16",
+                      "left": "16",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "imagery-photo-image",
+                      "elType": "widget",
+                      "widgetType": "image",
+                      "settings": {
+                        "image": {
+                          "url": "https://images.unsplash.com/photo-1529074963764-98f45c47344b?auto=format&fit=crop&w=960&q=80"
+                        },
+                        "image_size": "full",
+                        "border_radius": {
+                          "unit": "px",
+                          "top": "12",
+                          "right": "12",
+                          "bottom": "12",
+                          "left": "12",
+                          "isLinked": true
+                        }
+                      }
+                    },
+                    {
+                      "id": "imagery-photo-caption",
+                      "elType": "widget",
+                      "widgetType": "text-editor",
+                      "settings": {
+                        "editor": "<p style=\"color:#0f172a;font-weight:600\">Photography</p><p style=\"color:#475569;font-size:15px\">Capture real drivers, parcels, and marketplaces in motion. Favor natural light and dynamic angles.</p>"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "imagery-voice",
+                  "elType": "column",
+                  "isInner": true,
+                  "settings": {
+                    "_column_size": 50,
+                    "background_background": "classic",
+                    "background_color": "#0f172a",
+                    "padding": {
+                      "unit": "px",
+                      "top": "40",
+                      "right": "40",
+                      "bottom": "40",
+                      "left": "40",
+                      "isLinked": true
+                    },
+                    "border_radius": {
+                      "unit": "px",
+                      "top": "16",
+                      "right": "16",
+                      "bottom": "16",
+                      "left": "16",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "imagery-voice-heading",
+                      "elType": "widget",
+                      "widgetType": "heading",
+                      "settings": {
+                        "title": "Voice Principles",
+                        "header_size": "h3",
+                        "text_color": "#22d3ee"
+                      }
+                    },
+                    {
+                      "id": "imagery-voice-list",
+                      "elType": "widget",
+                      "widgetType": "icon-list",
+                      "settings": {
+                        "icon_list": [
+                          {
+                            "text": "Proactive: anticipate merchant needs",
+                            "icon": {
+                              "value": "fas fa-check-circle"
+                            }
+                          },
+                          {
+                            "text": "Assured: show operational excellence",
+                            "icon": {
+                              "value": "fas fa-check-circle"
+                            }
+                          },
+                          {
+                            "text": "Human: celebrate our rider community",
+                            "icon": {
+                              "value": "fas fa-check-circle"
+                            }
+                          }
+                        ],
+                        "text_color": "#f8fafc",
+                        "icon_color": "#22d3ee",
+                        "typography_typography": "custom",
+                        "typography_font_size": {
+                          "unit": "px",
+                          "size": 16
+                        },
+                        "space_between": 15
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brand-components",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "content_width": "boxed",
+        "gap": "extended",
+        "padding": {
+          "unit": "px",
+          "top": "80",
+          "right": "0",
+          "bottom": "80",
+          "left": "0",
+          "isLinked": false
+        },
+        "background_background": "classic",
+        "background_color": "#f1f5f9"
+      },
+      "elements": [
+        {
+          "id": "brand-components-column",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "brand-components-heading",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "UI Components",
+                "header_size": "h2",
+                "align": "center",
+                "typography_typography": "custom",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 36
+                },
+                "typography_font_weight": "600"
+              }
+            },
+            {
+              "id": "brand-components-text",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"text-align:center;color:#475569;font-size:17px\">Buttons, cards, and stats should feel responsive and tech-forward. Use subtle shadows and rounded corners to echo the speed of delivery.</p>"
+              }
+            },
+            {
+              "id": "brand-components-inner",
+              "elType": "section",
+              "isInner": true,
+              "settings": {
+                "gap": "wide"
+              },
+              "elements": [
+                {
+                  "id": "component-button",
+                  "elType": "column",
+                  "isInner": true,
+                  "settings": {
+                    "_column_size": 33,
+                    "background_background": "classic",
+                    "background_color": "#0f172a",
+                    "padding": {
+                      "unit": "px",
+                      "top": "40",
+                      "right": "30",
+                      "bottom": "40",
+                      "left": "30",
+                      "isLinked": true
+                    },
+                    "border_radius": {
+                      "unit": "px",
+                      "top": "16",
+                      "right": "16",
+                      "bottom": "16",
+                      "left": "16",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "component-button-heading",
+                      "elType": "widget",
+                      "widgetType": "heading",
+                      "settings": {
+                        "title": "Buttons",
+                        "header_size": "h4",
+                        "text_color": "#22d3ee"
+                      }
+                    },
+                    {
+                      "id": "component-button-button",
+                      "elType": "widget",
+                      "widgetType": "button",
+                      "settings": {
+                        "button_type": "info",
+                        "text": "Book a Courier",
+                        "size": "lg",
+                        "align": "center",
+                        "button_css_id": "medexpress-button-sample",
+                        "background_color": "#22d3ee",
+                        "hover_background_color": "#0ea5e9",
+                        "text_color": "#0f172a",
+                        "hover_animation": "pulse"
+                      }
+                    },
+                    {
+                      "id": "component-button-details",
+                      "elType": "widget",
+                      "widgetType": "text-editor",
+                      "settings": {
+                        "editor": "<p style=\"color:#cbd5f5;font-size:14px\">Corner radius 999px, medium weight, aqua fill. Use navy outline for secondary actions.</p>"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "component-card",
+                  "elType": "column",
+                  "isInner": true,
+                  "settings": {
+                    "_column_size": 33,
+                    "background_background": "classic",
+                    "background_color": "#ffffff",
+                    "padding": {
+                      "unit": "px",
+                      "top": "40",
+                      "right": "30",
+                      "bottom": "40",
+                      "left": "30",
+                      "isLinked": true
+                    },
+                    "border_radius": {
+                      "unit": "px",
+                      "top": "16",
+                      "right": "16",
+                      "bottom": "16",
+                      "left": "16",
+                      "isLinked": true
+                    },
+                    "box_shadow_box_shadow_type": "yes",
+                    "box_shadow_box_shadow": {
+                      "horizontal": 0,
+                      "vertical": 18,
+                      "blur": 35,
+                      "spread": -20,
+                      "color": "rgba(15,23,42,0.12)"
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "component-card-heading",
+                      "elType": "widget",
+                      "widgetType": "heading",
+                      "settings": {
+                        "title": "Service Card",
+                        "header_size": "h4",
+                        "text_color": "#0f172a"
+                      }
+                    },
+                    {
+                      "id": "component-card-icon",
+                      "elType": "widget",
+                      "widgetType": "icon",
+                      "settings": {
+                        "icon": {
+                          "value": "fas fa-shipping-fast"
+                        },
+                        "align": "left",
+                        "primary_color": "#22d3ee",
+                        "secondary_color": "#22d3ee",
+                        "size": {
+                          "unit": "px",
+                          "size": 36
+                        }
+                      }
+                    },
+                    {
+                      "id": "component-card-text",
+                      "elType": "widget",
+                      "widgetType": "text-editor",
+                      "settings": {
+                        "editor": "<p style=\"color:#475569;font-size:16px\">Pair an aqua accent with concise copy and a supporting link for deeper detail.</p>"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "component-stats",
+                  "elType": "column",
+                  "isInner": true,
+                  "settings": {
+                    "_column_size": 33,
+                    "background_background": "classic",
+                    "background_color": "#0f172a",
+                    "padding": {
+                      "unit": "px",
+                      "top": "40",
+                      "right": "30",
+                      "bottom": "40",
+                      "left": "30",
+                      "isLinked": true
+                    },
+                    "border_radius": {
+                      "unit": "px",
+                      "top": "16",
+                      "right": "16",
+                      "bottom": "16",
+                      "left": "16",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "component-stats-heading",
+                      "elType": "widget",
+                      "widgetType": "heading",
+                      "settings": {
+                        "title": "Performance Stats",
+                        "header_size": "h4",
+                        "text_color": "#22d3ee"
+                      }
+                    },
+                    {
+                      "id": "component-stats-counter",
+                      "elType": "widget",
+                      "widgetType": "counter",
+                      "settings": {
+                        "starting_number": 0,
+                        "ending_number": 98,
+                        "prefix": "",
+                        "suffix": "%",
+                        "duration": 1500,
+                        "thousand_separator": "",
+                        "title": "Same-day success rate",
+                        "align": "center",
+                        "number_prefix": "",
+                        "number_suffix": "%",
+                        "text_color": "#f8fafc",
+                        "title_color": "#cbd5f5"
+                      }
+                    },
+                    {
+                      "id": "component-stats-details",
+                      "elType": "widget",
+                      "widgetType": "text-editor",
+                      "settings": {
+                        "editor": "<p style=\"color:#cbd5f5;font-size:14px\">Use dynamic counters for proof points and pair with supporting copy.</p>"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "brand-cta",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "content_width": "boxed",
+        "gap": "extended",
+        "padding": {
+          "unit": "px",
+          "top": "90",
+          "right": "40",
+          "bottom": "100",
+          "left": "40",
+          "isLinked": false
+        },
+        "background_background": "gradient",
+        "background_color": "#0f172a",
+        "background_color_b": "#0b1120",
+        "background_gradient_type": "linear",
+        "background_gradient_angle": 120,
+        "shape_divider_top": "curve-asymmetrical"
+      },
+      "elements": [
+        {
+          "id": "brand-cta-column",
+          "elType": "column",
+          "isInner": false,
+          "settings": {
+            "_column_size": 100,
+            "padding": {
+              "unit": "px",
+              "top": "0",
+              "right": "0",
+              "bottom": "0",
+              "left": "0",
+              "isLinked": true
+            }
+          },
+          "elements": [
+            {
+              "id": "brand-cta-heading",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Ready to launch your Med Express experience?",
+                "header_size": "h2",
+                "align": "center",
+                "text_color": "#f8fafc",
+                "typography_typography": "custom",
+                "typography_font_size": {
+                  "unit": "px",
+                  "size": 40
+                },
+                "typography_font_weight": "700"
+              }
+            },
+            {
+              "id": "brand-cta-text",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"text-align:center;color:#cbd5f5;font-size:18px\">Share this kit with partners and creators to ship aligned campaigns, onboarding flows, and service messaging in record time.</p>"
+              }
+            },
+            {
+              "id": "brand-cta-button",
+              "elType": "widget",
+              "widgetType": "button",
+              "settings": {
+                "text": "Download Brand Assets",
+                "size": "lg",
+                "align": "center",
+                "button_css_id": "medexpress-brand-download",
+                "link": {
+                  "url": "#"
+                },
+                "background_color": "#22d3ee",
+                "text_color": "#0f172a",
+                "hover_background_color": "#38bdf8",
+                "hover_animation": "grow"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
