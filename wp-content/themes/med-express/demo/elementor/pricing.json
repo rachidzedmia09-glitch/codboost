@@ -1,0 +1,131 @@
+{
+  "version": "0.4",
+  "title": "Pricing",
+  "type": "page",
+  "assign_to": {
+    "post_title": "Pricing",
+    "post_type": "page"
+  },
+  "page_settings": {
+    "page_title": "Pricing",
+    "hide_title": "yes"
+  },
+  "content": [
+    {
+      "id": "pricing-section",
+      "elType": "section",
+      "settings": {
+        "content_width": "boxed",
+        "gap": "extended",
+        "padding": {
+          "unit": "px",
+          "top": "120",
+          "right": "20",
+          "bottom": "120",
+          "left": "20",
+          "isLinked": false
+        },
+        "background_color": "#f1f5f9"
+      },
+      "elements": [
+        {
+          "id": "pricing-column",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "pricing-heading",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Transparent pricing for nationwide coverage",
+                "header_size": "h2",
+                "align": "center"
+              }
+            },
+            {
+              "id": "pricing-card",
+              "elType": "section",
+              "isInner": true,
+              "settings": {
+                "columns_gap": "no"
+              },
+              "elements": [
+                {
+                  "id": "pricing-plan-column",
+                  "elType": "column",
+                  "settings": {
+                    "_column_size": 100,
+                    "background_background": "classic",
+                    "background_color": "#ffffff",
+                    "border_radius": {
+                      "unit": "px",
+                      "top": "24",
+                      "right": "24",
+                      "bottom": "24",
+                      "left": "24",
+                      "isLinked": true
+                    },
+                    "padding": {
+                      "unit": "px",
+                      "top": "48",
+                      "right": "48",
+                      "bottom": "48",
+                      "left": "48",
+                      "isLinked": true
+                    }
+                  },
+                  "elements": [
+                    {
+                      "id": "pricing-plan-heading",
+                      "elType": "widget",
+                      "widgetType": "heading",
+                      "settings": {
+                        "title": "Marketplace",
+                        "header_size": "h3",
+                        "align": "center"
+                      }
+                    },
+                    {
+                      "id": "pricing-price",
+                      "elType": "widget",
+                      "widgetType": "heading",
+                      "settings": {
+                        "title": "<span style=\\"font-size:48px;\\">490 DZD</span> <small>per parcel</small>",
+                        "align": "center"
+                      }
+                    },
+                    {
+                      "id": "pricing-description",
+                      "elType": "widget",
+                      "widgetType": "text-editor",
+                      "settings": {
+                        "editor": "<ul><li>Live tracking portal</li><li>COD remittance in 48h</li><li>Multi-city delivery network</li></ul>",
+                        "drop_cap": ""
+                      }
+                    },
+                    {
+                      "id": "pricing-button",
+                      "elType": "widget",
+                      "widgetType": "button",
+                      "settings": {
+                        "text": "Request proposal",
+                        "align": "center",
+                        "size": "lg",
+                        "link": {
+                          "url": "#contact"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

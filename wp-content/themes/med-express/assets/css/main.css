@@ -81,6 +81,73 @@ svg {
     padding: clamp(0.85rem, 2vw, 1.25rem) 0;
 }
 
+.medexpress-header-menu,
+.medexpress-footer-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.medexpress-header-menu {
+    justify-content: flex-end;
+    font-weight: 500;
+    color: var(--medexpress-text);
+}
+
+.medexpress-header-menu a {
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 0.25rem;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.medexpress-header-menu a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--medexpress-primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease-in-out;
+}
+
+.medexpress-header-menu a:hover,
+.medexpress-header-menu a:focus {
+    color: var(--medexpress-primary-dark);
+}
+
+.medexpress-header-menu a:hover::after,
+.medexpress-header-menu a:focus::after,
+.medexpress-header-menu .current-menu-item > a::after,
+.medexpress-header-menu .current_page_item > a::after {
+    transform: scaleX(1);
+}
+
+.medexpress-footer-menu {
+    justify-content: center;
+    gap: 1rem;
+    font-size: 0.9375rem;
+}
+
+.medexpress-footer-menu a {
+    color: var(--medexpress-text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.medexpress-footer-menu a:hover,
+.medexpress-footer-menu a:focus {
+    color: var(--medexpress-primary);
+}
+
 .site-branding {
     display: grid;
     grid-template-columns: auto;

@@ -1,0 +1,149 @@
+{
+  "version": "0.4",
+  "title": "Services",
+  "type": "page",
+  "assign_to": {
+    "post_title": "Services",
+    "post_type": "page"
+  },
+  "page_settings": {
+    "page_title": "Services",
+    "hide_title": "yes"
+  },
+  "content": [
+    {
+      "id": "services-hero",
+      "elType": "section",
+      "settings": {
+        "content_width": "boxed",
+        "gap": "wide",
+        "padding": {
+          "unit": "px",
+          "top": "120",
+          "right": "20",
+          "bottom": "80",
+          "left": "20",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "services-hero-column",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "services-title",
+              "elType": "widget",
+              "widgetType": "heading",
+              "settings": {
+                "title": "Delivery products tailored to every parcel",
+                "header_size": "h1",
+                "align": "center"
+              }
+            },
+            {
+              "id": "services-subtitle",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<p style=\"text-align:center;max-width:720px;margin:0 auto;\">From instant city runs to scheduled national routes, Med Express Delivery keeps your SKUs moving with predictive ETAs and COD reconciliation.</p>"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "services-grid",
+      "elType": "section",
+      "settings": {
+        "content_width": "boxed",
+        "gap": "extended"
+      },
+      "elements": [
+        {
+          "id": "services-grid-column",
+          "elType": "column",
+          "settings": {
+            "_column_size": 100
+          },
+          "elements": [
+            {
+              "id": "services-inner",
+              "elType": "section",
+              "isInner": true,
+              "settings": {
+                "columns_gap": "extended"
+              },
+              "elements": [
+                {
+                  "id": "service-card-1",
+                  "elType": "column",
+                  "settings": {
+                    "_column_size": 33
+                  },
+                  "elements": [
+                    {
+                      "id": "service-card-1-widget",
+                      "elType": "widget",
+                      "widgetType": "icon-box",
+                      "settings": {
+                        "view": "stacked",
+                        "icon": "fas fa-shipping-fast",
+                        "title_text": "Express Last-Mile",
+                        "description_text": "Same-day and next-day drops with POD via SMS, WhatsApp, and email."
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "service-card-2",
+                  "elType": "column",
+                  "settings": {
+                    "_column_size": 33
+                  },
+                  "elements": [
+                    {
+                      "id": "service-card-2-widget",
+                      "elType": "widget",
+                      "widgetType": "icon-box",
+                      "settings": {
+                        "view": "stacked",
+                        "icon": "fas fa-warehouse",
+                        "title_text": "Fulfilment &amp; Storage",
+                        "description_text": "Secure hubs in Algiers, Oran, and Constantine with SKU-level inventory syncing."
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "service-card-3",
+                  "elType": "column",
+                  "settings": {
+                    "_column_size": 33
+                  },
+                  "elements": [
+                    {
+                      "id": "service-card-3-widget",
+                      "elType": "widget",
+                      "widgetType": "icon-box",
+                      "settings": {
+                        "view": "stacked",
+                        "icon": "fas fa-hand-holding-usd",
+                        "title_text": "COD &amp; Returns",
+                        "description_text": "Daily cash reconciliation, reverse pickup orchestration, and SLA reporting."
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "version": "0.4",
+  "title": "Med Express Header",
+  "type": "section",
+  "location": "header",
+  "page_settings": [],
+  "content": [
+    {
+      "id": "header-section",
+      "elType": "section",
+      "settings": {
+        "content_width": "boxed",
+        "gap": "no",
+        "padding": {
+          "unit": "px",
+          "top": "20",
+          "right": "20",
+          "bottom": "20",
+          "left": "20",
+          "isLinked": false
+        }
+      },
+      "elements": [
+        {
+          "id": "header-column-left",
+          "elType": "column",
+          "settings": {
+            "_column_size": 30,
+            "vertical_align": "middle"
+          },
+          "elements": [
+            {
+              "id": "header-logo",
+              "elType": "widget",
+              "widgetType": "image",
+              "settings": {
+                "image": {
+                  "url": "https://via.placeholder.com/210x64/0f172a/f8fafc?text=Med+Express"
+                },
+                "align": "left"
+              }
+            }
+          ]
+        },
+        {
+          "id": "header-column-center",
+          "elType": "column",
+          "settings": {
+            "_column_size": 50,
+            "vertical_align": "middle"
+          },
+          "elements": [
+            {
+              "id": "header-nav",
+              "elType": "widget",
+              "widgetType": "shortcode",
+              "settings": {
+                "shortcode": "[medexpress_menu location=\"primary\" class=\"medexpress-header-menu\"]"
+              }
+            }
+          ]
+        },
+        {
+          "id": "header-column-right",
+          "elType": "column",
+          "settings": {
+            "_column_size": 20,
+            "vertical_align": "middle"
+          },
+          "elements": [
+            {
+              "id": "header-button",
+              "elType": "widget",
+              "widgetType": "button",
+              "settings": {
+                "text": "Track Parcel",
+                "size": "sm",
+                "align": "right",
+                "button_type": "success",
+                "background_color": "#22d3ee",
+                "color": "#0f172a",
+                "link": {
+                  "url": "https://track.medexpress.dz",
+                  "is_external": "true"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

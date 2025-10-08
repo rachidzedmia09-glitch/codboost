@@ -6,7 +6,7 @@
  */
 
 if ( ! defined( 'MEDEXPRESS_VERSION' ) ) {
-    define( 'MEDEXPRESS_VERSION', '1.1.0' );
+    define( 'MEDEXPRESS_VERSION', '1.2.0' );
 }
 
 if ( ! function_exists( 'medexpress_theme_setup' ) ) {
@@ -113,3 +113,5 @@ add_action( 'widgets_init', 'medexpress_widgets_init' );
 
 require get_template_directory() . '/inc/template-tags.php';
 require get_template_directory() . '/inc/elementor.php';
+require get_template_directory() . '/inc/plugins.php';
+require get_template_directory() . '/inc/demo-import.php';
