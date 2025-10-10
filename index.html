@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="auto">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>DG Network — Digital Marketing & Brand Identity Plan (2025 Edition)</title>
+    <meta
+      name="description"
+      content="Interactive presentation of the DG Network Digital Marketing & Brand Identity Plan (2025 Edition) with immersive microinteractions and modern web technologies."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+      as="style"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+    />
+    <link rel="stylesheet" href="assets/styles/dg-network.css" />
+    <link rel="preconnect" href="https://unpkg.com" crossorigin />
+    <script defer src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+    <script type="module" src="assets/scripts/dg-network.js" defer></script>
+  </head>
+  <body data-noise="enabled">
+    <a class="skip-link" href="#plan">Skip to content</a>
+    <div class="scroll-progress" aria-hidden="true">
+      <span class="scroll-progress__bar"></span>
+    </div>
+    <div class="background-layer" aria-hidden="true">
+      <div class="background-layer__gradient" data-parallax data-speed="0.1"></div>
+      <div class="background-layer__mesh" data-parallax data-speed="0.2"></div>
+      <svg class="background-layer__filter" aria-hidden="true">
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="30" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="3" stitchTiles="stitch" />
+            <feColorMatrix type="saturate" values="0" />
+          </filter>
+        </defs>
+      </svg>
+    </div>
+    <header class="site-header" data-parallax data-speed="0.05" role="banner">
+      <div class="site-header__inner">
+        <div class="logo-card" data-tilt data-shadow>
+          <span class="logo-card__accent"></span>
+          <span class="logo-card__text">DG Network</span>
+        </div>
+        <nav class="primary-nav" aria-label="Primary">
+          <button class="primary-nav__toggle" type="button" aria-expanded="false">
+            <span class="primary-nav__toggle-line"></span>
+            <span class="primary-nav__toggle-line"></span>
+            <span class="primary-nav__toggle-line"></span>
+            <span class="sr-only">Toggle navigation</span>
+          </button>
+          <ul class="primary-nav__list" role="list">
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#vision">Vision &amp; Mission</a></li>
+            <li><a href="#ecosystem">Brand Ecosystem</a></li>
+            <li><a href="#strategy">Strategy</a></li>
+            <li><a href="#roadmap">Roadmap</a></li>
+            <li><a href="#future">Future</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <button class="action-btn" id="theme-toggle" type="button" title="Toggle theme" popovertarget="theme-menu">
+            <span aria-hidden="true">🌗</span>
+            <span class="sr-only">Toggle theme</span>
+          </button>
+          <button class="action-btn" id="command-palette-toggle" type="button" title="Open command palette">
+            <span aria-hidden="true">⌘K</span>
+            <span class="sr-only">Open command palette</span>
+          </button>
+        </div>
+        <div id="theme-menu" class="theme-popover" popover>
+          <button type="button" data-theme-option="auto">Auto</button>
+          <button type="button" data-theme-option="light">Light</button>
+          <button type="button" data-theme-option="dark">Dark</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="plan" class="page" role="main">
+      <section class="hero" id="overview" data-section>
+        <div class="hero__media" data-parallax data-speed="0.12">
+          <dotlottie-player
+            src="https://lottie.host/3e0e8975-3e13-47aa-b940-bf3863276695/ZMHyAwL07g.json"
+            background="transparent"
+            speed="1"
+            loop
+            autoplay
+            class="hero__lottie"
+          ></dotlottie-player>
+        </div>
+        <div class="hero__content glass" data-observe>
+          <h1 class="hero__title">DG Network — Digital Marketing &amp; Brand Identity Plan (2025 Edition)</h1>
+          <p>1. Executive Overview</p>
+          <p>DG Network is a multi-niche digital media ecosystem that connects Algerian youth through entertainment, culture, and technology.</p>
+          <p>The network operates across five verticals: Sports, Tech, Movies, Anime, and Gaming — each with its own identity but unified under one brand vision.</p>
+          <p>Goal (2025): Build Algeria’s most engaging content ecosystem by leveraging consistent daily content, AI-driven automation, and strong community engagement.</p>
+        </div>
+        <figure class="hero__poster" data-parallax data-speed="0.18">
+          <picture>
+            <source type="image/avif" srcset="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80&fm=avif" />
+            <source type="image/webp" srcset="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80&fm=webp" />
+            <img
+              data-lazy
+              data-src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80"
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+              alt="Dynamic collage representing sports, technology, movies, anime, and gaming cultures."
+              loading="lazy"
+              width="900"
+              height="1200"
+            />
+          </picture>
+          <figcaption class="sr-only">Immersive visual collage of DG Network verticals.</figcaption>
+        </figure>
+      </section>
+
+      <section class="plan-section" id="vision" data-section data-observe>
+        <div class="plan-section__inner">
+          <header class="plan-section__header">
+            <h2>2. Vision &amp; Mission</h2>
+          </header>
+          <div class="plan-section__grid">
+            <article class="plan-card" data-tilt>
+              <h3>Vision:</h3>
+              <p>To become the #1 digital content network in North Africa, inspiring the next generation of creators and audiences through innovation and storytelling.</p>
+            </article>
+            <article class="plan-card" data-tilt>
+              <h3>Mission:</h3>
+              <p>To deliver daily, high-value content that informs, entertains, and connects audiences organically while maintaining authenticity and creative excellence.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="plan-section" id="ecosystem" data-section data-observe>
+        <div class="plan-section__inner">
+          <header class="plan-section__header">
+            <h2>3. Brand Ecosystem</h2>
+            <p>DG Network unites five key brands under one creative umbrella:</p>
+          </header>
+          <div class="ecosystem-grid" role="list">
+            <article class="ecosystem-card" role="listitem" data-tilt>
+              <h3>Brand</h3>
+              <p>DGSPORTS</p>
+              <p>Sports &amp; football culture</p>
+              <p>Showcase Algerian and global sports moments.</p>
+            </article>
+            <article class="ecosystem-card" role="listitem" data-tilt>
+              <h3>Brand</h3>
+              <p>DGTECH</p>
+              <p>Technology &amp; innovation</p>
+              <p>Simplify tech for youth and professionals.</p>
+            </article>
+            <article class="ecosystem-card" role="listitem" data-tilt>
+              <h3>Brand</h3>
+              <p>DGMOVIES</p>
+              <p>Cinema &amp; TV series</p>
+              <p>Explore film culture, reviews, and storytelling.</p>
+            </article>
+            <article class="ecosystem-card" role="listitem" data-tilt>
+              <h3>Brand</h3>
+              <p>DGANIME</p>
+              <p>Anime &amp; manga</p>
+              <p>Celebrate anime fandom and community debates.</p>
+            </article>
+            <article class="ecosystem-card" role="listitem" data-tilt>
+              <h3>Brand</h3>
+              <p>DGGAMING</p>
+              <p>Gaming &amp; esports</p>
+              <p>Connect gamers and showcase gameplay culture.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="plan-section" id="audience" data-section data-observe>
+        <div class="plan-section__inner">
+          <header class="plan-section__header">
+            <h2>4. Target Audience</h2>
+          </header>
+          <div class="plan-section__content">
+            <p>Age: 15–35 years</p>
+            <p>Location: Algeria, Tunisia, Morocco, French-speaking Africa</p>
+            <p>Psychographics: Trend-seekers, gamers, film lovers, sports fans, and tech enthusiasts</p>
+            <p>Habits: Daily users of TikTok, Instagram, and YouTube; engaged in online communities; prefer visual and fast content.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="plan-section" id="tone" data-section data-observe>
+        <div class="plan-section__inner">
+          <header class="plan-section__header">
+            <h2>5. Brand Tone &amp; Identity</h2>
+          </header>
+          <div class="plan-section__content multi-column">
+            <p>DG Network communicates with a tone that is:</p>
+            <p>Authentic: Feels real and grounded in Algerian culture.</p>
+            <p>Energetic: Quick, bold, and driven by emotion.</p>
+            <p>Youthful: Speaks the language of trends, humor, and curiosity.</p>
+            <p>Innovative: Always experimenting with new content formats and ideas.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="plan-section" id="platform" data-section data-observe>
+        <div class="plan-section__inner">
+          <header class="plan-section__header">
+            <h2>6. Platform Strategy</h2>
+            <p>Each niche builds its audience across five major platforms:</p>
+          </header>
+          <div class="strategy-table" role="table">
+            <div class="strategy-table__header" role="row">
+              <span role="columnheader">Platform</span>
+              <span role="columnheader">Objective</span>
+              <span role="columnheader">Content Type</span>
+              <span role="columnheader">Frequency</span>
+            </div>
+            <div class="strategy-table__row" role="row" data-tilt>
+              <span role="cell">TikTok</span>
+              <span role="cell">Reach &amp; virality</span>
+              <span role="cell">Short-form trends, edits</span>
+              <span role="cell">2 videos/day</span>
+            </div>
+            <div class="strategy-table__row" role="row" data-tilt>
+              <span role="cell">Instagram</span>
+              <span role="cell">Visual storytelling</span>
+              <span role="cell">Reels, carousels, stories</span>
+              <span role="cell">1–2 posts/day</span>
+            </div>
+            <div class="strategy-table__row" role="row" data-tilt>
+              <span role="cell">YouTube</span>
+              <span role="cell">Long-term growth</span>
+              <span role="cell">Shorts + long-form analysis</span>
+              <span role="cell">1 short/day + 1 long/week</span>
+            </div>
+            <div class="strategy-table__row" role="row" data-tilt>
+              <span role="cell">Facebook</span>
+              <span role="cell">Community engagement</span>
+              <span role="cell">Memes, posts, videos</span>
+              <span role="cell">1–2 posts/day</span>
+            </div>
+            <div class="strategy-table__row" role="row" data-tilt>
+              <span role="cell">Telegram</span>
+              <span role="cell">Retention &amp; loyalty</span>
+              <span role="cell">Exclusive updates, polls</span>
+              <span role="cell">3–5 posts/week</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="plan-section" id="content" data-section data-observe>
+        <div class="plan-section__inner">
+          <header class="plan-section__header">
+            <h2>7. Content Strategy</h2>
+          </header>
+          <div class="plan-section__content">
+            <p>Core Rule: Create once, repurpose everywhere.</p>
+            <p>Each video is reformatted for every platform — from one master clip to Reels, Shorts, and TikToks.</p>
+            <p>Weekly Content Pillars:</p>
+            <p>DGSPORTS: Highlights, rivalries, skills, and player stories.</p>
+            <p>DGTECH: Product tips, comparisons, AI news, and how-tos.</p>
+            <p>DGMOVIES: Reviews, scene breakdowns, cinematic edits.</p>
+            <p>DGANIME: Top lists, debates, character stories, community reactions.</p>
+            <p>DGGAMING: Challenges, tutorials, humor, and live event coverage.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="plan-section" id="calendar" data-section data-observe>
+        <div class="plan-section__inner">
+          <header class="plan-section__header">
+            <h2>8. Monthly Content Calendar (2025 Launch Schedule)</h2>
+          </header>
+          <div class="calendar-grid" role="table">
+            <div class="calendar-grid__row calendar-grid__row--header" role="row">
+              <span role="columnheader">Week</span>
+              <span role="columnheader">Focus</span>
+              <span role="columnheader">Example Theme</span>
+              <span role="columnheader">Deliverables</span>
+            </div>
+            <div class="calendar-grid__row" role="row" data-tilt>
+              <span role="cell">Week 1</span>
+              <span role="cell">Launch &amp; Awareness</span>
+              <span role="cell">“Welcome to DG Network”</span>
+              <span role="cell">5 Reels + 2 YouTube Shorts</span>
+            </div>
+            <div class="calendar-grid__row" role="row" data-tilt>
+              <span role="cell">Week 2</span>
+              <span role="cell">Engagement Boost</span>
+              <span role="cell">“Top 5 Moments” Challenge</span>
+              <span role="cell">10 short videos + 1 campaign post</span>
+            </div>
+            <div class="calendar-grid__row" role="row" data-tilt>
+              <span role="cell">Week 3</span>
+              <span role="cell">Collaboration</span>
+              <span role="cell">Partner with local influencers</span>
+              <span role="cell">5 collab Reels + 1 group post</span>
+            </div>
+            <div class="calendar-grid__row" role="row" data-tilt>
+              <span role="cell">Week 4</span>
+              <span role="cell">Retention</span>
+              <span role="cell">“Community Picks of the Month”</span>
+              <span role="cell">1 long-form recap + 5 Shorts</span>
+            </div>
+          </div>
+          <div class="plan-section__content">
+            <p>Monthly Objective:</p>
+            <p>100+ total posts (across all platforms)</p>
+            <p>8–10 viral content experiments</p>
+            <p>+10% audience growth across niches</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="plan-section" id="ai" data-section data-observe>
+        <div class="plan-section__inner">
+          <header class="plan-section__header">
+            <h2>9. AI &amp; Automation Stack</h2>
+          </header>
+          <div class="plan-section__content columns">
+            <p>DG Network uses a modern workflow to automate content creation, scheduling, and optimization:</p>
+            <p>Planning: Notion, Trello</p>
+            <p>Scripting &amp; Captions: ChatGPT, Jasper AI</p>
+            <p>Design: Canva Pro, Figma templates</p>
+            <p>Video Editing: CapCut, Premiere Pro</p>
+            <p>Scheduling: Meta Suite, YouTube Studio</p>
+            <p>Analytics: Google Sheets Dashboard + platform insights</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="plan-section" id="roadmap" data-section data-observe>
+        <div class="plan-section__inner">
+          <header class="plan-section__header">
+            <h2>10. Growth Roadmap (Q1–Q4 2025)</h2>
+          </header>
+          <div class="roadmap" role="list" data-scroll-snap>
+            <article class="roadmap__item" role="listitem" data-tilt>
+              <h3>Quarter</h3>
+              <p>Q1</p>
+              <p>Focus</p>
+              <p>Launch &amp; Awareness</p>
+              <p>Target</p>
+              <p>25K followers</p>
+              <p>Key Action</p>
+              <p>Establish brand identity, test formats</p>
+            </article>
+            <article class="roadmap__item" role="listitem" data-tilt>
+              <h3>Quarter</h3>
+              <p>Q2</p>
+              <p>Focus</p>
+              <p>Expansion</p>
+              <p>Target</p>
+              <p>60K followers</p>
+              <p>Key Action</p>
+              <p>Collaborations &amp; cross-promotion</p>
+            </article>
+            <article class="roadmap__item" role="listitem" data-tilt>
+              <h3>Quarter</h3>
+              <p>Q3</p>
+              <p>Focus</p>
+              <p>Monetization</p>
+              <p>Target</p>
+              <p>100K followers</p>
+              <p>Key Action</p>
+              <p>Activate brand deals, affiliate products</p>
+            </article>
+            <article class="roadmap__item" role="listitem" data-tilt>
+              <h3>Quarter</h3>
+              <p>Q4</p>
+              <p>Focus</p>
+              <p>Community Scaling</p>
+              <p>Target</p>
+              <p>150K+ followers</p>
+              <p>Key Action</p>
+              <p>Launch DG app &amp; merch drops</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="plan-section" id="campaigns" data-section data-observe>
+        <div class="plan-section__inner">
+          <header class="plan-section__header">
+            <h2>11. Viral Campaign Framework</h2>
+          </header>
+          <div class="plan-section__content">
+            <p>Each month features a branded campaign under one of the niches, e.g.:</p>
+            <p>#DGDerbyWeek (Sports)</p>
+            <p>#DGTechHack (Tech)</p>
+            <p>#DGMovieGem (Movies)</p>
+            <p>#DGAnimeArc (Anime)</p>
+            <p>#DGGamingRush (Gaming)</p>
+            <p>Process:</p>
+            <p>Define theme &amp; hashtag.</p>
+            <p>Launch 5 short videos.</p>
+            <p>Activate user-generated content (UGC).</p>
+            <p>Repost &amp; feature best entries.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="plan-section" id="monetization" data-section data-observe>
+        <div class="plan-section__inner">
+          <header class="plan-section__header">
+            <h2>12. Monetization Plan</h2>
+          </header>
+          <div class="plan-section__content">
+            <p>DG Network monetizes through multiple revenue streams:</p>
+            <p>Brand Sponsorships &amp; Ads – Collaborate with tech, sports, and entertainment brands.</p>
+            <p>Affiliate Marketing – Tech products, streaming platforms, gaming gear.</p>
+            <p>Ticketing Partnerships – Sports events, conventions, screenings.</p>
+            <p>Digital Products – Templates, guides, presets.</p>
+            <p>Merchandise Drops – Branded hoodies, caps, accessories.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="plan-section" id="team" data-section data-observe>
+        <div class="plan-section__inner">
+          <header class="plan-section__header">
+            <h2>13. Team Workflow</h2>
+          </header>
+          <div class="plan-section__content">
+            <p>DG Network functions as a structured content agency:</p>
+            <p>Strategist: Sets goals, analytics, and campaigns.</p>
+            <p>Content Creator: Produces daily videos and captions.</p>
+            <p>Editor: Cuts and optimizes content for all platforms.</p>
+            <p>Designer: Maintains brand visuals and thumbnails.</p>
+            <p>Community Manager: Manages posting, replies, and engagement.</p>
+            <p>Workflow Cycle:</p>
+            <p>Plan → Create → Edit → Review → Publish → Analyze</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="plan-section" id="kpis" data-section data-observe>
+        <div class="plan-section__inner">
+          <header class="plan-section__header">
+            <h2>14. KPIs &amp; Analytics</h2>
+          </header>
+          <div class="plan-section__content">
+            <p>Key performance indicators are tracked weekly and monthly:</p>
+            <p>Audience Growth (followers/subscribers)</p>
+            <p>Engagement Rate (likes, comments, shares)</p>
+            <p>Watch Time (video performance)</p>
+            <p>Conversion (Telegram group join or CTA clicks)</p>
+            <p>ROI per campaign (ads vs. reach)</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="plan-section" id="future" data-section data-observe>
+        <div class="plan-section__inner">
+          <header class="plan-section__header">
+            <h2>15. Future Objectives (2026 Preview)</h2>
+          </header>
+          <div class="plan-section__content">
+            <p>Expand to two new niches: DGFOOD and DGTRAVEL.</p>
+            <p>Develop DG Academy — a content creator learning platform.</p>
+            <p>Launch DG App for exclusive content and loyalty rewards.</p>
+            <p>Establish DG Network Algeria HQ studio for in-house production.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="plan-section" id="values" data-section data-observe>
+        <div class="plan-section__inner">
+          <header class="plan-section__header">
+            <h2>16. Core Values</h2>
+          </header>
+          <div class="plan-section__content">
+            <p>Consistency: Daily output builds audience trust.</p>
+            <p>Authenticity: Speak in the real voice of the Algerian youth.</p>
+            <p>Creativity: Never recycle; always innovate.</p>
+            <p>Community: Build belonging before monetization.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="plan-section" id="closing" data-section data-observe>
+        <div class="plan-section__inner">
+          <header class="plan-section__header">
+            <h2>17. Closing Statement</h2>
+          </header>
+          <div class="plan-section__content closing glass">
+            <p>DG Network is more than content — it’s a new creative economy built for Algeria’s digital generation.</p>
+            <p>By combining storytelling, strategy, and technology, we’re not just building pages — we’re building a movement.</p>
+            <p>“Consistency. Creativity. Connection.” — DG Network 2025</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+      <div class="site-footer__inner">
+        <p>Crafted with advanced web technologies, accessibility, and performance-first design tokens.</p>
+        <button type="button" class="action-btn" id="toast-trigger">Show toast</button>
+      </div>
+    </footer>
+
+    <dialog id="command-palette" class="command-palette" aria-modal="true" role="dialog">
+      <form method="dialog" class="command-palette__form">
+        <label class="sr-only" for="command-search">Search</label>
+        <input
+          id="command-search"
+          class="command-palette__input"
+          type="search"
+          name="command"
+          placeholder="Search sections..."
+          autocomplete="off"
+          inputmode="search"
+        />
+        <ul class="command-palette__results" role="listbox" aria-label="Sections"></ul>
+      </form>
+    </dialog>
+
+    <div class="toast" role="status" aria-live="polite" aria-atomic="true" hidden>
+      <p>Microinteraction triggered! Scroll or navigate to explore every chapter.</p>
+    </div>
+
+    <template id="skeleton-template">
+      <div class="skeleton-card" aria-hidden="true">
+        <div class="skeleton-card__line skeleton-card__line--short shimmer"></div>
+        <div class="skeleton-card__line shimmer"></div>
+        <div class="skeleton-card__line shimmer"></div>
+      </div>
+    </template>
+  </body>
+</html>
