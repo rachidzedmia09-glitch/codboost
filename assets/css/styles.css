@@ -163,8 +163,13 @@ canvas#cosmos {
 
 .main-nav a:hover::after,
 .main-nav a:focus::after,
-.main-nav a[aria-current="page"]::after {
+.main-nav a[aria-current="page"]::after,
+.main-nav a[aria-current="true"]::after {
   transform: scaleX(1);
+}
+
+.main-nav a[aria-current="true"] {
+  color: var(--accent-cyan);
 }
 
 .nav-toggle {
@@ -358,16 +363,11 @@ canvas#cosmos {
 }
 
 .overview header,
-.brand-gallery header,
-.cta .cta-inner,
-.mission-intro,
-.content-card,
-.holo-card,
-.playbook,
-.campaign-blueprint .split > div,
-.viral-blueprint,
-.operations-grid article,
-.closing-cta {
+.mission-heading,
+.mission-card,
+.mission-highlight,
+.closing-cta,
+.cta .cta-inner {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 24px;
@@ -423,14 +423,189 @@ canvas#cosmos {
   text-transform: uppercase;
 }
 
-.brand-gallery header {
-  text-align: center;
-}
-
 .gallery-grid {
   display: grid;
   gap: 2rem;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+[data-nav-section] {
+  scroll-margin-top: 120px;
+}
+
+[data-parallax] {
+  will-change: transform;
+  transform: translate3d(0, calc(var(--parallax-y, 0px) * 0.35), 0);
+  transition: transform 0.8s ease;
+}
+
+.mission {
+  --spark-x: 50%;
+  --spark-y: 50%;
+  --parallax-y: 0px;
+  position: relative;
+  padding: clamp(2.5rem, 6vw, 4rem);
+  border-radius: 32px;
+  background: linear-gradient(140deg, rgba(6, 9, 24, 0.95), rgba(10, 16, 40, 0.82));
+  border: 1px solid rgba(63, 130, 255, 0.22);
+  box-shadow: 0 35px 90px rgba(3, 8, 30, 0.55);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.mission::before {
+  content: "";
+  position: absolute;
+  inset: -120px;
+  background: radial-gradient(circle at var(--spark-x, 50%) calc(var(--spark-y, 50%) + var(--parallax-y, 0px)), rgba(63, 130, 255, 0.18), transparent 55%);
+  opacity: 0.9;
+  pointer-events: none;
+  transition: background-position 0.4s ease;
+}
+
+.mission::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(248, 69, 109, 0.12);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.mission-heading {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 1rem;
+  text-align: left;
+}
+
+.mission-heading .mission-number {
+  font-size: 0.78rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+}
+
+.mission-heading h2 {
+  font-size: clamp(1.6rem, 2.8vw, 2.3rem);
+  margin: 0;
+}
+
+.mission-heading p {
+  color: var(--muted);
+  max-width: 680px;
+}
+
+.mission-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 2.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  align-items: start;
+}
+
+.mission-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  border-radius: 22px;
+}
+
+.mission-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.mission-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.mission-card p[dir="rtl"] {
+  text-align: right;
+  font-family: "Cairo", sans-serif;
+}
+
+.mission-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mission-aside .aside-note {
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(212, 222, 255, 0.6);
+}
+
+.mission-highlight {
+  position: relative;
+  margin-top: clamp(2rem, 5vw, 3rem);
+  border-radius: 26px;
+}
+
+.mission-highlight h3 {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.mission-highlight p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.closing .mission-card {
+  min-height: 100%;
+}
+
+.closing-cta {
+  position: relative;
+  text-align: left;
+  border-radius: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.closing-cta h2 {
+  margin-top: 0;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+}
+
+.closing-cta p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.cta-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.cta-actions .secondary {
+  border: 1px solid rgba(50, 245, 255, 0.4);
+  border-radius: 999px;
+  padding: 0.85rem 1.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
 }
 
 .brand-card {
@@ -478,16 +653,6 @@ canvas#cosmos {
 
 .brand-card:hover {
   transform: translateY(-12px) rotate3d(1, -1, 0, 8deg);
-}
-
-.cta {
-  display: flex;
-  justify-content: center;
-}
-
-.cta-inner {
-  text-align: center;
-  max-width: 760px;
 }
 
 .site-footer {

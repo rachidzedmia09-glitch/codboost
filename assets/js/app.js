@@ -45,30 +45,9 @@ const animatePageIn = () => {
   requestAnimationFrame(() => {
     page.removeAttribute('data-transition-out');
     page.setAttribute('data-transition-in', '');
-  });
-};
-
-const transitionTo = (url) => {
-  if (!page) {
-    window.location.href = url;
-    return;
-  }
-  page.removeAttribute('data-transition-in');
-  page.setAttribute('data-transition-out', '');
-  loader?.classList.add('active');
-  setTimeout(() => {
-    window.location.href = url;
-  }, 450);
-};
-
-const bindTransitions = () => {
-  qsa('a[data-transition]').forEach((link) => {
-    link.addEventListener('click', (event) => {
-      const url = link.getAttribute('href');
-      if (!url || url.startsWith('#')) return;
-      event.preventDefault();
-      transitionTo(url);
-    });
+    setTimeout(() => {
+      page.removeAttribute('data-transition-in');
+    }, 600);
   });
 };
 
@@ -85,13 +64,101 @@ const revealElements = () => {
     { threshold: 0.2 }
   );
 
-  qsa('.overview-card, .brand-card, .content-card, .content-aside, .holo-card, .playbook, .campaign-blueprint .split > div, .viral-blueprint, .operations-grid article, .closing-cta, .cta-inner').forEach(
+  qsa('.hero-content, .overview-card, .brand-card, .mission-heading, .mission-card, .mission-aside, .mission-highlight, .closing-cta').forEach(
     (el, index) => {
       el.style.setProperty('--delay', `${index * 60}ms`);
       el.classList.add('will-reveal');
       observer.observe(el);
     }
   );
+};
+
+const bindSmoothScroll = () => {
+  const links = qsa('a[data-scroll]');
+  links.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const href = link.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      const target = qs(href);
+      if (!target) return;
+      event.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (nav?.classList.contains('open')) {
+        nav.classList.remove('open');
+        toggle?.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+};
+
+const initScrollSpy = () => {
+  const sections = qsa('[data-nav-section]');
+  const links = qsa('.main-nav a[data-scroll]');
+
+  if (!sections.length || !links.length) return;
+
+  const update = () => {
+    const threshold = window.innerHeight * 0.35;
+    let currentId = sections[0].id;
+
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= threshold && rect.bottom >= threshold) {
+        currentId = section.id;
+      }
+    });
+
+    links.forEach((link) => {
+      const href = link.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      const id = href.slice(1);
+      if (id === currentId) {
+        link.setAttribute('aria-current', 'true');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  };
+
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+};
+
+const initParallax = () => {
+  const sections = qsa('[data-parallax]');
+  if (!sections.length) return;
+
+  const handle = () => {
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      const center = rect.top + rect.height / 2;
+      const offset = (window.innerHeight / 2 - center) * 0.12;
+      section.style.setProperty('--parallax-y', `${offset.toFixed(2)}px`);
+    });
+  };
+
+  handle();
+  window.addEventListener('scroll', handle, { passive: true });
+  window.addEventListener('resize', handle);
+};
+
+const bindMissionSpark = () => {
+  const missions = qsa('.mission');
+  missions.forEach((mission) => {
+    mission.addEventListener('pointermove', (event) => {
+      const rect = mission.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * 100;
+      const y = ((event.clientY - rect.top) / rect.height) * 100;
+      mission.style.setProperty('--spark-x', `${x.toFixed(2)}%`);
+      mission.style.setProperty('--spark-y', `${y.toFixed(2)}%`);
+    });
+
+    mission.addEventListener('pointerleave', () => {
+      mission.style.setProperty('--spark-x', '50%');
+      mission.style.setProperty('--spark-y', '50%');
+    });
+  });
 };
 
 const initCanvas = () => {
@@ -163,7 +230,7 @@ const initCanvas = () => {
 };
 
 const attachHoverTilt = () => {
-  const cards = qsa('.brand-card');
+  const cards = qsa('[data-tilt]');
   const strength = 15;
 
   cards.forEach((card) => {
@@ -173,14 +240,18 @@ const attachHoverTilt = () => {
       const y = event.clientY - rect.top;
       const rotateX = ((y / rect.height - 0.5) * -strength).toFixed(2);
       const rotateY = ((x / rect.width - 0.5) * strength).toFixed(2);
-      card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     });
 
     card.addEventListener('mouseleave', () => {
-      card.style.transform = 'translateY(-12px) rotate3d(1, -1, 0, 8deg)';
-      setTimeout(() => {
+      if (card.classList.contains('brand-card')) {
+        card.style.transform = 'translateY(-12px) rotate3d(1, -1, 0, 8deg)';
+        setTimeout(() => {
+          card.style.transform = '';
+        }, 200);
+      } else {
         card.style.transform = '';
-      }, 200);
+      }
     });
   });
 };
@@ -189,9 +260,12 @@ const init = () => {
   setYear();
   handleNavToggle();
   initScrollProgress();
-  bindTransitions();
+  bindSmoothScroll();
+  initScrollSpy();
   revealElements();
   initCanvas();
+  initParallax();
+  bindMissionSpark();
   attachHoverTilt();
   animatePageIn();
   window.addEventListener('load', () => loader?.classList.remove('active'));
