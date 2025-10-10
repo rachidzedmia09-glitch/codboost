@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mission 01 — DG Network Brand Architecture</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Cairo:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script defer src="assets/js/app.js"></script>
+  </head>
+  <body data-page="brand">
+    <canvas id="cosmos" aria-hidden="true"></canvas>
+    <div class="page-loader active" aria-hidden="true">
+      <div class="loader-orb"></div>
+      <span>Synchronizing Mission 01</span>
+    </div>
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-icon">🧠</span>
+        <span class="brand-text">
+          <strong>DG Network</strong>
+          <small>Mission 01 · Brand Architecture</small>
+        </span>
+      </a>
+      <nav class="main-nav" aria-label="Primary">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links">
+          <span></span><span></span><span></span>
+        </button>
+        <ul id="nav-links">
+          <li><a data-transition href="index.html">Overview</a></li>
+          <li><a data-transition href="brand-architecture.html" aria-current="page">Brand System</a></li>
+          <li><a data-transition href="platform-strategy.html">Platform Strategy</a></li>
+          <li><a data-transition href="niche-playbooks.html">Niche Playbooks</a></li>
+          <li><a data-transition href="operations.html">Operations</a></li>
+        </ul>
+      </nav>
+      <div class="progress-bar" aria-hidden="true">
+        <span></span>
+      </div>
+    </header>
+
+    <main class="page">
+      <section class="mission-intro">
+        <span class="mission-number">Mission 01</span>
+        <h1>Brand Architecture &amp; Visual Language</h1>
+        <p>
+          Map the core identity of DG Network and discover how each niche brand connects through tone, colour, and shared
+          storytelling modules.
+        </p>
+      </section>
+
+      <section class="content-split" id="brand-architecture">
+        <div class="content-card">
+          <h2>1️⃣ Brand Architecture</h2>
+          <p>
+            English: DG Network is the central hub connecting and cross-promoting five niche brands: DGSPORTS, DGTECH, DGMOVIES,
+            DGANIME, and DGGAMING. Each niche has its own identity color and content focus, but all share the same logo family
+            and tone.
+          </p>
+          <p dir="rtl" lang="ar">
+            Arabic: المركز الرئيسي DG Network يربط ويُروّج لجميع التخصّصات: DGSPORTS، DGTECH، DGMOVIES، DGANIME، DGGAMING. لكل
+            علامة لون وهوية خاصة، لكنها تنتمي إلى عائلة شعار موحّدة وهوية واحدة.
+          </p>
+        </div>
+        <aside class="content-aside">
+          <div class="brand-web">
+            <img src="https://codboost.pro/wp-content/uploads/2025/10/DGSPORTS-icon.png" alt="DGSPORTS icon" />
+            <img src="https://codboost.pro/wp-content/uploads/2025/10/DGTECH-icon.png" alt="DGTECH icon" />
+            <img src="https://codboost.pro/wp-content/uploads/2025/10/DGMOVIE-icon.png" alt="DGMOVIES icon" />
+            <img src="https://codboost.pro/wp-content/uploads/2025/10/DGANIME-icon.png" alt="DGANIME icon" />
+            <img src="https://codboost.pro/wp-content/uploads/2025/10/DGGAMING-icon.png" alt="DGGAMING icon" />
+          </div>
+          <p class="aside-note">Unified logos orbit the DG Network core for instant recognition.</p>
+        </aside>
+      </section>
+
+      <section class="content-split" id="tone-visual">
+        <div class="content-card">
+          <h2>2️⃣ Tone &amp; Visual Identity</h2>
+          <p>
+            English: Each niche speaks in its own voice: Sports = energetic &amp; bold Tech = insightful &amp; clean Movies = cinematic &amp;
+            stylish Anime = vibrant &amp; expressive Gaming = hype &amp; neon Unified under a modern tech aesthetic (black, blue, red),
+            with bold typography and modular templates for posts, Reels, Shorts, and thumbnails.
+          </p>
+          <p dir="rtl" lang="ar">
+            Arabic: لكل تخصّص أسلوبه: الرياضة = حماس وشجاعة التقنية = معلومات ووضوح الأفلام = سينمائي وأنيق الأنمي = نابض
+            ومعبّر الألعاب = مشحون بالحماس توحيد الهوية من خلال أسلوب تقني حديث بالألوان الأسود والأزرق والأحمر مع خطوط قوية
+            وقوالب موحدة.
+          </p>
+        </div>
+        <aside class="content-aside">
+          <div class="tone-grid">
+            <span data-niche="sports">Energetic &amp; Bold</span>
+            <span data-niche="tech">Insightful &amp; Clean</span>
+            <span data-niche="movies">Cinematic &amp; Stylish</span>
+            <span data-niche="anime">Vibrant &amp; Expressive</span>
+            <span data-niche="gaming">Hype &amp; Neon</span>
+          </div>
+          <p class="aside-note">Modular templates ensure every story format feels part of the same digital universe.</p>
+        </aside>
+      </section>
+
+      <section class="mission-nav">
+        <a class="secondary" data-transition href="index.html">← Return to Overview</a>
+        <a class="primary" data-transition href="platform-strategy.html">Proceed to Mission 02</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© <span id="year"></span> DG Network — Mission 01 complete.</p>
+    </footer>
+  </body>
+</html>
