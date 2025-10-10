@@ -1,0 +1,55 @@
+:root[data-theme="dg-network"] {
+  --bg: #05070f;
+  --ink: #e9eef7;
+  --muted: #9aa4b3;
+  --line: rgba(255, 255, 255, 0.14);
+  --glass: rgba(255, 255, 255, 0.06);
+  --blue: #2d7df6;
+  --red: #ff3b3b;
+  --violet: #7c4dff;
+  --cyan: #22d3ee;
+  --amber: #f59e0b;
+  --purple: #8b5cf6;
+
+  --radius-xs: 6px;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-pill: 999px;
+
+  --shadow-soft: 0 12px 40px rgba(8, 12, 24, 0.45);
+  --shadow-card: 0 24px 60px rgba(12, 18, 36, 0.65);
+  --glow-blue: 0 0 40px rgba(45, 125, 246, 0.55);
+  --glow-red: 0 0 36px rgba(255, 59, 59, 0.45);
+  --glow-violet: 0 0 60px rgba(124, 77, 255, 0.35);
+
+  --font-family-base: "Inter", "SF Pro Display", "Segoe UI", "Roboto", "Helvetica Neue", system-ui, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 1.875rem;
+  --font-size-3xl: 2.5rem;
+  --font-size-hero: clamp(2.5rem, 5vw, 4rem);
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+
+  --motion-curve: cubic-bezier(.2, .7, .2, 1);
+  --motion-duration-quick: 220ms;
+  --motion-duration-base: 360ms;
+  --motion-duration-section: 520ms;
+  --motion-duration-hero: 900ms;
+}
