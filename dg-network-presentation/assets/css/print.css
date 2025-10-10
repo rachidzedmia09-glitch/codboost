@@ -1,0 +1,81 @@
+@page {
+  size: A4 portrait;
+  margin: 15mm;
+}
+
+body {
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-family: var(--font-sans);
+  overflow: visible;
+}
+
+.presentation,
+.slides {
+  display: block !important;
+  height: auto !important;
+  background: none !important;
+}
+
+.slide {
+  page-break-after: always;
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin-bottom: 20mm;
+}
+
+.slide::after {
+  display: none !important;
+}
+
+.hero-backdrop,
+.dot-nav,
+.progress-rail,
+.skip-link,
+.hero-actions .chip,
+.hero-actions .print-btn,
+.hero-backdrop,
+.brand-card::before,
+.brand-card::after {
+  display: none !important;
+}
+
+.hero-content,
+.section-header,
+.bilingual-grid,
+.brand-grid {
+  max-width: 100% !important;
+  width: 100% !important;
+  box-shadow: none !important;
+}
+
+.column,
+.brand-card {
+  border: 1px solid #1a1a1a !important;
+  background: none !important;
+  filter: none !important;
+  box-shadow: none !important;
+}
+
+.brand-card__tone::before {
+  display: none;
+}
+
+footer.print-footer {
+  display: block;
+  text-align: center;
+  font-size: 0.8rem;
+  margin-top: 10mm;
+  color: #333333;
+}
+
+body::after {
+  content: attr(data-print-url);
+  display: block;
+  text-align: center;
+  font-size: 0.7rem;
+  color: #555555;
+  margin-top: 5mm;
+}

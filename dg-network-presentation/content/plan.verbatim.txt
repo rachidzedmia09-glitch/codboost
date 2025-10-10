@@ -1,0 +1,65 @@
+[EN] Brand Architecture
+[AR] هيكل العلامة التجارية
+Anchor DG Network as a federation of five fandom verticals with one shared identity.
+- Publish brand playbooks for tone, motion, and community ethos.
+- Maintain modular iconography allowing each niche to flex its color energy while staying aligned.
+- Launch bilingual tagline "One pulse, infinite fandoms." across all assets.
+ترسيخ شبكة DG كاتحاد لخمسة عوالم جماهيرية تحت هوية مشتركة.
+- إصدار كتيبات أسلوب للغة البصرية، الحركة، وروح المجتمع.
+- الحفاظ على أيقونات معيارية تمنح كل تخصص طاقته اللونية مع البقاء منسجماً.
+- إطلاق الشعار الثنائي "نبض واحد، شغف بلا حدود." عبر كل الأصول.
+
+[EN] Audience Signals
+[AR] إشارات الجمهور
+Use social listening and analytics to rank community demand pulses each quarter.
+- Tag sentiment drivers for sports, tech, movies, anime, and gaming to inform calendar themes.
+- Deploy multilingual surveys with <200ms load across priority regions.
+- Share a monthly 'Fandom Heat Index' dashboard with leadership.
+استخدام الاستماع الاجتماعي والتحليلات لترتيب نبضات الطلب الجماهيري كل ربع سنة.
+- تمييز محفزات المشاعر للرياضة، التقنية، الأفلام، الأنمي، والألعاب لتوجيه موضوعات الجدول.
+- إطلاق استطلاعات متعددة اللغات بزمن تحميل أقل من 200 مللي ثانية عبر المناطق ذات الأولوية.
+- مشاركة لوحة متابعة شهرية بعنوان «مؤشر حرارة الجماهير» مع الإدارة.
+
+[EN] Platform Experience
+[AR] تجربة المنصة
+Deliver a scroll-snapped, high-contrast hub that feels cinematic yet efficient.
+- Streamline nav with keyboard, voice, and assistive tech parity.
+- Stage hero moments with adaptive gradient meshes and live stats integrations.
+- Introduce saveable watchlists and cross-vertical recommendations.
+تقديم مركز عالي التباين يعتمد التمرير المتتابع بإحساس سينمائي وكفاءة عالية.
+- تبسيط التنقل بدعم لوحة المفاتيح، الأوامر الصوتية، والتقنيات المساعدة بالتساوي.
+- عرض لحظات البطولة بخلفيات متدرجة متكيفة وتكاملات إحصائية مباشرة.
+- إتاحة قوائم متابعة قابلة للحفظ وتوصيات عابرة للتخصصات.
+
+[EN] Monetization & Partnerships
+[AR] تحقيق الدخل والشراكات
+Balance premium membership value with advertiser-safe storytelling.
+- Launch tiered 'DG+ Power Pass' with exclusive drops, ad-light streams, and early screenings.
+- Package branded missions co-created with e-commerce partners and sports leagues.
+- Secure rights-clearance workflow to accelerate go-live within 72 hours.
+موازنة قيمة العضوية المميزة مع سرد قصصي آمن للمعلنين.
+- إطلاق «DG+ Power Pass» متعدد المستويات مع محتوى حصري، بث خفيف الإعلانات، وعروض مبكرة.
+- تصميم مهمات برعاية مشتركة مع شركاء التجارة الإلكترونية والدوريات الرياضية.
+- تأمين سير عمل لترخيص الحقوق يسرع الإطلاق خلال 72 ساعة.
+
+[EN] Community Programs
+[AR] برامج المجتمع
+Nurture superfans into co-creators who amplify every release.
+- Host seasonal fandom labs where creators remix official assets into localized formats.
+- Establish moderation squads trained in bilingual safety protocols.
+- Reward ambassadors with digital badges, backstage AMAs, and revenue sharing pilots.
+رعاية المعجبين المخلصين ليصبحوا مشاركين في صناعة المحتوى يعززون كل إصدار.
+- استضافة مختبرات موسمية تمنح المبدعين فرصة إعادة مزج الأصول الرسمية بصيغ محلية.
+- إنشاء فرق إشراف مدربة على بروتوكولات السلامة ثنائية اللغة.
+- مكافأة السفراء بشارات رقمية، جلسات أسئلة خلف الكواليس، وتجارب مشاركة الإيرادات.
+
+[EN] Roadmap 2025
+[AR] خريطة الطريق 2025
+Sequence delivery to hit momentum milestones before year end.
+- Q2: Ship unified account system, release beta of cross-fandom feed.
+- Q3: Roll out brand labs, sign three flagship sponsorship alliances.
+- Q4: Expand data storytelling suite and publish first annual impact report.
+ترتيب التنفيذ للوصول إلى محطات الزخم قبل نهاية العام.
+- الربع الثاني: إطلاق نظام الحساب الموحد وإصدار نسخة تجريبية لتغذية العوالم المشتركة.
+- الربع الثالث: طرح مختبرات العلامة وتوقيع ثلاث شراكات رعاية رئيسية.
+- الربع الرابع: توسيع مجموعة رواية البيانات ونشر أول تقرير تأثير سنوي.
