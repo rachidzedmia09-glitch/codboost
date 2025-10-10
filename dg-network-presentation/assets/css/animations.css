@@ -1,0 +1,60 @@
+@keyframes meshFloat {
+  0% {
+    transform: translate3d(-2%, 0, 0) scale(1.02);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate3d(2%, -1%, 0) scale(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(-1%, 1%, 0) scale(1.02);
+    opacity: 0.7;
+  }
+}
+
+@keyframes chipPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(47, 123, 255, 0.45);
+  }
+  100% {
+    box-shadow: 0 0 0 18px rgba(47, 123, 255, 0);
+  }
+}
+
+.slide[data-active="true"] {
+  animation: fadeInUp var(--transition-slow) both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-backdrop {
+  animation: meshFloat 14s ease-in-out infinite;
+}
+
+.hero-chips .chip:first-child {
+  animation: chipPulse 2.8s ease-in-out infinite;
+}
+
+.brand-card {
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-backdrop,
+  .hero-chips .chip:first-child,
+  .brand-card,
+  .slide[data-active="true"] {
+    animation: none !important;
+    transform: none !important;
+  }
+}
